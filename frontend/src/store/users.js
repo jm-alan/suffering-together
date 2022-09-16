@@ -1,5 +1,5 @@
-import csrfetch from '../../utils/csrfetch';
-import silenceErrors from '../../utils/silcenceErrors';
+import csrfetch from '../utils/csrfetch';
+import silenceErrors from '../utils/silcenceErrors';
 
 export const SET_ALL = 'users/SET_ALL';
 export const SET_CURRENT = 'users/SET_CURRENT';

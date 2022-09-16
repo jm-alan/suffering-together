@@ -1,7 +1,7 @@
-import csrfetch from '../../utils/csrfetch';
-import silenceErrors from '../../utils/silcenceErrors';
-import { clearModal, hideModal } from '../UX/uxActionCreators';
-import { clearErrors } from '../errors/errorActionCreators';
+import csrfetch from '../utils/csrfetch';
+import silenceErrors from '../utils/silcenceErrors';
+import { clearModal, hideModal } from './UX';
+import { clearErrors } from './errors';
 
 export const SET = 'session/SET';
 export const CLEAR = 'session/CLEAR';
