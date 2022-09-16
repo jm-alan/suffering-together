@@ -1,16 +1,18 @@
-import * as types from './sessionActionTypes';
 import csrfetch from '../../utils/csrfetch';
 import silenceErrors from '../../utils/silcenceErrors';
 import { clearModal, hideModal } from '../UX/uxActionCreators';
 import { clearErrors } from '../errors/errorActionCreators';
 
+export const SET = 'session/SET';
+export const CLEAR = 'session/CLEAR';
+
 const setSession = (user = null) => ({
-  type: types.SET,
+  type: SET,
   user
 });
 
 const clearSession = () => ({
-  type: types.CLEAR
+  type: CLEAR
 });
 
 export const signup = ({ firstName, email, password }, shouldLogin) => async dispatch => {
@@ -68,3 +70,23 @@ export const restore = () => async dispatch => {
   }
   await csrfetch.restoreCSRF();
 };
+
+export default function reducer (
+  state = { user: null, loaded: false },
+  { type, user }
+) {
+  switch (type) {
+    case SET:
+      return {
+        user,
+        loaded: true
+      };
+    case CLEAR:
+      return {
+        user: null,
+        loaded: true
+      };
+    default:
+      return state;
+  }
+}
