@@ -1,6 +1,6 @@
 import axios, { AxiosError } from 'axios';
 
-import { oops, setErrors } from '../store/errors/errorActionCreators';
+import { oops, setErrors } from '../store/errors';
 import findCookie from './findCookie';
 import getApp from './getApp';
 
