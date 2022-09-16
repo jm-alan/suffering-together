@@ -1,34 +1,40 @@
 import csrfetch from '../../utils/csrfetch';
 import silenceErrors from '../../utils/silcenceErrors';
-import * as types from './userActionTypes';
+
+export const SET_ALL = 'users/SET_ALL';
+export const SET_CURRENT = 'users/SET_CURRENT';
+export const CLEAR_CURRENT = 'users/CLEAR_CURRENT';
+export const ADD_USER = 'users/ADD';
+export const REMOVE_USER = 'users/REMOVE';
+export const EDIT_USER = 'users/EDIT';
 
 const setAll = all => ({
-  type: types.SET_ALL,
+  type: SET_ALL,
   all
 });
 
 const addUser = user => ({
-  type: types.ADD_USER,
+  type: ADD_USER,
   user
 });
 
 const removeUser = userID => ({
-  type: types.REMOVE_USER,
+  type: REMOVE_USER,
   userID
 });
 
 const editUser = user => ({
-  type: types.EDIT_USER,
+  type: EDIT_USER,
   user
 });
 
 export const selectUser = userID => ({
-  type: types.SET_CURRENT,
+  type: SET_CURRENT,
   userID
 });
 
 export const clearSelectedUser = () => ({
-  type: types.CLEAR_CURRENT
+  type: CLEAR_CURRENT
 });
 
 export const getUsers = () => async dispatch => {
@@ -73,3 +79,53 @@ export const deleteUser = userID => async dispatch => {
   await csrfetch.delete(`/api/users/${userID}`);
   dispatch(removeUser(userID));
 };
+
+export default function reducer (
+  state = { all: {}, current: null, loaded: false },
+  { type, all, user, userID }
+) {
+  switch (type) {
+    case SET_ALL:
+      return {
+        ...state,
+        all,
+        loaded: true
+      };
+    case ADD_USER:
+      return {
+        ...state,
+        all: {
+          ...state.all,
+          [user.id]: user
+        }
+      };
+    case REMOVE_USER:
+      return {
+        ...state,
+        all: {
+          ...state.all,
+          [userID]: undefined
+        }
+      };
+    case EDIT_USER:
+      return {
+        ...state,
+        all: {
+          ...state.all,
+          [user.id]: user
+        }
+      };
+    case SET_CURRENT:
+      return {
+        ...state,
+        current: state.all[userID]
+      };
+    case CLEAR_CURRENT:
+      return {
+        ...state,
+        current: null
+      };
+    default:
+      return state;
+  }
+}
