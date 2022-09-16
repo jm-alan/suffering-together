@@ -1,29 +1,22 @@
-const HTMLPlugin = require('html-webpack-plugin');
 const { resolve } = require('path');
 
 module.exports = {
-  entry: resolve(__dirname, 'src', 'index.js'),
-  output: {
-    filename: 'main.js',
-    path: resolve(__dirname, 'build'),
-    publicPath: '/'
+  entry: {
+    main: resolve(__dirname, 'bin', 'www')
   },
-  plugins: [
-    new HTMLPlugin({
-      template: resolve(__dirname, 'src', 'index.html')
-    })
-  ],
-  module: {
-    rules: [
-      {
-        test: /\.js$/,
-        exclude: /node_modules/,
-        use: ['babel-loader']
-      },
-      {
-        test: /\.css$/,
-        use: ['style-loader', 'css-loader']
-      }
-    ]
+  output: {
+    filename: '[name].js',
+    path: resolve(__dirname, 'build')
+  },
+  target: 'node',
+  externalsPresets: { node: true },
+  node: {
+    __dirname: false,
+    __filename: false
+  },
+  externals: {
+    express: 'commonjs express',
+    sequelize: 'commonjs sequelize',
+    'socket.io': 'commonjs socket.io'
   }
 };
