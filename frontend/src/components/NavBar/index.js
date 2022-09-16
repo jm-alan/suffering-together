@@ -22,52 +22,30 @@ export default function NavBar () {
 
   return (
     <nav>
-      <Link
-        to={leftButtonDestination}
-        className='nav-button clickable first'
-      >
-        <span
-          className='material-symbols-outlined'
-        >
+      <Link to={leftButtonDestination} className='nav-button clickable first'>
+        <span className='material-symbols-outlined'>
           {leftButtonIcon}
         </span>
       </Link>
-      <Link
-        to='/residences'
-        className='nav-button clickable'
-      >
-        <span
-          className='material-symbols-outlined'
-        >
+      <Link to='/residences' className='nav-button clickable'>
+        <span className='material-symbols-outlined'>
           people
         </span>
       </Link>
       <div
         className='nav-button clickable'
       >
-        <span
-          className='material-symbols-outlined'
-        >
+        <span className='material-symbols-outlined'>
           add
         </span>
       </div>
-      <Link
-        to='/expenses'
-        className='nav-button clickable'
-      >
-        <span
-          className='material-symbols-outlined'
-        >
+      <Link to='/expenses' className='nav-button clickable'>
+        <span className='material-symbols-outlined'>
           history
         </span>
       </Link>
-      <Link
-        to='settings'
-        className='nav-button clickable last'
-      >
-        <span
-          className='material-symbols-outlined'
-        >
+      <Link to='settings' className='nav-button clickable last'>
+        <span className='material-symbols-outlined'>
           settings
         </span>
       </Link>
