@@ -1,3 +1,3 @@
-export default () => process.env.NODE_ENV === 'development'
-  ? 'http://localhost:5000'
-  : 'https://suffering-together.hostTBD.com';
+export default (protocol = process.env.NODE_ENV === 'development' ? 'http' : 'https') => process.env.NODE_ENV === 'development'
+  ? `${protocol}://localhost:5000`
+  : `${protocol}://suffering-together.hostTBD.com`;
