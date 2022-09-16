@@ -1,0 +1,39 @@
+#error-banner {
+  position: fixed;
+  top: 0px;
+  z-index: 5;
+  width: 100vw;
+  height: 75px;
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+  background-color: pink;
+  color: red;
+  font-size: 20px;
+}
+
+#scrolling-error-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 10px;
+  width: 60vw;
+  height: 75px;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+#error-banner-close {
+  cursor: pointer;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  border: 1px solid red;
+  border-radius: 5px;
+  padding: 3px 6px;
+}
+
+#error-banner-close:active {
+  background-color: red;
+  color: pink;
+}

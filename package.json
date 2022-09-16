@@ -1,0 +1,6 @@
+{
+  "scripts": {
+    "build": "mkdir ./build; mkdir ./build/frontend; npm run build --prefix backend; cp -r ./backend/build/. ./build; rm -rf backend; rpm run build --prefix frontend; cp -r ./frontend/build ./build; rm -rf frontend",
+    "start": "node ./build/index.js"
+  }
+}

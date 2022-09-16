@@ -1,0 +1,32 @@
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: var(--above-navbar);
+  width: 100vw;
+  padding: 0px 20px;
+}
+
+.auth-form * {
+  font-size: 3rem;
+}
+
+.auth-form>* {
+  --button-margin: 2rem;
+}
+
+.auth-input {
+  color: white;
+  background-color: black;
+  text-align: center;
+  border: none;
+  border-bottom: 0.3rem solid darkgrey;
+  margin: 2rem;
+  transition:
+    border-bottom 0.1s;
+}
+
+.auth-input:focus {
+  outline: none;
+  border-bottom: 0.3rem solid var(--not-quite-steelblue);
+}
