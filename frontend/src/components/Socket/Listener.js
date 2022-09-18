@@ -7,7 +7,6 @@ export default function Listener ({ eventName, children }) {
 
   useEffect(() => {
     const messageHandler = ({ data }) => {
-      console.log('MESSAGE');
       try {
         const { internalName, payload } = JSON.parse(data);
         if (eventName === internalName) children(payload, socket);
