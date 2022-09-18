@@ -3,13 +3,15 @@ import { createRoot } from 'react-dom/client';
 import { Provider, useDispatch } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 
-import { setMooring } from './store/UX/uxActionCreators';
+import { setMooring } from './store/UX';
 import App from './App';
 import ErrorBanner from './components/ErrorBanner';
 import store from './store';
 import csrfetch from './utils/csrfetch';
 import Modal from './components/Modal';
 import PageLoading from './components/Loading/PageLoading';
+
+import './utils/prototypes';
 
 if (process.env.NODE_ENV === 'development') {
   window.csrfetch = csrfetch;
