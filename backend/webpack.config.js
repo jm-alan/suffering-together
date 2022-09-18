@@ -17,6 +17,6 @@ module.exports = {
   externals: {
     express: 'commonjs express',
     sequelize: 'commonjs sequelize',
-    'socket.io': 'commonjs socket.io'
+    ws: 'commonjs ws'
   }
 };
