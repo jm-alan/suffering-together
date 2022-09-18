@@ -10,7 +10,7 @@ export default function Listener ({ eventName, children }) {
       console.log('MESSAGE');
       try {
         const { internalName, payload } = JSON.parse(data);
-        if (eventName === internalName) children(payload);
+        if (eventName === internalName) children(payload, socket);
       } catch {}
     };
     socket.addEventListener('message', messageHandler);
