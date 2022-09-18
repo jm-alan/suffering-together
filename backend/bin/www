@@ -2,14 +2,16 @@
 const app = require('../index');
 const { port } = require('../config/server');
 const db = require('../db/models');
+const handleWSUpgrade = require('../sockets');
 
 (async () => {
   try {
     await db.sequelize.authenticate();
     await db.sequelize.sync({ alter: true });
-    app.listen(port, () => {
+    const rootServer = app.listen(port, () => {
       console.log(`App:${port} UP`);
     });
+    rootServer.on('upgrade', handleWSUpgrade);
   } catch (err) {
     console.log(`Failed to instantiate app on port ${port}`);
     console.error(err);
