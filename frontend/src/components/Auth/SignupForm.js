@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
-import { signup } from '../../store/session/sessionActionCreators';
-import { setErrors } from '../../store/errors/errorActionCreators';
+import { signup } from '../../store/session';
+import { setErrors } from '../../store/errors';
 
 import './auth.css';
 

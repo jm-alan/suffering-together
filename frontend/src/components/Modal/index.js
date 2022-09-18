@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { clearModal, hideModal } from '../../store/UX/uxActionCreators';
+import { clearModal, hideModal } from '../../store/UX';
 
 import './modal.css';
 

@@ -4,7 +4,7 @@ import { Navigate, Route, Routes } from 'react-router-dom';
 
 import LoadingLock from './components/Loading/LoadingLock';
 import csrfetch from './utils/csrfetch';
-import { restore } from './store/session/sessionActionCreators';
+import { restore } from './store/session';
 
 import './index.css';
 import Houses from './components/Houses';

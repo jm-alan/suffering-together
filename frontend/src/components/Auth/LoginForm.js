@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { login } from '../../store/session/sessionActionCreators';
+import { login } from '../../store/session';
 import { useNavigate } from 'react-router-dom';
 
 import './auth.css';
