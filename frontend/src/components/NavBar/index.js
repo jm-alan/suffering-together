@@ -1,11 +1,12 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { Link, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 import Socket from '../Socket';
 import Listener from '../Socket/Listener';
 
 import './navbar.css';
+import NavButton from './NavButton';
 
 export default function NavBar () {
   const { pathname } = useLocation();
@@ -26,31 +27,11 @@ export default function NavBar () {
   return (
     <>
       <nav>
-        <Link to={leftButtonDestination} className='nav-button clickable first'>
-          <span className='material-symbols-outlined'>
-            {leftButtonIcon}
-          </span>
-        </Link>
-        <Link to='/residences' className='nav-button clickable'>
-          <span className='material-symbols-outlined'>
-            people
-          </span>
-        </Link>
-        <div className='nav-button clickable'>
-          <span className='material-symbols-outlined'>
-            add
-          </span>
-        </div>
-        <Link to='/expenses' className='nav-button clickable'>
-          <span className='material-symbols-outlined'>
-            history
-          </span>
-        </Link>
-        <Link to='settings' className='nav-button clickable last'>
-          <span className='material-symbols-outlined'>
-            settings
-          </span>
-        </Link>
+        <NavButton icon={leftButtonIcon} destination={leftButtonDestination} first />
+        <NavButton icon='people' destination='/residences' />
+        <NavButton icon='add' onClick={() => {}} />
+        <NavButton icon='history' destination='/expenses' />
+        <NavButton icon='settings' destination='/settings' last />
       </nav>
       <Socket>
         <Listener eventName='something'>
