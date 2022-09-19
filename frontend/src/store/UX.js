@@ -1,10 +1,12 @@
-export const SHOW_MODAL = 'UX/SHOW_MODAL';
-export const HIDE_MODAL = 'UX/SHOW_MODAL';
-export const SET_MODAL = 'UX/SET_MODAL';
-export const CLEAR_MODAL = 'UX/CLEAR_MODAL';
-export const SET_MOORING = 'UX/SET_MOORING';
-export const LOCK_LOADING = 'UX/LOCK_LOADING';
-export const UNLOCK_LOADING = 'UX/UNLOCK_LOADING';
+const SHOW_MODAL = 'UX/SHOW_MODAL';
+const HIDE_MODAL = 'UX/SHOW_MODAL';
+const SET_MODAL = 'UX/SET_MODAL';
+const CLEAR_MODAL = 'UX/CLEAR_MODAL';
+const SET_MOORING = 'UX/SET_MOORING';
+const LOCK_LOADING = 'UX/LOCK_LOADING';
+const UNLOCK_LOADING = 'UX/UNLOCK_LOADING';
+const SHOW_PLUS = 'UX/SHOW_PLUS';
+const HIDE_PLUS = 'UX/HIDE_PLUS';
 
 export const showModal = () => ({
   type: SHOW_MODAL
@@ -36,12 +38,21 @@ export const unlockLoading = () => ({
   type: UNLOCK_LOADING
 });
 
+export const showPlus = () => ({
+  type: SHOW_PLUS
+});
+
+export const hidePlus = () => ({
+  type: HIDE_PLUS
+});
+
 export default function reducer (
   state = {
     showModal: false,
     currentModal: null,
     modalMooring: null,
-    loadingLock: 0
+    loadingLock: 0,
+    showPlus: true
   },
   {
     type,
