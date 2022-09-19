@@ -1,26 +1,32 @@
 #error-banner {
+  --error-banner-container-height: calc(var(--navbar-height) * 2);
   position: fixed;
   top: 0px;
   z-index: 5;
   width: 100vw;
-  height: 75px;
+  height: var(--error-banner-container-height);
   display: flex;
   justify-content: center;
   overflow: hidden;
   background-color: pink;
   color: red;
-  font-size: 20px;
+  font-size: 3rem;
 }
 
 #scrolling-error-container {
+  text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 10px;
-  width: 60vw;
-  height: 75px;
+  padding: 1rem 0px;
+  width: 80vw;
+  height: var(--error-banner-container-height);
   overflow-x: hidden;
   overflow-y: auto;
+}
+
+.error {
+  margin: 0.5rem 0px;
 }
 
 #error-banner-close {
@@ -28,9 +34,8 @@
   position: absolute;
   top: 5px;
   right: 5px;
-  border: 1px solid red;
   border-radius: 5px;
-  padding: 3px 6px;
+  padding: 0.5rem;
 }
 
 #error-banner-close:active {
