@@ -13,8 +13,7 @@ router.post(
   restoreUser,
   limitPermittedKeys('firstName', 'email', 'password'),
   $(async (req, res) => {
-    const user = new User(req.body);
-    await user.save();
+    const user = await User.SignUp(req.body);
     createSessionCookie(res, user.id);
     res.json({ user: user.info });
   })
