@@ -1,9 +1,9 @@
 
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { login } from '../../store/session';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 import './auth.css';
 
@@ -14,10 +14,16 @@ export default function LoginForm () {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  const user = useSelector(state => state.session.user);
+
   const handleSubmit = e => {
     e.preventDefault();
     dispatch(login({ email, password }));
   };
+
+  if (user) {
+    return <Navigate to='/home' />;
+  }
 
   return (
     <form

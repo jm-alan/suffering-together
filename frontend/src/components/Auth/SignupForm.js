@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 import { signup } from '../../store/session';
 import { setErrors } from '../../store/errors';
@@ -25,9 +25,13 @@ export default function SignupForm () {
         'Passwords do not match'
       ]));
     } else {
-      dispatch(signup({ firstName, email, password }, !user));
+      dispatch(signup({ firstName, email, password }));
     }
   };
+
+  if (user) {
+    return <Navigate to='/home' />;
+  }
 
   return (
     <form
