@@ -86,6 +86,16 @@ export default function reducer (
         ...state,
         modalMooring
       };
+    case SHOW_PLUS:
+      return {
+        ...state,
+        showPlus: true
+      };
+    case HIDE_PLUS:
+      return {
+        ...state,
+        showPlus: false
+      };
     default:
       return state;
   }

@@ -1,0 +1,8 @@
+.house-entry {
+  border: 1px solid var(--not-quite-steelblue);
+  font-size: 4rem;
+  width: 60vw;
+  padding: 1rem;
+  margin: 1rem 0px;
+  border-radius: 1rem;
+}
