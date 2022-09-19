@@ -1,6 +1,5 @@
 import csrfetch from '../utils/csrfetch';
 import silenceErrors from '../utils/silcenceErrors';
-import { clearModal, hideModal } from './UX';
 import { clearErrors } from './errors';
 
 export const SET = 'session/SET';
@@ -15,7 +14,7 @@ const clearSession = () => ({
   type: CLEAR
 });
 
-export const signup = ({ firstName, email, password }, shouldLogin) => async dispatch => {
+export const signup = ({ firstName, email, password }) => async dispatch => {
   dispatch(clearErrors());
 
   // any failures from destructuring below are the result of errors
@@ -29,11 +28,7 @@ export const signup = ({ firstName, email, password }, shouldLogin) => async dis
         password
       }
     });
-    if (shouldLogin) {
-      dispatch(setSession(user));
-    }
-    dispatch(clearModal());
-    dispatch(hideModal());
+    dispatch(setSession(user));
   });
 };
 
@@ -47,8 +42,6 @@ export const login = ({ email, password }) => async dispatch => {
       }
     });
     dispatch(setSession(user));
-    dispatch(clearModal());
-    dispatch(hideModal());
   } catch {
     dispatch(clearSession());
   }
@@ -57,8 +50,6 @@ export const login = ({ email, password }) => async dispatch => {
 export const logout = () => async dispatch => {
   await csrfetch.delete('/api/session');
   dispatch(clearSession());
-  dispatch(clearModal());
-  dispatch(hideModal());
 };
 
 export const restore = () => async dispatch => {
