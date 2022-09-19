@@ -60,6 +60,7 @@ button:disabled {
 }
 
 #router-container {
+  position: relative;
   height: var(--above-navbar);
   width: 100vw;
   overflow-x: hidden;
