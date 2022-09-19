@@ -5,7 +5,8 @@ const {
   DataTypes: {
     STRING,
     DATE,
-    NOW
+    NOW,
+    INTEGER
   }
 } = require('sequelize');
 const { hashSync, compareSync } = require('bcryptjs');
@@ -129,6 +130,13 @@ module.exports = class User extends Model {
           }
         }
       },
+      primaryHouseID: {
+        type: INTEGER,
+        allowNull: true,
+        references: {
+          model: 'Houses'
+        }
+      },
       createdAt: {
         type: DATE,
         defaultValue: NOW
@@ -156,6 +164,7 @@ module.exports = class User extends Model {
   }
 
   static associate ({ Item, DebtEntry, House, RosterEntry }) {
+    User.belongsTo(House, { foreignKey: 'primaryHouseID', as: 'PrimaryResidence' });
     User.hasMany(House, { foreignKey: 'ownerID', as: 'OwnedResidences' });
     User.hasMany(Item, { foreignKey: 'userID', as: 'Credits' });
     User.belongsToMany(Item, {

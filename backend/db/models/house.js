@@ -91,6 +91,7 @@ module.exports = class House extends Model {
   }
 
   static associate ({ User, RosterEntry, Item, DebtEntry }) {
+    House.hasMany(User, { foreignKey: 'primaryResidenceID', as: 'PrimaryResidents' });
     House.belongsTo(User, { foreignKey: 'ownerID', as: 'Owner' });
     House.hasMany(Item, { foreignKey: 'houseID', as: 'Debts' });
     House.hasMany(DebtEntry, { foreignKey: 'houseID' });
