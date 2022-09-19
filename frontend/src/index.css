@@ -60,9 +60,9 @@ button:disabled {
 }
 
 #router-container {
-  position: relative;
   height: var(--above-navbar);
   width: 100vw;
+  padding: 2rem 0px;
   overflow-x: hidden;
   overflow-y: auto;
   display: flex;
