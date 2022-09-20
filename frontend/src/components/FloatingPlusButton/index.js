@@ -3,11 +3,14 @@ import { useSelector } from 'react-redux';
 
 import './plus.css';
 
-export default function FloatingPlusButton () {
+export default function FloatingPlusButton ({ onClick }) {
   const showPlus = useSelector(state => state.UX.showPlus);
 
   return (
-    <button className={`new-item-floater${showPlus ? ' show' : ' hide'}`}>
+    <button
+      className={`new-item-floater${showPlus ? ' show' : ' hide'}`}
+      onClick={onClick}
+    >
       <span className='material-symbols-outlined'>
         add
       </span>
