@@ -30,7 +30,7 @@ export const setMooring = modalMooring => ({
   modalMooring
 });
 
-export const lockLoading = (unlockKey, onUnlock = () => {}) => ({
+export const lockLoading = (unlockKey, onUnlock) => ({
   type: LOCK_LOADING,
   unlockKey,
   onUnlock
