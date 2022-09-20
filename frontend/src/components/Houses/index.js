@@ -1,9 +1,11 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { getAllhouses } from '../../store/houses';
 import FloatingPlusButton from '../FloatingPlusButton';
 import LoadingLock from '../Loading/LoadingLock';
+import NewHouse from '../NewHouse';
+import { getAllhouses } from '../../store/houses';
+import { setModal, showModal } from '../../store/UX';
 
 import './houses.css';
 
@@ -13,6 +15,11 @@ export default function Houses () {
   const loaded = useSelector(state => state.houses.loaded);
   const houses = useSelector(state => state.houses.all);
 
+  const popNewHouse = () => {
+    dispatch(setModal(NewHouse));
+    dispatch(showModal());
+  };
+
   useEffect(() => {
     dispatch(getAllhouses());
   }, [dispatch]);
@@ -20,7 +27,7 @@ export default function Houses () {
   return loaded
     ? (
       <>
-        <FloatingPlusButton />
+        <FloatingPlusButton onClick={popNewHouse} />
         {Object.values(houses).filter($ => $).map(house => (
           <div key={house.id}>
             {house.name}
