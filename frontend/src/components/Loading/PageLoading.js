@@ -24,9 +24,9 @@ export default function Loading () {
         <rect
           x='17.5'
           y='30'
-          width='15'
-          height='40'
-          fill='#000000'
+          width='20'
+          height='80'
+          fill='#4185c8'
         >
           <animate
             attributeName='y'
@@ -52,9 +52,9 @@ export default function Loading () {
         <rect
           x='42.5'
           y='30'
-          width='15'
-          height='40'
-          fill='#6c6c6c'
+          width='20'
+          height='80'
+          fill='#53aaff'
         >
           <animate
             attributeName='y'
@@ -80,9 +80,9 @@ export default function Loading () {
         <rect
           x='67.5'
           y='30'
-          width='15'
-          height='40'
-          fill='#acacac'
+          width='20'
+          height='80'
+          fill='#8dc6ff'
         >
           <animate
             attributeName='y'
