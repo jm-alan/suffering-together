@@ -1,18 +1,18 @@
-FROM node:18-slim AS backend-builder
+FROM node:18-alpine AS backend-builder
 WORKDIR /backend-staging
 COPY ./backend/package.json .
 RUN npm install
 COPY ./backend/. .
 RUN npm run build
 
-FROM node:18-slim AS frontend-builder
+FROM node:18-alpine AS frontend-builder
 WORKDIR /frontend-staging
 COPY ./frontend/package.json .
 RUN npm install
 COPY ./frontend/. .
 RUN npm run build
 
-FROM node:18-slim AS final
+FROM node:18-alpine AS final
 WORKDIR /core
 COPY ./package.json .
 RUN npm install
