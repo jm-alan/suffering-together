@@ -1,0 +1,104 @@
+import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+
+import Checkbox from '../Checkbox';
+import { addHouse } from '../../store/houses';
+
+import './newHouse.css';
+import csrfetch from '../../utils/csrfetch';
+
+export default function NewHouse () {
+  const dispatch = useDispatch();
+
+  const [name, setName] = useState('');
+  const [joinCode, setJoinCode] = useState('');
+  const [password, setPassword] = useState('');
+  const [hasPassword, setHasPassword] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [shouldGetRandomJoinCode, setShouldGetRandomJoinCode] = useState(false);
+  const [randomJoinCode, setRandomJoinCode] = useState(null);
+
+  const handleSubmit = e => {
+    e.preventDefault();
+    dispatch(addHouse({
+      name,
+      joinCode,
+      password: hasPassword ? password : null
+    }));
+  };
+
+  useEffect(() => {
+    if (shouldGetRandomJoinCode) {
+      (async () => {
+        const { data: { code } } = await csrfetch.get(
+          '/api/utils/random',
+          {
+            params: {
+              name
+            }
+          }
+        );
+        setRandomJoinCode(code);
+        setShouldGetRandomJoinCode(false);
+      })();
+    }
+  }, [shouldGetRandomJoinCode, setRandomJoinCode, setShouldGetRandomJoinCode]);
+
+  useEffect(() => {
+    if (name && name.length >= 5 && randomJoinCode && !joinCode) {
+      setJoinCode(randomJoinCode);
+    }
+  }, [randomJoinCode, joinCode, setJoinCode]);
+
+  return (
+    <form className='new-item-form houses' onSubmit={handleSubmit}>
+      <input
+        className='new-item-input'
+        type='text'
+        placeholder='Residence Name'
+        minLength={5}
+        value={name}
+        onChange={({ target: { value } }) => {
+          setName(value);
+          if (value && (value.length >= 5) && !joinCode) {
+            setShouldGetRandomJoinCode(true);
+          }
+        }}
+        required
+      />
+      <input
+        className='new-item-input'
+        type='text'
+        placeholder='Join Code'
+        value={joinCode}
+        onChange={({ target: { value } }) => setJoinCode(value)}
+      />
+      <Checkbox
+        label='Set a password?'
+        value={hasPassword}
+        valueSetter={setHasPassword}
+      />
+      {hasPassword
+        ? (
+          <>
+            <input
+              className='new-item-input'
+              type={showPassword ? 'text' : 'password'}
+              placeholder='Password'
+              value={password}
+              onChange={({ target: { value } }) => setPassword(value)}
+            />
+            <Checkbox
+              label='Show password'
+              value={showPassword}
+              valueSetter={setShowPassword}
+            />
+          </>
+          )
+        : null}
+      <button className='new-item-button submit' type='submit'>
+        Create Residence
+      </button>
+    </form>
+  );
+}

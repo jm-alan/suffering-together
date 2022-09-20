@@ -29,67 +29,10 @@ export default function Houses () {
       <>
         <FloatingPlusButton onClick={popNewHouse} />
         {Object.values(houses).filter($ => $).map(house => (
-          <div key={house.id}>
+          <div className='house-entry' key={house.id}>
             {house.name}
           </div>
         ))}
-        <div className='house-entry'>
-          Shmingy
-        </div>
-        <div className='house-entry'>
-          Shmingy
-        </div>
-        <div className='house-entry'>
-          Shmingy
-        </div>
-        <div className='house-entry'>
-          Shmingy
-        </div>
-        <div className='house-entry'>
-          Shmingy
-        </div>
-        <div className='house-entry'>
-          Shmingy
-        </div>
-        <div className='house-entry'>
-          Shmingy
-        </div>
-        <div className='house-entry'>
-          Shmingy
-        </div>
-        <div className='house-entry'>
-          Shmingy
-        </div>
-        <div className='house-entry'>
-          Shmingy
-        </div>
-        <div className='house-entry'>
-          Shmingy
-        </div>
-        <div className='house-entry'>
-          Shmingy
-        </div>
-        <div className='house-entry'>
-          Shmingy
-        </div>
-        <div className='house-entry'>
-          Shmingy
-        </div>
-        <div className='house-entry'>
-          Shmingy
-        </div>
-        <div className='house-entry'>
-          Shmingy
-        </div>
-        <div className='house-entry'>
-          Shmingy
-        </div>
-        <div className='house-entry'>
-          Shmingy
-        </div>
-        <div className='house-entry'>
-          Shmingy
-        </div>
       </>
       )
     : <LoadingLock name='houses list' />;
