@@ -35,6 +35,13 @@ export default function App () {
     dispatch(restore());
   }, [dispatch]);
 
+  useEffect(() => {
+    const tempLoading = document.getElementById('loading-temp');
+    if (tempLoading) {
+      tempLoading.parentElement.removeChild(tempLoading);
+    }
+  }, []);
+
   return (
     <div id='main'>
       <div id='router-container' onScroll={handleScroll}>
