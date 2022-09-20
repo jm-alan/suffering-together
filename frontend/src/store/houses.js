@@ -1,5 +1,6 @@
 import csrfetch from '../utils/csrfetch';
 import silenceErrors from '../utils/silcenceErrors';
+import { clearModal, hideModal } from './UX';
 
 const SET_ALL = 'houses/SET_ALL';
 const SET_CURRENT = 'houses/SET_CURRENT';
@@ -48,6 +49,8 @@ export const addHouse = body => async dispatch => {
   await silenceErrors(async () => {
     const { data: { house } } = await csrfetch.post('/api/houses', { body });
     dispatch(add(house));
+    dispatch(clearModal());
+    dispatch(hideModal());
   });
 };
 
