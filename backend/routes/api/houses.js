@@ -21,6 +21,7 @@ router.get('/owned', restoreOrReject, $(async (req, res) => {
 router.post('/', restoreOrReject, limitPermittedKeys('name', 'joinCode', 'password'), $(async (req, res) => {
   const { user, body } = req;
   const house = await user.createOwnedResidence(body);
+  house.addResident(user);
   res.json({ house });
 }));
 
