@@ -1,10 +1,17 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
 import './loading.css';
 
 export default function Loading () {
   const lock = !!useSelector(state => state.UX.loadingLock);
+
+  useEffect(() => {
+    const tempLoading = document.getElementById('loading-temp');
+    if (tempLoading) {
+      tempLoading.parentElement.removeChild(tempLoading);
+    }
+  }, []);
 
   return lock && (
     <div id='loading'>

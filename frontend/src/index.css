@@ -1,8 +1,8 @@
 :root {
-  --not-quite-steelblue: rgb(65, 133, 200);
+  --not-quite-steelblue: #4185c8;
   --navbar-height: 7rem;
   --above-navbar: calc(100vh - var(--navbar-height));
-  --active-highlight: rgb(83, 170, 255);
+  --active-highlight: #53aaff;
 }
 
 body {
