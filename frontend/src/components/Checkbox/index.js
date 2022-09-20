@@ -6,7 +6,7 @@ export default function Checkbox ({ label, value, valueSetter }) {
   return (
     <div className='checkbox-organizer'>
       <span className='checkbox-title'>
-        Set a password?
+        {label}
       </span>
       <div
         className={`custom-checkbox${value ? ' checked' : ''}`}
