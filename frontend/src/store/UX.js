@@ -30,12 +30,15 @@ export const setMooring = modalMooring => ({
   modalMooring
 });
 
-export const lockLoading = () => ({
-  type: LOCK_LOADING
+export const lockLoading = (unlockKey, onUnlock = () => {}) => ({
+  type: LOCK_LOADING,
+  unlockKey,
+  onUnlock
 });
 
-export const unlockLoading = () => ({
-  type: UNLOCK_LOADING
+export const unlockLoading = unlockKey => ({
+  type: UNLOCK_LOADING,
+  unlockKey
 });
 
 export const showPlus = () => ({
@@ -52,12 +55,15 @@ export default function reducer (
     currentModal: null,
     modalMooring: null,
     loadingLock: 0,
+    onUnlock: {},
     showPlus: true
   },
   {
     type,
     currentModal,
-    modalMooring
+    modalMooring,
+    unlockKey,
+    onUnlock
   }
 ) {
   switch (type) {
@@ -85,6 +91,25 @@ export default function reducer (
       return {
         ...state,
         modalMooring
+      };
+    case LOCK_LOADING:
+      return {
+        ...state,
+        onUnlock: {
+          ...state.onUnlock,
+          [unlockKey]: onUnlock
+        },
+        loadingLock: state.loadingLock + 1
+      };
+    case UNLOCK_LOADING:
+      state.onUnlock[unlockKey] && state.onUnlock[unlockKey]();
+      return {
+        ...state,
+        onUnlock: {
+          ...state.onUnlock,
+          [unlockKey]: null
+        },
+        loadingLock: state.loadingLock > 0 ? state.loadingLock - 1 : 0
       };
     case SHOW_PLUS:
       return {
