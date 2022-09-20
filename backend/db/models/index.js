@@ -6,11 +6,8 @@ const House = require('./house');
 const DebtEntry = require('./debtEntry');
 const RosterEntry = require('./rosterEntry');
 const config = require('../../config/database');
-const { isProduction } = require('../../config/server');
 
-const sequelize = isProduction
-  ? new Sequelize(process.env.DATABASE_URL, config)
-  : new Sequelize(config.database, config.username, config.password, config);
+const sequelize = new Sequelize(process.env.DATABASE_URL, config);
 
 const models = {
   User,
