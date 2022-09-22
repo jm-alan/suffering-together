@@ -1,7 +1,6 @@
 import React, { lazy, Suspense, useEffect, useRef } from 'react';
 import { createRoot } from 'react-dom/client';
 import { Provider, useDispatch, useSelector } from 'react-redux';
-import { BrowserRouter } from 'react-router-dom';
 
 import LoadingLock from './components/Loading/LoadingLock';
 import store from './store';
@@ -59,8 +58,6 @@ const Root = () => {
 const concurrentRoot = createRoot(document.getElementById('react-root'));
 concurrentRoot.render(
   <Provider store={store}>
-    <BrowserRouter>
-      <Root />
-    </BrowserRouter>
+    <Root />
   </Provider>
 );

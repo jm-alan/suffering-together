@@ -1,6 +1,6 @@
 import React, { lazy, useEffect, useRef, Suspense } from 'react';
 import { useDispatch } from 'react-redux';
-import { Navigate, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 
 import LoadingLock from './components/Loading/LoadingLock';
 import csrfetch from './utils/csrfetch';
@@ -43,50 +43,52 @@ export default function App () {
   }, []);
 
   return (
-    <div id='main'>
-      <div id='router-container' onScroll={handleScroll}>
-        <Routes>
-          <Route
-            path='/'
-            element={<Navigate to='/home' />}
-          />
-          <Route
-            path='/home'
-            element={(
-              <Suspense fallback={<LoadingLock name='home' />}>
-                <Home />
-              </Suspense>
+    <BrowserRouter>
+      <div id='main'>
+        <div id='router-container' onScroll={handleScroll}>
+          <Routes>
+            <Route
+              path='/'
+              element={<Navigate to='/home' />}
+            />
+            <Route
+              path='/home'
+              element={(
+                <Suspense fallback={<LoadingLock name='home' />}>
+                  <Home />
+                </Suspense>
             )}
-          />
-          <Route
-            path='/login'
-            element={(
-              <Suspense fallback={<LoadingLock name='login' />}>
-                <LoginForm />
-              </Suspense>
+            />
+            <Route
+              path='/login'
+              element={(
+                <Suspense fallback={<LoadingLock name='login' />}>
+                  <LoginForm />
+                </Suspense>
             )}
-          />
-          <Route
-            path='/signup'
-            element={(
-              <Suspense fallback={<LoadingLock name='signup' />}>
-                <SignupForm />
-              </Suspense>
+            />
+            <Route
+              path='/signup'
+              element={(
+                <Suspense fallback={<LoadingLock name='signup' />}>
+                  <SignupForm />
+                </Suspense>
             )}
-          />
-          <Route
-            path='/residences'
-            element={
-              <Suspense fallback={<LoadingLock name='residences' />}>
-                <Houses />
-              </Suspense>
+            />
+            <Route
+              path='/residences'
+              element={
+                <Suspense fallback={<LoadingLock name='residences' />}>
+                  <Houses />
+                </Suspense>
             }
-          />
-        </Routes>
+            />
+          </Routes>
+        </div>
+        <Suspense fallback={<LoadingLock name='navbar' />}>
+          <NavBar />
+        </Suspense>
       </div>
-      <Suspense fallback={<LoadingLock name='navbar' />}>
-        <NavBar />
-      </Suspense>
-    </div>
+    </BrowserRouter>
   );
 }
