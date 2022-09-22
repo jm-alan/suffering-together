@@ -84,7 +84,9 @@ export default function App () {
           />
         </Routes>
       </div>
-      <NavBar />
+      <Suspense fallback={<LoadingLock name='navbar' />}>
+        <NavBar />
+      </Suspense>
     </div>
   );
 }
