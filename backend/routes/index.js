@@ -11,12 +11,12 @@ if (isProduction) {
   const buildFolder = resolve(__dirname, 'webapp');
   const rootHTML = resolve(buildFolder, 'index.html');
 
+  router.use(express.static(buildFolder));
+
   router.get(/(\/)|(^(?!\/?api).*)/, (req, res) => {
     res.cookie('XSRF-TOKEN', req.csrfToken());
     res.sendFile(rootHTML);
   });
-
-  router.use(express.static(buildFolder));
 } else {
   router.get('/api/csrf/restore', (req, res) => {
     const token = req.csrfToken();
