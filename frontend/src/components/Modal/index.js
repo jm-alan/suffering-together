@@ -9,7 +9,6 @@ export default function Modal () {
   const dispatch = useDispatch();
 
   const modalMooring = useSelector(state => state.UX.modalMooring);
-  const showModal = useSelector(state => state.UX.showModal);
   const Current = useSelector(state => state.UX.currentModal);
 
   const resist = e => {
@@ -34,26 +33,24 @@ export default function Modal () {
     };
   }, [dispatch]);
 
-  return (Current && showModal)
-    ? createPortal(
+  return Current && createPortal(
+    <div
+      id='modal-background'
+      onClick={clearAndClose}
+    >
       <div
-        id='modal-background'
-        onClick={clearAndClose}
+        id='modal-content'
+        onClick={resist}
       >
-        <div
-          id='modal-content'
-          onClick={resist}
+        <button
+          id='modal-close'
+          onClick={clearAndClose}
         >
-          <button
-            id='modal-close'
-            onClick={clearAndClose}
-          >
-            X
-          </button>
-          <Current />
-        </div>
-      </div>,
-      modalMooring
-    )
-    : null;
+          X
+        </button>
+        <Current />
+      </div>
+    </div>,
+    modalMooring
+  );
 }

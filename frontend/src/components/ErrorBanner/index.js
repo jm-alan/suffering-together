@@ -14,26 +14,24 @@ export default function ErrorBanner () {
     dispatch(clearErrors());
   };
 
-  return currentErrors.length
-    ? (
-      <div id='error-banner'>
-        <div id='scrolling-error-container'>
-          {currentErrors.map((err, idx) => (
-            <div
-              className='error'
-              key={idx}
-            >
-              {err}
-            </div>
-          ))}
-        </div>
-        <div
-          id='error-banner-close'
-          onClick={clearAndClose}
-        >
-          X
-        </div>
+  return (
+    <div id='error-banner'>
+      <div id='scrolling-error-container'>
+        {currentErrors.map((err, idx) => (
+          <div
+            className='error'
+            key={idx}
+          >
+            {err}
+          </div>
+        ))}
       </div>
-      )
-    : null;
+      <div
+        id='error-banner-close'
+        onClick={clearAndClose}
+      >
+        X
+      </div>
+    </div>
+  );
 }
