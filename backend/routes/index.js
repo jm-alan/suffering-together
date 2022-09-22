@@ -1,8 +1,9 @@
 const express = require('express');
-const router = express.Router();
 
 const { isProduction } = require('../config/server');
 const apiRouter = require('./api');
+
+const router = express.Router();
 
 router.use('/api', apiRouter);
 

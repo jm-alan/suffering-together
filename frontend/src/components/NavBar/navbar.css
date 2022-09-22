@@ -20,14 +20,16 @@ nav {
   height: var(--navbar-height);
   color: black;
   cursor: pointer;
+  max-width: calc(100vw / 5);
+  min-width: calc(100vw / 5);
 }
 
 .nav-button:not(.first) {
-  border-left: 2px solid black;
+  border-left: 1px solid black;
 }
 
 .nav-button:not(.last) {
-  border-right: 2px solid black;
+  border-right: 1px solid black;
 }
 
 .nav-button>span {
