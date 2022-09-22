@@ -1,8 +1,8 @@
 .house-entry {
   border: 1px solid var(--not-quite-steelblue);
-  font-size: 4rem;
+  font-size: calc(calc(4rem * 3) / 7);
   width: 60vw;
-  padding: 1rem;
-  margin: 1rem 0px;
-  border-radius: 1rem;
+  padding: calc(calc(1rem * 3) / 7);
+  margin: calc(calc(1rem * 3) / 7) 0px;
+  border-radius: calc(calc(1rem * 3) / 7);
 }

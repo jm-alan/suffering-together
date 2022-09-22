@@ -1,6 +1,7 @@
 :root {
+  --mobile-scale: 3 / 7;
   --not-quite-steelblue: #4185c8;
-  --navbar-height: 7rem;
+  --navbar-height: calc(calc(7rem * 3) / 7);
   --above-navbar: calc(100vh - var(--navbar-height));
   --active-highlight: #53aaff;
 }
@@ -9,7 +10,7 @@ body {
   margin: 0;
   background-color: black;
   color: var(--not-quite-steelblue);
-  font-size: 1.5rem;
+  font-size: calc(calc(1.5rem * 3) / 7);
 }
 
 .clickable:active {
@@ -25,14 +26,14 @@ body {
 }
 
 button {
-  --button-padding: 1.5rem;
-  --button-margin: 0rem;
-  border-radius: 0.5rem;
+  --button-padding: calc(calc(1.5rem * 3) / 7);
+  --button-margin: calc(calc(0rem * 3) / 7);
+  border-radius: calc(calc(0.5rem * 3) / 7);
   cursor: pointer;
   border: none;
   color: black;
   background-color: var(--not-quite-steelblue);
-  font-size: 1rem;
+  font-size: calc(calc(1rem * 3) / 7);
   padding: var(--button-padding);
   margin: var(--button-margin);
   transition:
@@ -41,8 +42,8 @@ button {
 }
 
 button:not(:disabled):active {
-  margin: calc(var(--button-margin) + 0.5rem);
-  padding: calc(var(--button-padding) - 0.5rem);
+  margin: calc(var(--button-margin) + calc(calc(0.5rem * 3) / 7));
+  padding: calc(var(--button-padding) - calc(calc(0.5rem * 3) / 7));
 }
 
 button:disabled {
@@ -62,7 +63,7 @@ button:disabled {
 #router-container {
   height: var(--above-navbar);
   width: 100vw;
-  padding: 2rem 0px;
+  padding: calc(calc(2rem * 3) / 7) 0px;
   overflow-x: hidden;
   overflow-y: auto;
   display: flex;

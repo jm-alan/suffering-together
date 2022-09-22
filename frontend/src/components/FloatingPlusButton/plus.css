@@ -1,19 +1,19 @@
 .new-item-floater {
   position: fixed;
-  right: 3rem;
+  right: calc(calc(3rem * 3) / 7);
   z-index: 0;
   transition:
     bottom 0.2s;
 }
 
 .new-item-floater.show {
-  bottom: calc(var(--navbar-height) + 3rem);
+  bottom: calc(var(--navbar-height) + calc(calc(3rem * 3) / 7));
 }
 
 .new-item-floater.hide {
-  bottom: -0.2rem;
+  bottom: -calc(calc(0.2rem * 3) / 7);
 }
 
 .new-item-floater>span {
-  font-size: 4rem;
+  font-size: calc(calc(4rem * 3) / 7);
 }
