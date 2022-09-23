@@ -3,6 +3,8 @@ const HIDE_MODAL = 'UX/SHOW_MODAL';
 const SET_MODAL = 'UX/SET_MODAL';
 const CLEAR_MODAL = 'UX/CLEAR_MODAL';
 const SET_MOORING = 'UX/SET_MOORING';
+const SHOW_ERRORS = 'UX/SHOW_ERRORS';
+const HIDE_ERRORS = 'UX/HIDE_ERRORS';
 const LOCK_LOADING = 'UX/LOCK_LOADING';
 const UNLOCK_LOADING = 'UX/UNLOCK_LOADING';
 const SHOW_PLUS = 'UX/SHOW_PLUS';
@@ -49,9 +51,18 @@ export const hidePlus = () => ({
   type: HIDE_PLUS
 });
 
+export const showErrors = () => ({
+  type: SHOW_ERRORS
+});
+
+export const hideErrors = () => ({
+  type: HIDE_ERRORS
+});
+
 export default function reducer (
   state = {
     showModal: false,
+    showErrors: false,
     currentModal: null,
     modalMooring: null,
     loadingLock: 0,
@@ -91,6 +102,16 @@ export default function reducer (
       return {
         ...state,
         modalMooring
+      };
+    case SHOW_ERRORS:
+      return {
+        ...state,
+        showErrors: true
+      };
+    case HIDE_ERRORS:
+      return {
+        ...state,
+        showErrors: false
       };
     case LOCK_LOADING:
       return {

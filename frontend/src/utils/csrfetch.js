@@ -1,8 +1,9 @@
 import axios, { AxiosError } from 'axios';
 
-import { oops, setErrors } from '../store/errors';
 import findCookie from './findCookie';
 import getApp from './getApp';
+import { oops, setErrors } from '../store/errors';
+import { showErrors } from '../store/UX';
 
 const getHeaders = () => ({
   'Content-Type': 'application/json',
@@ -71,6 +72,7 @@ export default {
           ...err.response.data.errors,
           'If you believe you\'re seeing this message in error, please refresh the page and try again'
         ]));
+        this.dispatch(showErrors());
       }
     }
   }
