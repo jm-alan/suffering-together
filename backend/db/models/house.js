@@ -1,7 +1,11 @@
-const { hashSync } = require('bcryptjs');
+const { hashSync, compareSync } = require('bcryptjs');
 const { Model, DataTypes: { STRING, INTEGER }, ValidationErrorItem, ValidationError } = require('sequelize');
 
 module.exports = class House extends Model {
+  validatePass (password) {
+    return !this.password || (!!password && compareSync(password, this.password));
+  }
+
   static setup (sequelize, { User }) {
     super.init({
       name: {
