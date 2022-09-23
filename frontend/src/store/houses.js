@@ -1,5 +1,5 @@
 import csrfetch from '../utils/csrfetch';
-import silenceErrors from '../utils/silcenceErrors';
+import $ from '../utils/silcenceErrors';
 import { clearModal, hideModal } from './UX';
 
 const SET_ALL = 'houses/SET_ALL';
@@ -65,6 +65,20 @@ export const editHouse = (houseID, body) => async dispatch => {
   await $(async () => {
     const { data: { house } } = await csrfetch.patch(`/api/houses/${houseID}`, { body });
     dispatch(edit(house));
+  });
+};
+
+export const joinHouse = ({ joinCode, password }) => async dispatch => {
+  await $(async () => {
+    const { data: { house } } = await csrfetch.post(
+      `/api/houses/${joinCode}/residents`,
+      {
+        body: {
+          password
+        }
+      }
+    );
+    dispatch(add(house));
   });
 };
 

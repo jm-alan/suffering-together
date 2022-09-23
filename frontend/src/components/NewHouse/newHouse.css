@@ -1,6 +1,64 @@
+#new-house-scroll-control {
+  height: 50vh;
+  min-height: 50vh;
+  max-height: 50vh;
+  width: 80vw;
+  max-width: 80vw;
+  min-width: 80vw;
+  overflow: hidden;
+}
+
+#new-house-sliding-container {
+  height: 50vh;
+  min-height: 50vh;
+  max-height: 50vh;
+  width: 160vw;
+  max-width: 160vw;
+  min-width: 160vw;
+  display: flex;
+  position: relative;
+  transition:
+    left 0.5s;
+}
+
+.new-house-sliding-subcontainer {
+  height: 50vh;
+  min-height: 50vh;
+  max-height: 50vh;
+  width: 80vw;
+  max-width: 80vw;
+  min-width: 80vw;
+}
+
+#new-house-mode-select-container {
+  height: 50vh;
+  min-height: 50vh;
+  max-height: 50vh;
+  width: 80vw;
+  max-width: 80vw;
+  min-width: 80vw;
+  padding: 5vh calc(calc(2rem * 3) / 7);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.new-house-mode-select,
+.new-item-form>button {
+  background-color: black;
+  color: var(--not-quite-steelblue);
+  font-size: calc(9rem / 7);
+  width: 100%;
+}
+
 .new-item-form {
   height: 50vh;
+  min-height: 50vh;
+  max-height: 50vh;
   width: 80vw;
+  max-width: 80vw;
+  min-width: 80vw;
   padding: 5vh calc(calc(2rem * 3) / 7);
   display: flex;
   flex-direction: column;

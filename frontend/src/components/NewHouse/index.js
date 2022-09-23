@@ -1,104 +1,84 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
 
-import Checkbox from '../Checkbox';
-import { addHouse } from '../../store/houses';
+import Join from './Join';
+import Create from './Create';
 
 import './newHouse.css';
-import csrfetch from '../../utils/csrfetch';
 
 export default function NewHouse () {
-  const dispatch = useDispatch();
+  const [page, setPage] = useState(0);
+  const [mode, setMode] = useState(null);
 
-  const [name, setName] = useState('');
-  const [joinCode, setJoinCode] = useState('');
-  const [password, setPassword] = useState('');
-  const [hasPassword, setHasPassword] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
-  const [shouldGetRandomJoinCode, setShouldGetRandomJoinCode] = useState(false);
-  const [randomJoinCode, setRandomJoinCode] = useState(null);
-
-  const handleSubmit = e => {
-    e.preventDefault();
-    dispatch(addHouse({
-      name,
-      joinCode,
-      password: hasPassword ? password : null
-    }));
+  const forward = () => {
+    setPage(prev => prev + 1);
   };
 
-  useEffect(() => {
-    if (shouldGetRandomJoinCode) {
-      (async () => {
-        const { data: { code } } = await csrfetch.get(
-          '/api/utils/random',
-          {
-            params: {
-              name
-            }
-          }
-        );
-        setRandomJoinCode(code);
-        setShouldGetRandomJoinCode(false);
-      })();
-    }
-  }, [shouldGetRandomJoinCode, setRandomJoinCode, setShouldGetRandomJoinCode]);
+  const backward = () => {
+    setPage(prev => prev - 1);
+    setTimeout(setMode, 500, null);
+  };
 
-  useEffect(() => {
-    if (name && name.length >= 5 && randomJoinCode && !joinCode) {
-      setJoinCode(randomJoinCode);
-    }
-  }, [randomJoinCode, joinCode, setJoinCode]);
+  const showJoin = () => {
+    setMode('join');
+    forward();
+  };
+
+  const showCreate = () => {
+    setMode('create');
+    forward();
+  };
+
+  useEffect(() => () => {
+    setPage(0);
+    setMode(null);
+  }, [setPage, setMode]);
 
   return (
-    <form className='new-item-form houses' onSubmit={handleSubmit}>
-      <input
-        className='new-item-input'
-        type='text'
-        placeholder='Residence Name'
-        minLength={5}
-        value={name}
-        onChange={({ target: { value } }) => {
-          setName(value);
-          if (value && (value.length >= 5) && !joinCode) {
-            setShouldGetRandomJoinCode(true);
-          }
-        }}
-        required
-      />
-      <input
-        className='new-item-input'
-        type='text'
-        placeholder='Join Code'
-        value={joinCode}
-        onChange={({ target: { value } }) => setJoinCode(value)}
-      />
-      <Checkbox
-        label='Set a password?'
-        value={hasPassword}
-        valueSetter={setHasPassword}
-      />
-      {hasPassword
+    <>
+      {page
         ? (
-          <>
-            <input
-              className='new-item-input'
-              type={showPassword ? 'text' : 'password'}
-              placeholder='Password'
-              value={password}
-              onChange={({ target: { value } }) => setPassword(value)}
-            />
-            <Checkbox
-              label='Show password'
-              value={showPassword}
-              valueSetter={setShowPassword}
-            />
-          </>
+          <button className='modal-floater top-left' onClick={backward}>
+            {'<'}
+          </button>
           )
         : null}
-      <button className='new-item-button submit' type='submit'>
-        Create Residence
-      </button>
-    </form>
+      <div id='new-house-scroll-control'>
+        <div
+          id='new-house-sliding-container'
+          style={{
+            left: `-${80 * page}vw`
+          }}
+        >
+          <div className='new-house-sliding-subcontainer'>
+            <div id='new-house-mode-select-container'>
+              <button
+                className='new-house-mode-select'
+                onClick={showJoin}
+              >
+                Join a Residence
+              </button>
+              <button
+                className='new-house-mode-select'
+                onClick={showCreate}
+              >
+                Create a New Residence
+              </button>
+            </div>
+          </div>
+          <div className='new-house-sliding-subcontainer'>
+            {(() => {
+              switch (mode) {
+                case 'join':
+                  return <Join />;
+                case 'create':
+                  return <Create />;
+                default:
+                  return null;
+              }
+            })()}
+          </div>
+        </div>
+      </div>
+    </>
   );
 }

@@ -8,6 +8,7 @@ import './modal.css';
 export default function Modal () {
   const dispatch = useDispatch();
 
+  const showModal = useSelector(state => state.UX.showModal);
   const modalMooring = useSelector(state => state.UX.modalMooring);
   const Current = useSelector(state => state.UX.currentModal);
 
@@ -33,7 +34,7 @@ export default function Modal () {
     };
   }, [dispatch]);
 
-  return Current && createPortal(
+  return showModal && Current && createPortal(
     <div
       id='modal-background'
       onClick={clearAndClose}
@@ -43,7 +44,7 @@ export default function Modal () {
         onClick={resist}
       >
         <button
-          id='modal-close'
+          className='modal-floater top-right'
           onClick={clearAndClose}
         >
           X
