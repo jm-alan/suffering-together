@@ -1,6 +1,6 @@
 import React, { lazy, Suspense, useEffect, useRef } from 'react';
 import { createRoot } from 'react-dom/client';
-import { Provider, useDispatch, useSelector } from 'react-redux';
+import { Provider, useDispatch } from 'react-redux';
 
 import LoadingLock from './components/Loading/LoadingLock';
 import store from './store';
@@ -21,9 +21,6 @@ if (process.env.NODE_ENV === 'development') {
 const Root = () => {
   const dispatch = useDispatch();
 
-  const currentErrors = useSelector(state => state.errors.current);
-  const showModal = useSelector(state => state.UX.showModal);
-
   const mooringRef = useRef(null);
 
   useEffect(() => {
@@ -32,23 +29,15 @@ const Root = () => {
 
   return (
     <>
-      {currentErrors.length
-        ? (
-          <Suspense fallback={<LoadingLock name='error banner' />}>
-            <ErrorBanner />
-          </Suspense>
-          )
-        : null}
+      <Suspense fallback={<LoadingLock name='error banner' />}>
+        <ErrorBanner />
+      </Suspense>
       <Suspense fallback={<LoadingLock name='core app' />}>
         <App />
       </Suspense>
-      {showModal
-        ? (
-          <Suspense fallback={<LoadingLock name='modal' />}>
-            <Modal />
-          </Suspense>
-          )
-        : null}
+      <Suspense fallback={<LoadingLock name='modal' />}>
+        <Modal />
+      </Suspense>
       <PageLoading />
       <div ref={mooringRef} id='mooring' />
     </>
