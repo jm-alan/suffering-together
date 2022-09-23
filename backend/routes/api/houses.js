@@ -1,8 +1,8 @@
 const router = require('express').Router();
 const { Op } = require('sequelize');
-
 const $ = require('express-async-handler');
-const { User, House } = require('../../db/models');
+
+const { House } = require('../../db/models');
 const restoreOrReject = require('../../utils/auth/restoreOrReject');
 const limitPermittedKeys = require('../../utils/middleware/limitPermittedKeys');
 
@@ -39,32 +39,33 @@ router.get('/:houseID(\\d+)/residents', restoreOrReject, $(async (req, res) => {
   res.json({ residents });
 }));
 
-router.post('/:houseID(\\d+)/residents', restoreOrReject, limitPermittedKeys('userID'), $(async (req, res) => {
-  const { user, params: { houseID }, body: { userID } } = req;
-  const house = (await user.getResidences({ where: { id: +houseID } }))[0];
+router.post('/:joinCode/residents', restoreOrReject, limitPermittedKeys('userID'), $(async (req, res) => {
+  const { user, params: { joinCode }, body: { password } } = req;
+  const house = await House.findOne({ where: { joinCode } });
   if (!house) {
     return res.status(404).json({
       errors: [
-        'That residence does not exist'
+        'Sorry, it looks like that join code doesn\'t match any residences',
+        'Please double-check and try again, or contact the residence owner.'
       ]
     });
   }
-  const newResident = await User.findByPk(+userID);
-  if (!newResident) {
-    return res.status(404).json({
+  if (!house.validatePass(password)) {
+    return res.status(401).json({
       errors: [
-        'That user does not exist'
+        'Sorry, that password was incorrect.',
+        'Please double-check and try again, or contact the residence owner.'
       ]
     });
   }
-  await house.addResident(newResident);
+  await house.addResident(user);
   res.sendStatus(200);
 }));
 
 router.delete('/:houseID(\\d+)/residents/:userID(\\d+)', restoreOrReject, $(async (req, res) => {
   const { user, params: { houseID, userID } } = req;
-  const house = await House.findByPk(+houseID);
-  const userIsOwner = await house.hasOwner(user);
+  const house = (await user.getResidences({ where: { id: +houseID } }))[0];
+  const userIsOwner = house && await house.hasOwner(user);
   const userIsRemoving = user.id === (+userID);
   if (!house || !(userIsOwner || userIsRemoving)) {
     return res.status(404).json({
