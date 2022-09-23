@@ -1,5 +1,5 @@
 import csrfetch from '../utils/csrfetch';
-import silenceErrors from '../utils/silcenceErrors';
+import $ from '../utils/silcenceErrors';
 
 export const SET_ALL = 'users/SET_ALL';
 export const SET_CURRENT = 'users/SET_CURRENT';
@@ -38,18 +38,14 @@ export const clearSelectedUser = () => ({
 });
 
 export const getUsers = () => async dispatch => {
-  await silenceErrors(async () => {
+  await $(async () => {
     const { data: { users } } = await csrfetch.get('/api/users');
     dispatch(setAll(users));
-    // similar to the session reducer, failures which would cause
-    // this destructuring pattern to error will already have been
-    // handled and presented to the user via csrfetch's internal
-    // error handling, and can therefore be silenced here
   });
 };
 
 export const createUser = ({ firstName, email, password }) => async dispatch => {
-  await silenceErrors(async () => {
+  await $(async () => {
     const { data: { user } } = await csrfetch.post('/api/users', {
       body: {
         firstName,
@@ -62,7 +58,7 @@ export const createUser = ({ firstName, email, password }) => async dispatch => 
 };
 
 export const editUserInfo = (userID, { firstName, email, password, admin }) => async dispatch => {
-  await silenceErrors(async () => {
+  await $(async () => {
     const { data: { user } } = await csrfetch.patch(`/api/users/${userID}`, {
       body: {
         firstName,

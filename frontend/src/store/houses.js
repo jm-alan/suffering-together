@@ -39,14 +39,14 @@ export const clearCurrentHouse = () => ({
 });
 
 export const getAllhouses = () => async dispatch => {
-  await silenceErrors(async () => {
+  await $(async () => {
     const { data: { houses } } = await csrfetch.get('/api/houses');
     dispatch(setAll(houses));
   });
 };
 
 export const addHouse = body => async dispatch => {
-  await silenceErrors(async () => {
+  await $(async () => {
     const { data: { house } } = await csrfetch.post('/api/houses', { body });
     dispatch(add(house));
     dispatch(clearModal());
@@ -55,14 +55,14 @@ export const addHouse = body => async dispatch => {
 };
 
 export const removeHouse = houseID => async dispatch => {
-  await silenceErrors(async () => {
+  await $(async () => {
     await csrfetch.delete(`/api/houses/${houseID}`);
     dispatch(remove(houseID));
   });
 };
 
 export const editHouse = (houseID, body) => async dispatch => {
-  await silenceErrors(async () => {
+  await $(async () => {
     const { data: { house } } = await csrfetch.patch(`/api/houses/${houseID}`, { body });
     dispatch(edit(house));
   });

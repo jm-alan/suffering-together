@@ -1,5 +1,5 @@
 import csrfetch from '../utils/csrfetch';
-import silenceErrors from '../utils/silcenceErrors';
+import $ from '../utils/silcenceErrors';
 import { clearErrors } from './errors';
 
 export const SET = 'session/SET';
@@ -17,10 +17,7 @@ const clearSession = () => ({
 export const signup = ({ firstName, email, password }) => async dispatch => {
   dispatch(clearErrors());
 
-  // any failures from destructuring below are the result of errors
-  // which will already have been caught by csrfetch error handling;
-  // therefore, errors from the destructuring itself can be silenced
-  await silenceErrors(async () => {
+  await $(async () => {
     const { data: { user } } = await csrfetch.post('/api/users', {
       body: {
         firstName,
