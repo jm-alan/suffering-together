@@ -59,7 +59,7 @@ router.post('/:joinCode/residents', restoreOrReject, limitPermittedKeys('userID'
     });
   }
   await house.addResident(user);
-  res.sendStatus(200);
+  res.json({ house });
 }));
 
 router.delete('/:houseID(\\d+)/residents/:userID(\\d+)', restoreOrReject, $(async (req, res) => {
