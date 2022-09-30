@@ -31,8 +31,8 @@ module.exports = class House extends Model {
         unique: true,
         validate: {
           len: {
-            args: [10, 10],
-            msg: 'Join codes must be exactly 10 characters in length'
+            args: [5, 10],
+            msg: 'Join codes must be between 5 and 10 characters'
           }
         },
         set (val) {
