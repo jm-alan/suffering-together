@@ -59,7 +59,7 @@ export default function LoginForm () {
         type='button'
         onClick={() => navigate('/signup')}
       >
-        Dont' have an account? Sign up here
+        Dont' have an account?<br />Sign up here
       </button>
     </form>
   );

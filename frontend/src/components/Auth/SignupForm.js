@@ -85,7 +85,7 @@ export default function SignupForm () {
         type='button'
         onClick={() => navigate('/login')}
       >
-        Already have an account? Log in here
+        Already have an account?<br />Log in here
       </button>
     </form>
   );
