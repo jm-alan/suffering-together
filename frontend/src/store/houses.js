@@ -1,5 +1,4 @@
 import csrfetch from '../utils/csrfetch';
-import $ from '../utils/silcenceErrors';
 import { clearModal, hideModal } from './UX';
 
 const SET_ALL = 'houses/SET_ALL';
@@ -39,47 +38,33 @@ export const clearCurrentHouse = () => ({
 });
 
 export const getAllhouses = () => async dispatch => {
-  await $(async () => {
-    const { data: { houses } } = await csrfetch.get('/api/houses');
-    dispatch(setAll(houses));
-  });
+  const { houses } = await csrfetch.get('/api/houses');
+  dispatch(setAll(houses));
 };
 
 export const addHouse = body => async dispatch => {
-  await $(async () => {
-    const { data: { house } } = await csrfetch.post('/api/houses', { body });
-    dispatch(add(house));
-    dispatch(clearModal());
-    dispatch(hideModal());
-  });
+  const { house } = await csrfetch.post('/api/houses', body);
+  dispatch(add(house));
+  dispatch(clearModal());
+  dispatch(hideModal());
 };
 
 export const removeHouse = houseID => async dispatch => {
-  await $(async () => {
-    await csrfetch.delete(`/api/houses/${houseID}`);
-    dispatch(remove(houseID));
-  });
+  await csrfetch.delete(`/api/houses/${houseID}`);
+  dispatch(remove(houseID));
 };
 
 export const editHouse = (houseID, body) => async dispatch => {
-  await $(async () => {
-    const { data: { house } } = await csrfetch.patch(`/api/houses/${houseID}`, { body });
-    dispatch(edit(house));
-  });
+  const { house } = await csrfetch.patch(`/api/houses/${houseID}`, body);
+  dispatch(edit(house));
 };
 
 export const joinHouse = ({ joinCode, password }) => async dispatch => {
-  await $(async () => {
-    const { data: { house } } = await csrfetch.post(
-      `/api/houses/${joinCode}/residents`,
-      {
-        body: {
-          password
-        }
-      }
-    );
-    dispatch(add(house));
-  });
+  const { house } = await csrfetch.post(
+    `/api/houses/${joinCode}/residents`,
+    { password }
+  );
+  dispatch(add(house));
 };
 
 export default function reducer (

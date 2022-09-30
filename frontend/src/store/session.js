@@ -1,5 +1,4 @@
 import csrfetch from '../utils/csrfetch';
-import $ from '../utils/silcenceErrors';
 import { clearErrors } from './errors';
 
 export const SET = 'session/SET';
@@ -10,52 +9,37 @@ const setSession = (user = null) => ({
   user
 });
 
-const clearSession = () => ({
-  type: CLEAR
-});
-
 export const signup = ({ firstName, email, password }) => async dispatch => {
   dispatch(clearErrors());
-
-  await $(async () => {
-    const { data: { user } } = await csrfetch.post('/api/users', {
-      body: {
-        firstName,
-        email,
-        password
-      }
-    });
-    dispatch(setSession(user));
+  const { user } = await csrfetch.post('/api/users', {
+    body: {
+      firstName,
+      email,
+      password
+    }
   });
+  dispatch(setSession(user));
 };
 
 export const login = ({ email, password }) => async dispatch => {
   dispatch(clearErrors());
-  try {
-    const { data: { user } } = await csrfetch.post('/api/session', {
-      body: {
-        email,
-        password
-      }
-    });
-    dispatch(setSession(user));
-  } catch {
-    dispatch(clearSession());
-  }
+  const { user } = await csrfetch.post('/api/session', {
+    body: {
+      email,
+      password
+    }
+  });
+  dispatch(setSession(user));
 };
 
 export const logout = () => async dispatch => {
   await csrfetch.delete('/api/session');
-  dispatch(clearSession());
+  dispatch(setSession());
 };
 
 export const restore = () => async dispatch => {
-  try {
-    const { data: { user } } = await csrfetch.get('/api/session');
-    dispatch(setSession(user));
-  } catch {
-    dispatch(clearSession());
-  }
+  const { user } = await csrfetch.get('/api/session');
+  dispatch(setSession(user));
   await csrfetch.restoreCSRF();
 };
 
@@ -67,11 +51,6 @@ export default function reducer (
     case SET:
       return {
         user,
-        loaded: true
-      };
-    case CLEAR:
-      return {
-        user: null,
         loaded: true
       };
     default:

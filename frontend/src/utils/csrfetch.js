@@ -1,7 +1,7 @@
-import axios, { AxiosError } from 'axios';
-
 import findCookie from './findCookie';
 import getApp from './getApp';
+import store from '../store';
+import paramKVParser from './paramKVParser';
 import { oops, setErrors } from '../store/errors';
 import { showErrors } from '../store/UX';
 
@@ -10,70 +10,52 @@ const getHeaders = () => ({
   'XSRF-Token': findCookie('XSRF-TOKEN')
 });
 
+const getCredentials = () => process.env.NODE_ENV === 'development' ? 'include' : 'same-origin';
+
 export default {
-  async get (url, { params } = { params: {} }) {
-    return await this.errorHandler(async () => {
-      return await axios.get(`${getApp()}${url}`, {
-        params,
-        withCredentials: true
-      });
-    });
+  async get (url, params) {
+    console.log('GET', url, params);
+    return await this.__fetch_and_catch(url, { params });
   },
-  async post (url, { params, body }) {
-    return await this.errorHandler(async () => {
-      return await axios.post(`${getApp()}${url}`, body, {
-        params,
-        headers: getHeaders(),
-        withCredentials: true
-      });
-    });
+  async post (url, body) {
+    console.log('POST', url, body);
+    return await this.__fetch_and_catch(url, { method: 'POST', body });
   },
-  async patch (url, { params, body }) {
-    return await this.errorHandler(async () => {
-      return await axios.patch(`${getApp()}${url}`, body, {
-        params,
-        headers: getHeaders(),
-        withCredentials: true
-      });
-    });
+  async patch (url, body) {
+    console.log('PATCH', url, body);
+    return await this.__fetch_and_catch(url, { method: 'PATCH', body });
   },
-  async delete (url) {
-    return await this.errorHandler(async () => {
-      return await axios.delete(`${getApp()}${url}`, {
-        headers: getHeaders(),
-        withCredentials: true
-      });
-    });
+  async delete (url, body) {
+    console.log('DELETE ', url, body);
+    return await this.__fetch_and_catch(url, { method: 'DELETE', body });
   },
   async restoreCSRF () {
     if (process.env.NODE_ENV === 'development') {
-      await this.errorHandler(async () => {
-        await axios.get('http://localhost:5000/api/csrf/restore', {
-          withCredentials: true
-        });
-      });
+      await fetch('/api/csrf/restore');
     }
   },
-  captureDispatch (dispatch) {
-    this.dispatch = dispatch;
-  },
-  async errorHandler (asyncFetchFn) {
-    try {
-      return await asyncFetchFn();
-    } catch (err) {
-      if (
-        !(err instanceof AxiosError) ||
-        !(err.response.data) ||
-        (!err.response.data.errors)
-      ) {
-        this.dispatch(oops());
-      } else {
-        this.dispatch(setErrors([
-          ...err.response.data.errors,
-          'If you believe you\'re seeing this message in error, please refresh the page and try again'
-        ]));
-        this.dispatch(showErrors());
-      }
-    }
+  async __fetch_and_catch (url, { method, params, body } = {}) {
+    url = `${getApp()}${url}`;
+    if (body) body = JSON.stringify(body);
+    if (params) url += `?${paramKVParser(params)}`;
+    const res = await fetch(url, {
+      method,
+      body,
+      headers: getHeaders(),
+      credentials: getCredentials()
+    });
+    if (res.status.between(400, 499)) {
+      const { errors } = await res.json();
+      store.dispatch(setErrors([
+        ...errors,
+        'If you believe you\'re seeing this message in error, please refresh the page and try again'
+      ]));
+      store.dispatch(showErrors());
+      return {};
+    } else if (res.status >= 500) {
+      store.dispatch(oops());
+      store.dispatch(showErrors());
+      return {};
+    } else return await res.json();
   }
 };

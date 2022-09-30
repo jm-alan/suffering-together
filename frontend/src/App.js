@@ -3,7 +3,6 @@ import { useDispatch } from 'react-redux';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 
 import LoadingLock from './components/Loading/LoadingLock';
-import csrfetch from './utils/csrfetch';
 import { restore } from './store/session';
 
 import './index.css';
@@ -31,7 +30,6 @@ export default function App () {
   }, 50);
 
   useEffect(() => {
-    csrfetch.captureDispatch(dispatch);
     dispatch(restore());
   }, [dispatch]);
 

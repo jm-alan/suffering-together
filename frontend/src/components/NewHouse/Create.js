@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import Checkbox from '../Checkbox';
 import csrfetch from '../../utils/csrfetch';
 import { addHouse } from '../../store/houses';
+import { lockLoading, unlockLoading } from '../../store/UX';
 
 export default function Create () {
   const dispatch = useDispatch();
@@ -27,6 +28,7 @@ export default function Create () {
 
   useEffect(() => {
     if (shouldGetRandomJoinCode) {
+      dispatch(lockLoading('joincode'));
       (async () => {
         const { data: { code } } = await csrfetch.get(
           '/api/utils/random',
@@ -38,6 +40,7 @@ export default function Create () {
         );
         setRandomJoinCode(code);
         setShouldGetRandomJoinCode(false);
+        dispatch(unlockLoading('joincode'));
       })();
     }
   }, [shouldGetRandomJoinCode, setRandomJoinCode, setShouldGetRandomJoinCode]);

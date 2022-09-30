@@ -8,7 +8,6 @@ const limitPermittedKeys = require('../../utils/middleware/limitPermittedKeys');
 
 router.get('/', restoreUser, (req, res) => {
   const user = req.user && req.user.info;
-
   res.json({ user });
 });
 
