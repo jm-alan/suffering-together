@@ -12,17 +12,17 @@ export default function NavBar () {
   const { pathname } = useLocation();
   const user = useSelector(state => state.session.user);
 
-  const leftButtonDestination = pathname === '/home'
-    ? user
+  const leftButtonDestination = user
+    ? pathname === '/home'
       ? '/me'
-      : '/login'
-    : '/home';
+      : '/home'
+    : '/login';
 
-  const leftButtonIcon = pathname === '/home'
-    ? user
+  const leftButtonIcon = user
+    ? pathname === '/home'
       ? 'account_circle'
-      : 'login'
-    : 'home';
+      : 'home'
+    : 'login';
 
   return (
     <>
