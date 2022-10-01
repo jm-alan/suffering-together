@@ -9,6 +9,8 @@ const LOCK_LOADING = 'UX/LOCK_LOADING';
 const UNLOCK_LOADING = 'UX/UNLOCK_LOADING';
 const SHOW_PLUS = 'UX/SHOW_PLUS';
 const HIDE_PLUS = 'UX/HIDE_PLUS';
+const SET_REBOUND = 'UX/SET_REBOUND';
+const CLEAR_REBOUND = 'UX/CLEAR_REBOUND';
 
 export const showModal = () => ({
   type: SHOW_MODAL
@@ -59,6 +61,15 @@ export const hideErrors = () => ({
   type: HIDE_ERRORS
 });
 
+export const setRebound = reboundLocation => ({
+  type: SET_REBOUND,
+  reboundLocation
+});
+
+export const clearRebound = () => ({
+  type: CLEAR_REBOUND
+});
+
 export default function reducer (
   state = {
     showModal: false,
@@ -67,14 +78,16 @@ export default function reducer (
     modalMooring: null,
     loadingLock: 0,
     onUnlock: {},
-    showPlus: true
+    showPlus: true,
+    reboundLocation: null
   },
   {
     type,
     currentModal,
     modalMooring,
     unlockKey,
-    onUnlock
+    onUnlock,
+    reboundLocation
   }
 ) {
   switch (type) {
@@ -141,6 +154,16 @@ export default function reducer (
       return {
         ...state,
         showPlus: false
+      };
+    case SET_REBOUND:
+      return {
+        ...state,
+        reboundLocation
+      };
+    case CLEAR_REBOUND:
+      return {
+        ...state,
+        reboundLocation: null
       };
     default:
       return state;
