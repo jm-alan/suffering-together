@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Navigate } from 'react-router-dom';
 
 import FloatingPlusButton from '../FloatingPlusButton';
 import LoadingLock from '../Loading/LoadingLock';
@@ -12,6 +13,8 @@ import './houses.css';
 export default function Houses () {
   const dispatch = useDispatch();
 
+  const user = useSelector(state => state.session.user);
+  const sessionLoaded = useSelector(state => state.session.loaded);
   const loaded = useSelector(state => state.houses.loaded);
   const houses = useSelector(state => state.houses.all);
 
@@ -21,8 +24,12 @@ export default function Houses () {
   };
 
   useEffect(() => {
-    dispatch(getAllhouses());
-  }, [dispatch]);
+    if (sessionLoaded && user) dispatch(getAllhouses());
+  }, [dispatch, sessionLoaded, user]);
+
+  if (sessionLoaded && !user) {
+    return <Navigate to='/login' />;
+  }
 
   return loaded
     ? (
