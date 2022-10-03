@@ -1,8 +1,14 @@
 .house-entry {
+  cursor: pointer;
   border: 1px solid var(--not-quite-steelblue);
   font-size: calc(calc(4rem * 3) / 7);
-  width: 60vw;
+  width: 85vw;
   padding: calc(calc(1rem * 3) / 7);
   margin: calc(calc(1rem * 3) / 7) 0px;
   border-radius: calc(calc(1rem * 3) / 7);
+}
+
+.house-entry:active {
+  background-color: var(--not-quite-steelblue);
+  color: white;
 }
