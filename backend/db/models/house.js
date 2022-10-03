@@ -1,5 +1,6 @@
 const { hashSync, compareSync } = require('bcryptjs');
-const { Model, DataTypes: { STRING, INTEGER }, ValidationErrorItem, ValidationError } = require('sequelize');
+const { UUID, UUIDV4 } = require('sequelize');
+const { Model, STRING, ValidationErrorItem, ValidationError } = require('sequelize');
 
 module.exports = class House extends Model {
   validatePass (password) {
@@ -8,6 +9,12 @@ module.exports = class House extends Model {
 
   static setup (sequelize, { User }) {
     super.init({
+      id: {
+        type: UUID,
+        allowNull: false,
+        defaultValue: UUIDV4,
+        primaryKey: true
+      },
       name: {
         type: STRING,
         allowNull: false,
@@ -19,7 +26,7 @@ module.exports = class House extends Model {
         }
       },
       ownerID: {
-        type: INTEGER,
+        type: UUID,
         allowNull: false,
         references: {
           model: User

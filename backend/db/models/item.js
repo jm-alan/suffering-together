@@ -1,17 +1,23 @@
-const { Model, DataTypes: { INTEGER, BOOLEAN, DECIMAL, DATE, TEXT, NOW } } = require('sequelize');
+const { Model, UUID, UUIDV4, BOOLEAN, DECIMAL, DATE, TEXT, NOW } = require('sequelize');
 
 module.exports = class Item extends Model {
   static setup (sequelize, { User, House }) {
     super.init({
+      id: {
+        type: UUID,
+        allowNull: false,
+        defaultValue: UUIDV4,
+        primaryKey: true
+      },
       userID: {
-        type: INTEGER,
+        type: UUID,
         allowNull: false,
         references: {
           model: User
         }
       },
       houseID: {
-        type: INTEGER,
+        type: UUID,
         allowNull: false,
         references: {
           model: House

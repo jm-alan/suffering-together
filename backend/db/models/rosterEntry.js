@@ -1,17 +1,17 @@
-const { Model, DataTypes: { INTEGER } } = require('sequelize');
+const { Model, UUID } = require('sequelize');
 
 module.exports = class RosterEntry extends Model {
   static setup (sequelize, { User, House }) {
     super.init({
       userID: {
-        type: INTEGER,
+        type: UUID,
         allowNull: false,
         references: {
           model: User
         }
       },
       houseID: {
-        type: INTEGER,
+        type: UUID,
         allowNull: false,
         references: {
           model: House

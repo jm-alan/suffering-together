@@ -2,12 +2,11 @@ const {
   Model,
   ValidationErrorItem,
   ValidationError,
-  DataTypes: {
-    STRING,
-    DATE,
-    NOW,
-    INTEGER
-  }
+  STRING,
+  DATE,
+  NOW,
+  UUID,
+  UUIDV4
 } = require('sequelize');
 const { hashSync, compareSync } = require('bcryptjs');
 
@@ -69,6 +68,12 @@ module.exports = class User extends Model {
 
   static setup (sequelize) {
     super.init({
+      id: {
+        type: UUID,
+        allowNull: false,
+        defaultValue: UUIDV4,
+        primaryKey: true
+      },
       firstName: {
         type: STRING,
         allowNull: false
@@ -131,7 +136,7 @@ module.exports = class User extends Model {
         }
       },
       primaryHouseID: {
-        type: INTEGER,
+        type: UUID,
         allowNull: true,
         references: {
           model: 'Houses'
