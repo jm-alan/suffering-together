@@ -63,7 +63,6 @@ button:disabled {
 #router-container {
   height: var(--above-navbar);
   width: 100vw;
-  padding: calc(calc(2rem * 3) / 7) 0px;
   overflow-x: hidden;
   overflow-y: auto;
   display: flex;
