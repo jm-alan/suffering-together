@@ -3,3 +3,4 @@ require('./Array#mapInPlace');
 require('./Array#unique');
 require('./WebSocket#serialize');
 require('./String.random');
+require('./RegExp#concat');
