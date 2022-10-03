@@ -30,13 +30,9 @@ export default function Create () {
     if (shouldGetRandomJoinCode) {
       dispatch(lockLoading('joincode'));
       (async () => {
-        const { data: { code } } = await csrfetch.get(
+        const { code } = await csrfetch.get(
           '/api/utils/random',
-          {
-            params: {
-              name
-            }
-          }
+          { name }
         );
         setRandomJoinCode(code);
         setShouldGetRandomJoinCode(false);
@@ -50,6 +46,7 @@ export default function Create () {
       setJoinCode(randomJoinCode);
     }
   }, [randomJoinCode, joinCode, setJoinCode]);
+
   return (
     <form className='new-item-form houses' onSubmit={handleSubmit}>
       <input
