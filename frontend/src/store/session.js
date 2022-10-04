@@ -12,11 +12,9 @@ const setSession = (user = null) => ({
 export const signup = ({ firstName, email, password }) => async dispatch => {
   dispatch(clearErrors());
   const { user } = await csrfetch.post('/api/users', {
-    body: {
-      firstName,
-      email,
-      password
-    }
+    firstName,
+    email,
+    password
   });
   dispatch(setSession(user));
 };
@@ -24,10 +22,8 @@ export const signup = ({ firstName, email, password }) => async dispatch => {
 export const login = ({ email, password }) => async dispatch => {
   dispatch(clearErrors());
   const { user } = await csrfetch.post('/api/session', {
-    body: {
-      email,
-      password
-    }
+    email,
+    password
   });
   dispatch(setSession(user));
 };
