@@ -12,17 +12,17 @@ router.get('/', restoreOrReject, $(async (req, res) => {
   res.json({ houses });
 }));
 
-router.get('/owned', restoreOrReject, $(async (req, res) => {
-  const { user } = req;
-  const houses = (await user.getOwnedResidences()).indexed('id');
-  res.json({ houses });
-}));
-
 router.post('/', restoreOrReject, limitPermittedKeys('name', 'joinCode', 'password'), $(async (req, res) => {
   const { user, body } = req;
   const house = await user.createOwnedResidence(body);
   house.addResident(user);
   res.json({ house });
+}));
+
+router.get('/owned', restoreOrReject, $(async (req, res) => {
+  const { user } = req;
+  const houses = (await user.getOwnedResidences()).indexed('id');
+  res.json({ houses });
 }));
 
 router.get('/:houseID(\\d+)/residents', restoreOrReject, $(async (req, res) => {
