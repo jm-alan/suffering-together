@@ -55,7 +55,7 @@ export default function App () {
                 <Suspense fallback={<LoadingLock name='home' />}>
                   <Home />
                 </Suspense>
-            )}
+              )}
             />
             <Route
               path='/login'
@@ -63,7 +63,7 @@ export default function App () {
                 <Suspense fallback={<LoadingLock name='login' />}>
                   <LoginForm />
                 </Suspense>
-            )}
+              )}
             />
             <Route
               path='/signup'
@@ -71,7 +71,7 @@ export default function App () {
                 <Suspense fallback={<LoadingLock name='signup' />}>
                   <SignupForm />
                 </Suspense>
-            )}
+              )}
             />
             <Route
               path='/residences'
@@ -80,6 +80,14 @@ export default function App () {
                   <Houses />
                 </Suspense>
             }
+            />
+            <Route
+              path='/residences/:houseID'
+              element={
+                <Suspense fallback={<LoadingLock name='residences' />}>
+                  <Houses />
+                </Suspense>
+              }
             />
           </Routes>
         </div>
