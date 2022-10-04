@@ -4,6 +4,7 @@ import store from '../store';
 import paramKVParser from './paramKVParser';
 import { oops, setErrors } from '../store/errors';
 import { showErrors } from '../store/UX';
+import { silenceAsync } from './silcenceErrors';
 
 const getHeaders = () => ({
   'Content-Type': 'application/json',
@@ -14,24 +15,20 @@ const getCredentials = () => process.env.NODE_ENV === 'development' ? 'include' 
 
 export default {
   async get (url, params) {
-    console.log('GET', url, params);
     return await this.__fetch_and_catch(url, { params });
   },
   async post (url, body) {
-    console.log('POST', url, body);
     return await this.__fetch_and_catch(url, { method: 'POST', body });
   },
   async patch (url, body) {
-    console.log('PATCH', url, body);
     return await this.__fetch_and_catch(url, { method: 'PATCH', body });
   },
   async delete (url, body) {
-    console.log('DELETE ', url, body);
     return await this.__fetch_and_catch(url, { method: 'DELETE', body });
   },
   async restoreCSRF () {
     if (process.env.NODE_ENV === 'development') {
-      await fetch('/api/csrf/restore');
+      await this.__fetch_and_catch('/api/csrf/restore');
     }
   },
   async __fetch_and_catch (url, { method, params, body } = {}) {
@@ -56,6 +53,6 @@ export default {
       store.dispatch(oops());
       store.dispatch(showErrors());
       return {};
-    } else return await res.json();
+    } else return await silenceAsync(async () => await res.json());
   }
 };
