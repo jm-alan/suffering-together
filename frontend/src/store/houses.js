@@ -4,6 +4,8 @@ import { clearModal, hideModal } from './UX';
 const SET_ALL = 'houses/SET_ALL';
 const SET_CURRENT = 'houses/SET_CURRENT';
 const CLEAR_CURRENT = 'houses/CLEAR_CURRENT';
+const SET_RESIDENTS = 'houses/SET_RESIDENTS';
+const CLEAR_RESIDENTS = 'houses/CLEAR_RESIDENTS';
 const ADD_HOUSE = 'houses/ADD';
 const REMOVE_HOUSE = 'houses/REMOVE';
 const EDIT_HOUSE = 'houses/EDIT';
@@ -37,6 +39,15 @@ export const clearCurrent = () => ({
   type: CLEAR_CURRENT
 });
 
+const setResidents = currentResidents => ({
+  type: SET_RESIDENTS,
+  currentResidents
+});
+
+export const clearResidents = () => ({
+  type: CLEAR_RESIDENTS
+});
+
 export const getAllhouses = () => async dispatch => {
   const { houses } = await csrfetch.get('/api/houses');
   dispatch(setAll(houses));
@@ -67,14 +78,27 @@ export const joinHouse = ({ joinCode, password }) => async dispatch => {
   dispatch(add(house));
 };
 
+export const getAllResidents = houseID => async dispatch => {
+  const { residents } = await csrfetch.get(`/api/houses/${houseID}/residents`);
+  dispatch(setResidents(residents));
+};
+
 export default function reducer (
   state = {
     all: {},
     current: null,
     allLoaded: false,
-    currentLoaded: false
+    currentLoaded: false,
+    currentResidents: {},
+    residentsLoaded: false
   },
-  { type, all, house, houseID }
+  {
+    type,
+    all,
+    house,
+    houseID,
+    currentResidents
+  }
 ) {
   switch (type) {
     case SET_ALL:
@@ -94,6 +118,18 @@ export default function reducer (
         ...state,
         current: null,
         currentLoaded: false
+      };
+    case SET_RESIDENTS:
+      return {
+        ...state,
+        currentResidents,
+        residentsLoaded: true
+      };
+    case CLEAR_RESIDENTS:
+      return {
+        ...state,
+        currentResidents: {},
+        residentsLoaded: false
       };
     case ADD_HOUSE:
       return {
