@@ -18,7 +18,7 @@ router.get('/debts', restoreOrReject, $(async (req, res) => {
 
 router.post('/', restoreOrReject, limitPermittedKeys('userIDs', 'houseID', 'amount', 'expense', 'description', 'date'), $(async (req, res) => {
   const { user, body: { userIDs, houseID, amount, expense, description, date } } = req;
-  const house = (await user.getResidences({ where: { id: +houseID } }))[0];
+  const house = (await user.getResidences({ where: { id: houseID } }))[0];
   if (!house) {
     return res.status(404).json({
       errors: [
@@ -53,7 +53,7 @@ router.post('/', restoreOrReject, limitPermittedKeys('userIDs', 'houseID', 'amou
 
 router.get('/:itemID(\\d+)/debtors', restoreOrReject, $(async (req, res) => {
   const { user, params: { itemID } } = req;
-  const item = (await user.getCredits({ where: { id: +itemID } }))[0];
+  const item = (await user.getCredits({ where: { id: itemID } }))[0];
   if (!item) {
     return res.status(404).json({
       errors: [
@@ -67,7 +67,7 @@ router.get('/:itemID(\\d+)/debtors', restoreOrReject, $(async (req, res) => {
 
 router.get('/:itemID(\\d+)/house', restoreOrReject, $(async (req, res) => {
   const { user, params: { itemID } } = req;
-  const item = (await user.getCredits({ where: { id: +itemID } }))[0];
+  const item = (await user.getCredits({ where: { id: itemID } }))[0];
   if (!item) {
     return res.status(404).json({
       errors: [
@@ -81,8 +81,8 @@ router.get('/:itemID(\\d+)/house', restoreOrReject, $(async (req, res) => {
 
 router.patch('/:itemID(\\d+)/house', restoreOrReject, limitPermittedKeys('houseID'), $(async (req, res) => {
   const { user, params: { itemID }, body: { houseID } } = req;
-  const item = (await user.getCredits({ where: { id: +itemID } }))[0];
-  const house = (await user.getResidences({ where: { id: +houseID } }))[0];
+  const item = (await user.getCredits({ where: { id: itemID } }))[0];
+  const house = (await user.getResidences({ where: { id: houseID } }))[0];
   if (!(item && house)) {
     return res.status(404).json({
       errors: [
@@ -100,7 +100,7 @@ router.patch('/:itemID(\\d+)/house', restoreOrReject, limitPermittedKeys('houseI
 
 router.patch('/:itemID(\\d+)/debtors', restoreOrReject, limitPermittedKeys('userIDs'), $(async (req, res) => {
   const { user, params: { itemID }, body: { userIDs } } = req;
-  const item = (await user.getCredits({ where: { id: +itemID } }))[0];
+  const item = (await user.getCredits({ where: { id: itemID } }))[0];
   if (!item) {
     return res.status(404).json({
       errors: [
