@@ -16,7 +16,7 @@
 }
 
 .new-item-floater.hide {
-  bottom: -calc(calc(0.2rem * 3) / 7);
+  bottom: -0.5rem;
 }
 
 .new-item-floater>span {
