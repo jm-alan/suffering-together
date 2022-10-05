@@ -66,7 +66,7 @@ router.delete('/:houseID(\\d+)/residents/:userID(\\d+)', restoreOrReject, $(asyn
   const { user, params: { houseID, userID } } = req;
   const house = (await user.getResidences({ where: { id: +houseID } }))[0];
   const userIsOwner = house && await house.hasOwner(user);
-  const userIsRemoving = user.id === (+userID);
+  const userIsRemoving = user.id === (userID);
   if (!house || !(userIsOwner || userIsRemoving)) {
     return res.status(404).json({
       errors: [
@@ -79,7 +79,7 @@ router.delete('/:houseID(\\d+)/residents/:userID(\\d+)', restoreOrReject, $(asyn
     const newOwner = (await house.getResidents({
       where: {
         id: {
-          [Op.not]: +userID
+          [Op.not]: userID
         }
       }
     }))[0];
@@ -90,7 +90,7 @@ router.delete('/:houseID(\\d+)/residents/:userID(\\d+)', restoreOrReject, $(asyn
       await house.removeResident(user);
     }
   } else if (userIsOwner) {
-    const removingUser = (await house.getResidents({ where: { id: +userID } }))[0];
+    const removingUser = (await house.getResidents({ where: { id: userID } }))[0];
     if (!removingUser) {
       return res.status(404).json({
         errors: [
@@ -107,7 +107,7 @@ router.delete('/:houseID(\\d+)/residents/:userID(\\d+)', restoreOrReject, $(asyn
 
 router.delete('/:houseID(\\d+)', restoreOrReject, $(async (req, res) => {
   const { user, params: { houseID } } = req;
-  const house = await user.getOwnedResidences({ where: { id: +houseID } });
+  const house = await user.getOwnedResidences({ where: { id: houseID } });
   if (!house) {
     return res.status(404).json({
       errors: [

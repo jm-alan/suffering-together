@@ -40,7 +40,7 @@ module.exports = async (req, socket, head) => {
   }
   try {
     const { userID } = verify(token, secret);
-    const user = await User.findByPk(+userID);
+    const user = await User.findByPk(userID);
     wss.handleUpgrade(req, socket, head, (upSocket) => {
       wss.emit('connection', upSocket, req, user);
     });
