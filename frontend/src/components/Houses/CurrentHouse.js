@@ -37,9 +37,9 @@ export default function CurrentHouse () {
       <h1>{currentHouse.name}</h1>
       <h1>Residents</h1>
       <div id='house-residents-container'>
-        {Object.values(currentResidents).filter($ => $).map(({ id, name }) => (
+        {Object.values(currentResidents).filter($ => $).map(({ id, firstName }) => (
           <div key={id} className='resident-entry'>
-            {name}
+            {firstName}
           </div>
         ))}
       </div>
