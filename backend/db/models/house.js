@@ -97,6 +97,11 @@ module.exports = class House extends Model {
       }
     }, {
       modelName: 'House',
+      defaultScope: {
+        attributes: {
+          exclude: ['password', 'createdAt', 'updatedAt']
+        }
+      },
       sequelize
     });
   }
