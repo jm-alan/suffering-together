@@ -15,6 +15,7 @@ const PageLoading = lazy(() => import('./components/Loading/PageLoading'));
 const ErrorBanner = lazy(() => import('./components/ErrorBanner'));
 
 if (process.env.NODE_ENV === 'development') {
+  window.store = store;
   window.csrfetch = csrfetch;
 }
 
