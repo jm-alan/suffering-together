@@ -85,7 +85,7 @@ export default function App () {
               path='/residences/:houseID'
               element={
                 <Suspense fallback={<LoadingLock name='residences' />}>
-                  <Houses />
+                  <Houses houseSelected />
                 </Suspense>
               }
             />
