@@ -2,9 +2,10 @@ const router = require('express').Router();
 const { Op } = require('sequelize');
 const $ = require('express-async-handler');
 
-const { House } = require('../../db/models');
 const restoreOrReject = require('../../utils/auth/restoreOrReject');
 const limitPermittedKeys = require('../../utils/middleware/limitPermittedKeys');
+const UUIDpattern = require('../../utils/constants/UUIDpattern');
+const { House } = require('../../db/models');
 
 router.get('/', restoreOrReject, $(async (req, res) => {
   const { user } = req;
@@ -25,9 +26,18 @@ router.get('/owned', restoreOrReject, $(async (req, res) => {
   res.json({ houses });
 }));
 
-router.get('/:houseID(\\d+)/residents', restoreOrReject, $(async (req, res) => {
+router.get('/:houseID/residents', restoreOrReject, $(async (req, res) => {
   const { user, params: { houseID } } = req;
-  const house = (await user.getResidences({ where: { id: +houseID } }))[0];
+  if (!houseID || !houseID.match(UUIDpattern)) {
+    return res.status(404).json({
+      errors: [
+        'That residence does not exist'
+      ]
+    });
+  }
+
+  const house = (await user.getResidences({ where: { id: houseID } }))[0];
+
   if (!house) {
     return res.status(404).json({
       errors: [
@@ -62,9 +72,21 @@ router.post('/:joinCode/residents', restoreOrReject, limitPermittedKeys('userID'
   res.json({ house });
 }));
 
-router.delete('/:houseID(\\d+)/residents/:userID(\\d+)', restoreOrReject, $(async (req, res) => {
+router.delete('/:houseID/residents/:userID', restoreOrReject, $(async (req, res) => {
   const { user, params: { houseID, userID } } = req;
-  const house = (await user.getResidences({ where: { id: +houseID } }))[0];
+  if (
+    !houseID ||
+    !userID ||
+    !houseID.match(UUIDpattern) ||
+    !userID.match(UUIDpattern)
+  ) {
+    return res.status(400).json({
+      errors: [
+        'Either the residence ID or user ID provided was invalid'
+      ]
+    });
+  }
+  const house = (await user.getResidences({ where: { id: houseID } }))[0];
   const userIsOwner = house && await house.hasOwner(user);
   const userIsRemoving = user.id === (userID);
   if (!house || !(userIsOwner || userIsRemoving)) {
@@ -105,8 +127,15 @@ router.delete('/:houseID(\\d+)/residents/:userID(\\d+)', restoreOrReject, $(asyn
   res.sendStatus(200);
 }));
 
-router.delete('/:houseID(\\d+)', restoreOrReject, $(async (req, res) => {
+router.delete('/:houseID', restoreOrReject, $(async (req, res) => {
   const { user, params: { houseID } } = req;
+  if (!houseID || !houseID.match(UUIDpattern)) {
+    return res.status(404).json({
+      errors: [
+        'That residence does not exist'
+      ]
+    });
+  }
   const house = await user.getOwnedResidences({ where: { id: houseID } });
   if (!house) {
     return res.status(404).json({
