@@ -9,6 +9,8 @@ const LOCK_LOADING = 'UX/LOCK_LOADING';
 const UNLOCK_LOADING = 'UX/UNLOCK_LOADING';
 const SHOW_PLUS = 'UX/SHOW_PLUS';
 const HIDE_PLUS = 'UX/HIDE_PLUS';
+const ENABLE_PLUS = 'UX/ENABLE_PLUS';
+const DISABLE_PLUS = 'UX/DISABLE_PLUS';
 const SET_REBOUND = 'UX/SET_REBOUND';
 const CLEAR_REBOUND = 'UX/CLEAR_REBOUND';
 
@@ -53,6 +55,14 @@ export const hidePlus = () => ({
   type: HIDE_PLUS
 });
 
+export const enablePlus = () => ({
+  type: ENABLE_PLUS
+});
+
+export const disablePlus = () => ({
+  type: DISABLE_PLUS
+});
+
 export const showErrors = () => ({
   type: SHOW_ERRORS
 });
@@ -79,6 +89,7 @@ export default function reducer (
     loadingLock: 0,
     onUnlock: {},
     showPlus: true,
+    enablePlus: true,
     reboundLocation: null
   },
   {
@@ -154,6 +165,16 @@ export default function reducer (
       return {
         ...state,
         showPlus: false
+      };
+    case ENABLE_PLUS:
+      return {
+        ...state,
+        enablePlus: true
+      };
+    case DISABLE_PLUS:
+      return {
+        ...state,
+        enablePlus: false
       };
     case SET_REBOUND:
       return {
