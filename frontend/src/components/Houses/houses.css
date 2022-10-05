@@ -9,6 +9,7 @@
 }
 
 #residence-sliding-container {
+  position: relative;
   width: 200vw;
   max-width: 200vw;
   min-width: 200vw;
@@ -17,6 +18,19 @@
   max-height: var(--above-navbar);
   overflow: hidden;
   display: flex;
+  transition:
+    left 0.5s,
+    right 0.5s;
+}
+
+#residence-sliding-container.hide {
+  left: 0vw;
+  right: -100vw;
+}
+
+#residence-sliding-container.reveal {
+  left: -100vw;
+  right: 0vw;
 }
 
 .residence-subcontainer {
