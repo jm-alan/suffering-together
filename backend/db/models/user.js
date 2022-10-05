@@ -154,7 +154,7 @@ module.exports = class User extends Model {
       modelName: 'User',
       defaultScope: {
         attributes: {
-          exclude: ['password']
+          exclude: ['password', 'createdAt', 'updatedAt']
         }
       },
       scopes: {
