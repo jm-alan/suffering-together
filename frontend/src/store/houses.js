@@ -28,12 +28,12 @@ const edit = house => ({
   house
 });
 
-export const setCurrentHouse = houseID => ({
+export const setCurrent = houseID => ({
   type: SET_CURRENT,
   houseID
 });
 
-export const clearCurrentHouse = () => ({
+export const clearCurrent = () => ({
   type: CLEAR_CURRENT
 });
 
@@ -68,7 +68,12 @@ export const joinHouse = ({ joinCode, password }) => async dispatch => {
 };
 
 export default function reducer (
-  state = { all: {}, current: null, loaded: false },
+  state = {
+    all: {},
+    current: null,
+    allLoaded: false,
+    currentLoaded: false
+  },
   { type, all, house, houseID }
 ) {
   switch (type) {
@@ -76,17 +81,19 @@ export default function reducer (
       return {
         ...state,
         all,
-        loaded: true
+        allLoaded: true
       };
     case SET_CURRENT:
       return {
         ...state,
-        current: state.all[houseID]
+        current: state.all[houseID],
+        currentLoaded: true
       };
     case CLEAR_CURRENT:
       return {
         ...state,
-        current: null
+        current: null,
+        currentLoaded: false
       };
     case ADD_HOUSE:
       return {
