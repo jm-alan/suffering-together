@@ -2,7 +2,7 @@ import React, { lazy, Suspense, useEffect, useRef } from 'react';
 import { createRoot } from 'react-dom/client';
 import { Provider, useDispatch } from 'react-redux';
 
-import LoadingLock from './components/Loading/LoadingLock';
+import LoadingLock from './components/paint/Loading/LoadingLock';
 import store from './store';
 import csrfetch from './utils/csrfetch';
 import { setMooring } from './store/UX';
@@ -10,9 +10,9 @@ import { setMooring } from './store/UX';
 import './utils/prototypes';
 
 const App = lazy(() => import('./App'));
-const Modal = lazy(() => import('./components/Modal'));
-const PageLoading = lazy(() => import('./components/Loading/PageLoading'));
-const ErrorBanner = lazy(() => import('./components/ErrorBanner'));
+const Modal = lazy(() => import('./components/paint/Modal'));
+const PageLoading = lazy(() => import('./components/paint/Loading/PageLoading'));
+const ErrorBanner = lazy(() => import('./components/paint/ErrorBanner'));
 
 if (process.env.NODE_ENV === 'development') {
   window.store = store;

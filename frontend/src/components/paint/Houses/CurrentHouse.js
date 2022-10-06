@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Navigate, useParams } from 'react-router-dom';
-import { clearCurrent, getAllResidents, setCurrent } from '../../store/houses';
+import { clearCurrent, getAllResidents, setCurrent } from '../../../store/houses';
 
 export default function CurrentHouse () {
   const dispatch = useDispatch();

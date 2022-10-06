@@ -1,7 +1,7 @@
 import React, { createContext, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import getApp from '../../utils/getApp';
+import getApp from '../../../utils/getApp';
 
 export const SocketContext = createContext();
 

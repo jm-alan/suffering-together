@@ -1,7 +1,7 @@
 import React from 'react';
 import { Navigate, useParams } from 'react-router-dom';
 
-import UUIDpattern from '../../utils/UUIDpattern';
+import UUIDpattern from '../../../utils/UUIDpattern';
 import AllHouses from './AllHouses';
 import CurrentHouse from './CurrentHouse';
 

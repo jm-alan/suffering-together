@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 
 import LoadingLock from '../Loading/LoadingLock';
-import { getAllhouses } from '../../store/houses';
-import { disablePlus, enablePlus, setModal, showModal } from '../../store/UX';
+import { getAllhouses } from '../../../store/houses';
+import { disablePlus, enablePlus, setModal, showModal } from '../../../store/UX';
 
 import './houses.css';
 

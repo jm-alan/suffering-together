@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { joinHouse } from '../../store/houses';
+import { joinHouse } from '../../../store/houses';
 
 export default function Join () {
   const dispatch = useDispatch();

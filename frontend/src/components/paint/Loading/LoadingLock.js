@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { lockLoading, unlockLoading } from '../../store/UX';
+import { lockLoading, unlockLoading } from '../../../store/UX';
 
 export default function LoadingLock ({ name, children }) {
   const dispatch = useDispatch();

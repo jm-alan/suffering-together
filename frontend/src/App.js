@@ -1,24 +1,22 @@
 import React, { lazy, useEffect, useRef, Suspense } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 
-import LoadingLock from './components/Loading/LoadingLock';
-import Houses from './components/Houses';
+import LoadingLock from './components/paint/Loading/LoadingLock';
+import Houses from './components/paint/Houses';
 import throttle from './utils/throttle';
 import { restore } from './store/session';
-import { hidePlus, showPlus, triggerAfterAuth } from './store/UX';
+import { hidePlus, showPlus } from './store/UX';
 
 import './index.css';
 
-const Home = lazy(() => import('./components/Home'));
-const NavBar = lazy(() => import('./components/NavBar'));
-const LoginForm = lazy(() => import('./components/Auth/LoginForm'));
-const SignupForm = lazy(() => import('./components/Auth/SignupForm'));
+const Home = lazy(() => import('./components/paint/Home'));
+const NavBar = lazy(() => import('./components/paint/NavBar'));
+const LoginForm = lazy(() => import('./components/paint/Auth/LoginForm'));
+const SignupForm = lazy(() => import('./components/paint/Auth/SignupForm'));
 
 export default function App () {
   const dispatch = useDispatch();
-
-  const user = useSelector(state => state.session.user);
 
   const mutableScrollTracker = useRef(0);
 
@@ -30,10 +28,6 @@ export default function App () {
     }
     mutableScrollTracker.current = scrollTop;
   }, 50);
-
-  useEffect(() => {
-    if (user) dispatch(triggerAfterAuth());
-  }, [dispatch, user]);
 
   useEffect(() => {
     dispatch(restore());

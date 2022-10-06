@@ -2,8 +2,8 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 
-import Socket from '../Socket';
-import Listener from '../Socket/Listener';
+import Socket from '../../logic/Socket';
+import Listener from '../../logic/Socket/Listener';
 
 import './navbar.css';
 import NavButton from './NavButton';

@@ -1,8 +1,8 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { clearErrors } from '../../store/errors';
-import { hideErrors } from '../../store/UX';
+import { clearErrors } from '../../../store/errors';
+import { hideErrors } from '../../../store/UX';
 
 import './errorBanner.css';
 

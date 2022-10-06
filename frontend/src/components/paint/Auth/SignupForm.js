@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Navigate, useNavigate } from 'react-router-dom';
 
-import { signup } from '../../store/session';
-import { setErrors } from '../../store/errors';
-import { clearRebound } from '../../store/UX';
+import { signup } from '../../../store/session';
+import { setErrors } from '../../../store/errors';
+import { clearRebound, lockLoading, setAfterAuth, showErrors, unlockLoading } from '../../../store/UX';
 
 import './auth.css';
 
@@ -23,10 +23,14 @@ export default function SignupForm () {
   const handleSubmit = e => {
     e.preventDefault();
     if (password !== confirmPassword) {
+      console.log('setting errors');
       dispatch(setErrors([
         'Passwords do not match'
       ]));
+      dispatch(showErrors());
     } else {
+      dispatch(lockLoading('signup request'));
+      dispatch(setAfterAuth(dispatch, unlockLoading('signup request')));
       dispatch(signup({ firstName, email, password }));
     }
   };

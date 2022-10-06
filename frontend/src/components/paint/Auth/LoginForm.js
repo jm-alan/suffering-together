@@ -2,10 +2,11 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { login } from '../../store/session';
+import { login } from '../../../store/session';
 import { Navigate, useNavigate } from 'react-router-dom';
 
 import './auth.css';
+import { lockLoading, setAfterAuth, unlockLoading } from '../../../store/UX';
 
 export default function LoginForm () {
   const dispatch = useDispatch();
@@ -19,6 +20,8 @@ export default function LoginForm () {
 
   const handleSubmit = e => {
     e.preventDefault();
+    dispatch(lockLoading('login request'));
+    dispatch(setAfterAuth(dispatch, unlockLoading('login request')));
     dispatch(login({ email, password }));
   };
 
