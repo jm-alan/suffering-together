@@ -1,12 +1,12 @@
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { login } from '../../../store/session';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import './auth.css';
-import { lockLoading, setAfterAuth, unlockLoading } from '../../../store/UX';
+import { enableRebound, lockLoading, setAfterAuth, setRebound, unlockLoading } from '../../../store/UX';
 
 export default function LoginForm () {
   const dispatch = useDispatch();
@@ -15,20 +15,21 @@ export default function LoginForm () {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const user = useSelector(state => state.session.user);
   const reboundLocation = useSelector(state => state.UX.reboundLocation);
 
   const handleSubmit = e => {
     e.preventDefault();
     dispatch(lockLoading('login request'));
-    dispatch(setAfterAuth(dispatch, unlockLoading('login request')));
+    dispatch(setAfterAuth(() => {
+      dispatch(enableRebound());
+      dispatch(unlockLoading('login request'));
+    }));
     dispatch(login({ email, password }));
   };
 
-  if (user) {
-    if (reboundLocation) return <Navigate to={reboundLocation} />;
-    return <Navigate to='/home' />;
-  }
+  useEffect(() => {
+    if (!reboundLocation) setRebound('/home');
+  }, [dispatch, reboundLocation]);
 
   return (
     <form

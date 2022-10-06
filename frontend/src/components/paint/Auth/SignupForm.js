@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 import { signup } from '../../../store/session';
 import { setErrors } from '../../../store/errors';
-import { clearRebound, lockLoading, setAfterAuth, showErrors, unlockLoading } from '../../../store/UX';
+import { enableRebound, lockLoading, setAfterAuth, showErrors, unlockLoading } from '../../../store/UX';
 
 import './auth.css';
 
@@ -17,9 +17,6 @@ export default function SignupForm () {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
-  const user = useSelector(state => state.session.user);
-  const reboundLocation = useSelector(state => state.UX.reboundLocation);
-
   const handleSubmit = e => {
     e.preventDefault();
     if (password !== confirmPassword) {
@@ -30,18 +27,13 @@ export default function SignupForm () {
       dispatch(showErrors());
     } else {
       dispatch(lockLoading('signup request'));
-      dispatch(setAfterAuth(dispatch, unlockLoading('signup request')));
+      dispatch(setAfterAuth(() => {
+        dispatch(enableRebound());
+        dispatch(unlockLoading('signup request'));
+      }));
       dispatch(signup({ firstName, email, password }));
     }
   };
-
-  if (user) {
-    if (reboundLocation) {
-      dispatch(clearRebound());
-      return <Navigate to={reboundLocation} />;
-    }
-    return <Navigate to='/home' />;
-  }
 
   return (
     <form
