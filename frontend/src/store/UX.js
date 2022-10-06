@@ -82,9 +82,10 @@ export const clearRebound = () => ({
   type: CLEAR_REBOUND
 });
 
-export const setAfterAuth = afterAuth => ({
+export const setAfterAuth = (afterAuth, ...afterAuthArgs) => ({
   type: SET_AFTERAUTH,
-  afterAuth
+  afterAuth,
+  afterAuthArgs
 });
 
 export const triggerAfterAuth = () => ({
@@ -102,7 +103,8 @@ export default function reducer (
     showPlus: true,
     enablePlus: true,
     reboundLocation: null,
-    afterAuth: null
+    afterAuth: null,
+    afterAuthArgs: []
   },
   {
     type,
@@ -111,7 +113,8 @@ export default function reducer (
     unlockKey,
     onUnlock,
     reboundLocation,
-    afterAuth
+    afterAuth,
+    afterAuthArgs
   }
 ) {
   switch (type) {
@@ -205,10 +208,11 @@ export default function reducer (
         afterAuth
       };
     case TRIGGER_AFTERAUTH:
-      state.afterAuth && state.afterAuth();
+      state.afterAuth && state.afterAuth(...state.afterAuthArgs);
       return {
         ...state,
-        afterAuth: null
+        afterAuth: null,
+        afterAuthArgs: []
       };
     default:
       return state;
