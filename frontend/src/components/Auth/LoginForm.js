@@ -15,6 +15,7 @@ export default function LoginForm () {
   const [password, setPassword] = useState('');
 
   const user = useSelector(state => state.session.user);
+  const reboundLocation = useSelector(state => state.UX.reboundLocation);
 
   const handleSubmit = e => {
     e.preventDefault();
@@ -22,6 +23,7 @@ export default function LoginForm () {
   };
 
   if (user) {
+    if (reboundLocation) return <Navigate to={reboundLocation} />;
     return <Navigate to='/home' />;
   }
 
