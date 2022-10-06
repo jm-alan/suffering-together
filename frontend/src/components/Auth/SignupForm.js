@@ -4,6 +4,7 @@ import { Navigate, useNavigate } from 'react-router-dom';
 
 import { signup } from '../../store/session';
 import { setErrors } from '../../store/errors';
+import { clearRebound } from '../../store/UX';
 
 import './auth.css';
 
@@ -17,6 +18,7 @@ export default function SignupForm () {
   const [confirmPassword, setConfirmPassword] = useState('');
 
   const user = useSelector(state => state.session.user);
+  const reboundLocation = useSelector(state => state.UX.reboundLocation);
 
   const handleSubmit = e => {
     e.preventDefault();
@@ -30,6 +32,10 @@ export default function SignupForm () {
   };
 
   if (user) {
+    if (reboundLocation) {
+      dispatch(clearRebound());
+      return <Navigate to={reboundLocation} />;
+    }
     return <Navigate to='/home' />;
   }
 
