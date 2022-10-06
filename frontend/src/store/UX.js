@@ -13,6 +13,8 @@ const ENABLE_PLUS = 'UX/ENABLE_PLUS';
 const DISABLE_PLUS = 'UX/DISABLE_PLUS';
 const SET_REBOUND = 'UX/SET_REBOUND';
 const CLEAR_REBOUND = 'UX/CLEAR_REBOUND';
+const SET_AFTERAUTH = 'UX/SET_AFTER';
+const TRIGGER_AFTERAUTH = 'UX/TRIGGER_AFTER';
 
 export const showModal = () => ({
   type: SHOW_MODAL
@@ -80,6 +82,15 @@ export const clearRebound = () => ({
   type: CLEAR_REBOUND
 });
 
+export const setAfterAuth = afterAuth => ({
+  type: SET_AFTERAUTH,
+  afterAuth
+});
+
+export const triggerAfterAuth = () => ({
+  type: TRIGGER_AFTERAUTH
+});
+
 export default function reducer (
   state = {
     showModal: false,
@@ -90,7 +101,8 @@ export default function reducer (
     onUnlock: {},
     showPlus: true,
     enablePlus: true,
-    reboundLocation: null
+    reboundLocation: null,
+    afterAuth: null
   },
   {
     type,
@@ -98,7 +110,8 @@ export default function reducer (
     modalMooring,
     unlockKey,
     onUnlock,
-    reboundLocation
+    reboundLocation,
+    afterAuth
   }
 ) {
   switch (type) {
@@ -185,6 +198,17 @@ export default function reducer (
       return {
         ...state,
         reboundLocation: null
+      };
+    case SET_AFTERAUTH:
+      return {
+        ...state,
+        afterAuth
+      };
+    case TRIGGER_AFTERAUTH:
+      state.afterAuth && state.afterAuth();
+      return {
+        ...state,
+        afterAuth: null
       };
     default:
       return state;

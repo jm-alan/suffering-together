@@ -1,14 +1,14 @@
 import React, { lazy, useEffect, useRef, Suspense } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 
 import LoadingLock from './components/Loading/LoadingLock';
-import { restore } from './store/session';
-
-import './index.css';
 import Houses from './components/Houses';
 import throttle from './utils/throttle';
-import { hidePlus, showPlus } from './store/UX';
+import { restore } from './store/session';
+import { hidePlus, showPlus, triggerAfterAuth } from './store/UX';
+
+import './index.css';
 
 const Home = lazy(() => import('./components/Home'));
 const NavBar = lazy(() => import('./components/NavBar'));
@@ -17,6 +17,8 @@ const SignupForm = lazy(() => import('./components/Auth/SignupForm'));
 
 export default function App () {
   const dispatch = useDispatch();
+
+  const user = useSelector(state => state.session.user);
 
   const mutableScrollTracker = useRef(0);
 
@@ -28,6 +30,10 @@ export default function App () {
     }
     mutableScrollTracker.current = scrollTop;
   }, 50);
+
+  useEffect(() => {
+    if (user) dispatch(triggerAfterAuth());
+  }, [dispatch, user]);
 
   useEffect(() => {
     dispatch(restore());
