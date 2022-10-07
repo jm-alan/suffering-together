@@ -14,6 +14,8 @@ import TempLoadingPruner from './components/logic/TempLoadingPruner';
 const AuthMonitor = lazy(() => import('./components/logic/AuthMonitor'));
 const Home = lazy(() => import('./components/paint/Home'));
 const NavBar = lazy(() => import('./components/paint/NavBar'));
+const AuthMonitor = lazy(() => import('./components/logic/AuthMonitor'));
+const ReboundMonitor = lazy(() => import('./components/logic/ReboundMonitor'));
 const LoginForm = lazy(() => import('./components/paint/Auth/LoginForm'));
 const SignupForm = lazy(() => import('./components/paint/Auth/SignupForm'));
 
