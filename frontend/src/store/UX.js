@@ -1,3 +1,5 @@
+import { devlog } from '../utils/logging';
+
 const SHOW_MODAL = 'UX/SHOW_MODAL';
 const HIDE_MODAL = 'UX/SHOW_MODAL';
 const SET_MODAL = 'UX/SET_MODAL';
@@ -11,8 +13,6 @@ const SHOW_PLUS = 'UX/SHOW_PLUS';
 const HIDE_PLUS = 'UX/HIDE_PLUS';
 const ENABLE_PLUS = 'UX/ENABLE_PLUS';
 const DISABLE_PLUS = 'UX/DISABLE_PLUS';
-const SET_AFTERAUTH = 'UX/SET_AFTER';
-const TRIGGER_AFTERAUTH = 'UX/TRIGGER_AFTER';
 
 export const showModal = () => ({
   type: SHOW_MODAL
@@ -77,16 +77,6 @@ export const hideErrors = () => ({
   type: HIDE_ERRORS
 });
 
-export const setAfterAuth = (afterAuth, ...args) => ({
-  type: SET_AFTERAUTH,
-  afterAuth,
-  args
-});
-
-export const triggerAfterAuth = () => ({
-  type: TRIGGER_AFTERAUTH
-});
-
 export default function reducer (
   state = {
     showModal: false,
@@ -104,9 +94,7 @@ export default function reducer (
     currentModal,
     modalMooring,
     unlockKey,
-    onUnlock,
-    afterAuth,
-    args
+    onUnlock
   }
 ) {
   switch (type) {
@@ -183,19 +171,6 @@ export default function reducer (
       return {
         ...state,
         enablePlus: false
-      };
-    case SET_AFTERAUTH:
-      return {
-        ...state,
-        afterAuth: state.afterAuth.concat(() => afterAuth(...args))
-      };
-    case TRIGGER_AFTERAUTH:
-      for (let i = 0; i < state.afterAuth.length; i++) {
-        state.afterAuth[i]();
-      }
-      return {
-        ...state,
-        afterAuth: []
       };
     default:
       return state;
