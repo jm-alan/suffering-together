@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 
+import { devlog } from '../../utils/logging';
 import { disableRebound } from '../../store/rebound';
 
 export default function ReboundMonitor () {
@@ -15,9 +16,14 @@ export default function ReboundMonitor () {
 
   useEffect(() => {
     if (enabled && (pathname !== origin)) {
+      devlog(`disabling rebound because ${pathname} !== ${origin}`);
       dispatch(disableRebound());
-      if (origin) navigate(origin);
-    } else if (pathname !== destination) {
+      if (origin) {
+        devlog(`rebounding to ${origin}`);
+        navigate(origin);
+      }
+    } else if (destination && (pathname !== destination)) {
+      devlog(`rebound intercept initiated, navigating to ${destination}`);
       navigate(destination);
     }
     return () => enabled && dispatch(disableRebound());
