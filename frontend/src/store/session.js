@@ -1,8 +1,7 @@
 import csrfetch from '../utils/csrfetch';
 import { clearErrors } from './errors';
 
-export const SET = 'session/SET';
-export const CLEAR = 'session/CLEAR';
+const SET = 'session/SET';
 
 const setSession = (user = null) => ({
   type: SET,
