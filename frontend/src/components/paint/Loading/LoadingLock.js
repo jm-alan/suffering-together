@@ -8,10 +8,10 @@ export default function LoadingLock ({ name, children }) {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    devlog('Loading lock added by', name);
+    devlog(`<LoadingLock /> for ${name} mounting`);
     dispatch(lockLoading(name, children));
     return () => {
-      devlog('Loading lock released by', name);
+      devlog(`<LoadingLock /> for ${name} unmounting`);
       dispatch(unlockLoading(name));
     };
   }, [dispatch, name, children]);
