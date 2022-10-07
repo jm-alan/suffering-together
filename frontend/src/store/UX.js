@@ -11,8 +11,6 @@ const SHOW_PLUS = 'UX/SHOW_PLUS';
 const HIDE_PLUS = 'UX/HIDE_PLUS';
 const ENABLE_PLUS = 'UX/ENABLE_PLUS';
 const DISABLE_PLUS = 'UX/DISABLE_PLUS';
-const SET_REBOUND = 'UX/SET_REBOUND';
-const CLEAR_REBOUND = 'UX/CLEAR_REBOUND';
 const SET_AFTERAUTH = 'UX/SET_AFTER';
 const TRIGGER_AFTERAUTH = 'UX/TRIGGER_AFTER';
 
@@ -73,15 +71,6 @@ export const hideErrors = () => ({
   type: HIDE_ERRORS
 });
 
-export const setRebound = reboundLocation => ({
-  type: SET_REBOUND,
-  reboundLocation
-});
-
-export const clearRebound = () => ({
-  type: CLEAR_REBOUND
-});
-
 export const setAfterAuth = (afterAuth, ...afterAuthArgs) => ({
   type: SET_AFTERAUTH,
   afterAuth,
@@ -102,7 +91,6 @@ export default function reducer (
     onUnlock: {},
     showPlus: true,
     enablePlus: true,
-    reboundLocation: null,
     afterAuth: null,
     afterAuthArgs: []
   },
@@ -112,7 +100,6 @@ export default function reducer (
     modalMooring,
     unlockKey,
     onUnlock,
-    reboundLocation,
     afterAuth,
     afterAuthArgs
   }
@@ -192,20 +179,11 @@ export default function reducer (
         ...state,
         enablePlus: false
       };
-    case SET_REBOUND:
-      return {
-        ...state,
-        reboundLocation
-      };
-    case CLEAR_REBOUND:
-      return {
-        ...state,
-        reboundLocation: null
-      };
     case SET_AFTERAUTH:
       return {
         ...state,
-        afterAuth
+        afterAuth,
+        afterAuthArgs
       };
     case TRIGGER_AFTERAUTH:
       state.afterAuth && state.afterAuth(...state.afterAuthArgs);
