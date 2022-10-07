@@ -36,16 +36,22 @@ export const setMooring = modalMooring => ({
   modalMooring
 });
 
-export const lockLoading = (unlockKey, onUnlock) => ({
-  type: LOCK_LOADING,
-  unlockKey,
-  onUnlock
-});
+export const lockLoading = (unlockKey, onUnlock) => {
+  devlog(`lockLoading called by ${unlockKey}`);
+  return {
+    type: LOCK_LOADING,
+    unlockKey,
+    onUnlock
+  };
+};
 
-export const unlockLoading = unlockKey => ({
-  type: UNLOCK_LOADING,
-  unlockKey
-});
+export const unlockLoading = unlockKey => {
+  devlog(`unlockLoading called by ${unlockKey}`);
+  return {
+    type: UNLOCK_LOADING,
+    unlockKey
+  };
+};
 
 export const showPlus = () => ({
   type: SHOW_PLUS
