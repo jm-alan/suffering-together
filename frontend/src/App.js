@@ -91,6 +91,9 @@ export default function App () {
             <NavBar />
           </Suspense>
         </div>
+        <Suspense fallback={<LoadingLock name='rebound monitor' />}>
+          <ReboundMonitor />
+        </Suspense>
       </BrowserRouter>
       <Suspense fallback={<LoadingLock name='auth monitor' />}>
         <AuthMonitor />
