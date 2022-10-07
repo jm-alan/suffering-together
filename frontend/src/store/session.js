@@ -1,5 +1,6 @@
 import csrfetch from '../utils/csrfetch';
 import { clearErrors } from './errors';
+import { enableAfterAuth } from './afterAuth';
 
 const SET = 'session/SET';
 
@@ -16,6 +17,7 @@ export const signup = ({ firstName, email, password }) => async dispatch => {
     password
   });
   dispatch(setSession(user));
+  dispatch(enableAfterAuth());
 };
 
 export const login = ({ email, password }) => async dispatch => {
@@ -25,16 +27,19 @@ export const login = ({ email, password }) => async dispatch => {
     password
   });
   dispatch(setSession(user));
+  dispatch(enableAfterAuth());
 };
 
 export const logout = () => async dispatch => {
   await csrfetch.delete('/api/session');
   dispatch(setSession());
+  dispatch(enableAfterAuth());
 };
 
 export const restore = () => async dispatch => {
   const { user } = await csrfetch.get('/api/session');
   dispatch(setSession(user));
+  dispatch(enableAfterAuth());
   await csrfetch.restoreCSRF();
 };
 
