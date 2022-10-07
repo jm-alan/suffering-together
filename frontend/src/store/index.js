@@ -5,6 +5,7 @@ import UX from './UX';
 import session from './session';
 import errors from './errors';
 import houses from './houses';
+import rebound from './rebound';
 
 export default configureStore({
   middleware: [thunk],
@@ -12,6 +13,7 @@ export default configureStore({
     UX,
     session,
     errors,
-    houses
+    houses,
+    rebound
   }
 });
