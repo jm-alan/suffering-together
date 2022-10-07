@@ -1,9 +1,14 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Route } from 'react-router-dom';
-import Rebound from './Rebound';
+import Rebound from '../components/logic/Rebound';
 
-export default function ProtectedRoute ({ path, children }) {
+/**
+ *
+ * @param {string} path
+ * @param {JSX.Element | JSX.Element[]} children
+ */
+export default function protect (path, children) {
   const user = useSelector(state => state.session.user);
 
   return (
