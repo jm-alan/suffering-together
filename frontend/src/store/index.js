@@ -6,6 +6,7 @@ import session from './session';
 import errors from './errors';
 import houses from './houses';
 import rebound from './rebound';
+import afterAuth from './afterAuth';
 
 export default configureStore({
   middleware: [thunk],
@@ -14,6 +15,7 @@ export default configureStore({
     session,
     errors,
     houses,
-    rebound
+    rebound,
+    afterAuth
   }
 });
