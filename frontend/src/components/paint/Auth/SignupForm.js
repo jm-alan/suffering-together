@@ -3,8 +3,13 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { signup } from '../../../store/session';
 import { setErrors } from '../../../store/errors';
-import { setReboundDestination, setReboundOrigin } from '../../../store/rebound';
-import { enableRebound, lockLoading, setAfterAuth, showErrors, unlockLoading } from '../../../store/UX';
+import { onAny, onSuccess } from '../../../store/afterAuth';
+import { lockLoading, showErrors, unlockLoading } from '../../../store/UX';
+import {
+  enableRebound,
+  setReboundDestination,
+  setReboundOrigin
+} from '../../../store/rebound';
 
 import './auth.css';
 
@@ -21,16 +26,13 @@ export default function SignupForm () {
   const handleSubmit = e => {
     e.preventDefault();
     if (password !== confirmPassword) {
-      console.log('setting errors');
       dispatch(setErrors([
         'Passwords do not match'
       ]));
       dispatch(showErrors());
     } else {
       dispatch(lockLoading('signup request'));
-      dispatch(setAfterAuth(() => {
-        dispatch(unlockLoading('signup request'));
-      }));
+      dispatch(onAny(() => dispatch(unlockLoading('signup request'))));
       dispatch(signup({ firstName, email, password }));
     }
   };
@@ -44,7 +46,7 @@ export default function SignupForm () {
   }, [dispatch, reboundOrigin]);
 
   useEffect(() => {
-    if (reboundOrigin) dispatch(setAfterAuth, enableRebound());
+    if (reboundOrigin) dispatch(onSuccess(() => dispatch(enableRebound())));
   }, [dispatch, reboundOrigin]);
 
   return (

@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { setReboundDestination, setReboundOrigin } from '../../../store/rebound';
-
 import { login } from '../../../store/session';
+import { onAny, onSuccess } from '../../../store/afterAuth';
 import {
-  enableRebound,
-  lockLoading,
-  setAfterAuth,
-  unlockLoading
-} from '../../../store/UX';
+  setReboundDestination,
+  setReboundOrigin,
+  enableRebound
+} from '../../../store/rebound';
+import { lockLoading, unlockLoading } from '../../../store/UX';
 
 import './auth.css';
 
@@ -24,9 +23,7 @@ export default function LoginForm () {
   const handleSubmit = e => {
     e.preventDefault();
     dispatch(lockLoading('login request'));
-    dispatch(setAfterAuth(() => {
-      dispatch(unlockLoading('login request'));
-    }));
+    dispatch(onAny(() => dispatch(unlockLoading('login request'))));
     dispatch(login({ email, password }));
   };
 
@@ -39,7 +36,7 @@ export default function LoginForm () {
   }, [dispatch, reboundOrigin]);
 
   useEffect(() => {
-    if (reboundOrigin) dispatch(setAfterAuth, enableRebound());
+    if (reboundOrigin) dispatch(onSuccess(() => dispatch(enableRebound())));
   }, [dispatch, reboundOrigin]);
 
   return (
