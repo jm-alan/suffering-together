@@ -5,6 +5,12 @@ const CLEAR_NEW = 'rebound/CLEAR_NEW';
 const ENABLE = 'rebound/ENABLE';
 const DISABLE = 'rebound/DISABLE';
 
+/**
+ * Sets the location to which the rebound process should navigate
+ * once enabled, i.e. after the user has completed some action
+ * @param {string} originalDestination
+ * @param {boolean} force
+ */
 export const setReboundOrigin = (originalDestination, force = false) => ({
   type: SET_ORIGINAL,
   originalDestination,
@@ -15,6 +21,12 @@ export const clearReboundOrigin = () => ({
   type: CLEAR_ORIGINAL
 });
 
+/**
+ * Sets the location to which the rebound process should navigate
+ * while disabled, i.e. while the user completes some action
+ * @param {string} newDestination
+ * @param {boolean} force
+ */
 export const setReboundDestination = (newDestination, force = false) => ({
   type: SET_NEW,
   newDestination,
