@@ -5,18 +5,20 @@ const CLEAR_NEW = 'rebound/CLEAR_NEW';
 const ENABLE = 'rebound/ENABLE';
 const DISABLE = 'rebound/DISABLE';
 
-export const setReboundOrigin = originalDestination => ({
+export const setReboundOrigin = (originalDestination, force = false) => ({
   type: SET_ORIGINAL,
-  originalDestination
+  originalDestination,
+  force
 });
 
 export const clearReboundOrigin = () => ({
   type: CLEAR_ORIGINAL
 });
 
-export const setReboundDestination = newDestination => ({
+export const setReboundDestination = (newDestination, force = false) => ({
   type: SET_NEW,
-  newDestination
+  newDestination,
+  force
 });
 
 export const clearReboundDestination = () => ({
@@ -40,12 +42,13 @@ export default function reducer (
   {
     type,
     originalDestination,
-    newDestination
+    newDestination,
+    force
   }
 ) {
   switch (type) {
     case SET_ORIGINAL:
-      if (!state.originalDestination) {
+      if (force || !state.originalDestination) {
         return {
           ...state,
           originalDestination
@@ -57,7 +60,7 @@ export default function reducer (
         originalDestination: null
       };
     case SET_NEW:
-      if (!state.newDestination) {
+      if (force || !state.newDestination) {
         return {
           ...state,
           newDestination
