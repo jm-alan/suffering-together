@@ -71,10 +71,10 @@ export const hideErrors = () => ({
   type: HIDE_ERRORS
 });
 
-export const setAfterAuth = (afterAuth, ...afterAuthArgs) => ({
+export const setAfterAuth = (afterAuth, ...args) => ({
   type: SET_AFTERAUTH,
   afterAuth,
-  afterAuthArgs
+  args
 });
 
 export const triggerAfterAuth = () => ({
@@ -91,8 +91,7 @@ export default function reducer (
     onUnlock: {},
     showPlus: true,
     enablePlus: true,
-    afterAuth: null,
-    afterAuthArgs: []
+    afterAuth: []
   },
   {
     type,
@@ -101,7 +100,7 @@ export default function reducer (
     unlockKey,
     onUnlock,
     afterAuth,
-    afterAuthArgs
+    args
   }
 ) {
   switch (type) {
@@ -182,15 +181,15 @@ export default function reducer (
     case SET_AFTERAUTH:
       return {
         ...state,
-        afterAuth,
-        afterAuthArgs
+        afterAuth: state.afterAuth.concat(() => afterAuth(...args))
       };
     case TRIGGER_AFTERAUTH:
-      state.afterAuth && state.afterAuth(...state.afterAuthArgs);
+      for (let i = 0; i < state.afterAuth.length; i++) {
+        state.afterAuth[i]();
+      }
       return {
         ...state,
-        afterAuth: null,
-        afterAuthArgs: []
+        afterAuth: []
       };
     default:
       return state;
