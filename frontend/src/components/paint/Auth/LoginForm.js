@@ -1,12 +1,17 @@
-
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { setReboundDestination } from '../../../store/rebound';
 
 import { login } from '../../../store/session';
-import { useNavigate } from 'react-router-dom';
+import {
+  enableRebound,
+  lockLoading,
+  setAfterAuth,
+  unlockLoading
+} from '../../../store/UX';
 
 import './auth.css';
-import { enableRebound, lockLoading, setAfterAuth, setRebound, unlockLoading } from '../../../store/UX';
 
 export default function LoginForm () {
   const dispatch = useDispatch();
@@ -15,7 +20,7 @@ export default function LoginForm () {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const reboundLocation = useSelector(state => state.UX.reboundLocation);
+  const reboundOrigin = useSelector(state => state.rebound.originalDestination);
 
   const handleSubmit = e => {
     e.preventDefault();
@@ -28,8 +33,11 @@ export default function LoginForm () {
   };
 
   useEffect(() => {
-    if (!reboundLocation) setRebound('/home');
-  }, [dispatch, reboundLocation]);
+    if (!reboundOrigin) {
+      dispatch(setReboundDestination('/home'));
+      dispatch(setAfterAuth(dispatch, enableRebound()));
+    }
+  }, [dispatch, reboundOrigin]);
 
   return (
     <form
