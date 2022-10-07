@@ -45,20 +45,24 @@ export default function reducer (
 ) {
   switch (type) {
     case SET_ORIGINAL:
-      return {
-        ...state,
-        originalDestination
-      };
+      if (!state.originalDestination) {
+        return {
+          ...state,
+          originalDestination
+        };
+      } else return state;
     case CLEAR_ORIGINAL:
       return {
         ...state,
         originalDestination: null
       };
     case SET_NEW:
-      return {
-        ...state,
-        newDestination
-      };
+      if (!state.newDestination) {
+        return {
+          ...state,
+          newDestination
+        };
+      } else return state;
     case CLEAR_NEW:
       return {
         ...state,
