@@ -1,40 +1,45 @@
 const ON_SUCCESS = 'afterAuth/ON_SUCCESS';
-const CALL_SUCCESS = 'afterAuth/CALL_SUCCESS';
 const ON_FAILURE = 'afterAuth/ON_FAILURE';
-const CALL_FAILURE = 'afterAuth/CALL_FALIURE';
+const CLEAR = 'afterAuth/CLEAR';
 const ON_ANY = 'afterAuth/ON_ANY';
 const ENABLE = 'afterAuth/ENABLE';
 const DISABLE = 'afterAuth/DISABLE';
 
-export const onSuccess = (onSuccess, ...args) => ({
+export const onSuccess = fn => ({
   type: ON_SUCCESS,
-  onSuccess,
-  args
+  fn
 });
 
-export const callSuccess = () => ({
-  type: CALL_SUCCESS
-});
-
-export const onFailure = (onFailure, ...args) => ({
+export const onFailure = fn => ({
   type: ON_FAILURE,
-  onFailure,
-  args
+  fn
 });
 
-export const callFailure = () => ({
-  type: CALL_FAILURE
-});
-
-export const onAny = (onAny, ...args) => ({
+export const onAny = fn => ({
   type: ON_ANY,
-  onAny,
-  args
+  fn
+});
+
+export const clearAfterAuth = () => ({
+  type: CLEAR
+});
+
+export const enableAfterAuth = () => ({
+  type: ENABLE
+});
+
+export const disableAfterAuth = () => ({
+  type: DISABLE
 });
 
 export default function reducer (
-  state = { onSuccess: [], onFailure: [], enabled: false },
-  { type, onSuccess, onFailure, args }
+  state = {
+    onSuccess: [],
+    onFailure: [],
+    onAny: [],
+    enabled: false
+  },
+  { type, fn, success }
 ) {
   switch (type) {
     case ENABLE:
@@ -50,34 +55,23 @@ export default function reducer (
     case ON_SUCCESS:
       return {
         ...state,
-        onSuccess: state.onSuccess.concat(() => onSuccess(...args))
-      };
-    case CALL_SUCCESS:
-      for (let i = 0; i < state.onSuccess.length; i++) {
-        state.onSuccess[i]();
-      }
-      return {
-        onSuccess: [],
-        onFailure: []
+        onSuccess: state.onSuccess.concat(fn)
       };
     case ON_FAILURE:
       return {
         ...state,
-        onFailure: state.onFailure.concat(() => onFailure(...args))
-      };
-    case CALL_FAILURE:
-      for (let i = 0; i < state.onFailure.length; i++) {
-        state.onFailure[i]();
-      }
-      return {
-        onSuccess: [],
-        onFailure: []
+        onFailure: state.onFailure.concat(fn)
       };
     case ON_ANY:
       return {
         ...state,
-        onSuccess: state.onSuccess.concat(() => onAny(...args)),
-        onFailure: state.onFailure.concat(() => onAny(...args))
+        onAny: state.onAny.concat(fn)
+      };
+    case CLEAR:
+      return {
+        onSuccess: [],
+        onFailure: [],
+        onAny: []
       };
     default:
       return state;
