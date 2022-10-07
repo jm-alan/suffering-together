@@ -11,7 +11,6 @@ import { hidePlus, showPlus } from './store/UX';
 import './index.css';
 import TempLoadingPruner from './components/logic/TempLoadingPruner';
 
-const AuthMonitor = lazy(() => import('./components/logic/AuthMonitor'));
 const Home = lazy(() => import('./components/paint/Home'));
 const NavBar = lazy(() => import('./components/paint/NavBar'));
 const AuthMonitor = lazy(() => import('./components/logic/AuthMonitor'));
