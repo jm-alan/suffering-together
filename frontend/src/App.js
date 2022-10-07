@@ -3,15 +3,16 @@ import { useDispatch } from 'react-redux';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 
 import LoadingLock from './components/paint/Loading/LoadingLock';
-import Houses from './components/paint/Houses';
+import TempLoadingPruner from './components/logic/TempLoadingPruner';
 import throttle from './utils/throttle';
+import protect from './utils/protect';
 import { restore } from './store/session';
 import { hidePlus, showPlus } from './store/UX';
 
 import './index.css';
-import TempLoadingPruner from './components/logic/TempLoadingPruner';
 
 const Home = lazy(() => import('./components/paint/Home'));
+const Houses = lazy(() => import('./components/paint/Houses'));
 const NavBar = lazy(() => import('./components/paint/NavBar'));
 const AuthMonitor = lazy(() => import('./components/logic/AuthMonitor'));
 const ReboundMonitor = lazy(() => import('./components/logic/ReboundMonitor'));
@@ -47,14 +48,6 @@ export default function App () {
                 element={<Navigate to='/home' />}
               />
               <Route
-                path='/home'
-                element={(
-                  <Suspense fallback={<LoadingLock name='home' />}>
-                    <Home />
-                  </Suspense>
-              )}
-              />
-              <Route
                 path='/login'
                 element={(
                   <Suspense fallback={<LoadingLock name='login' />}>
@@ -70,22 +63,27 @@ export default function App () {
                   </Suspense>
               )}
               />
-              <Route
-                path='/residences'
-                element={
-                  <Suspense fallback={<LoadingLock name='residences' />}>
-                    <Houses />
-                  </Suspense>
-            }
-              />
-              <Route
-                path='/residences/:houseID'
-                element={
-                  <Suspense fallback={<LoadingLock name='residences' />}>
-                    <Houses houseSelected />
-                  </Suspense>
-              }
-              />
+              {protect('/home', (
+                <Suspense fallback={<LoadingLock name='home' />}>
+                  <Home />
+                </Suspense>
+              ))}
+              {protect('/me', (
+                <Suspense fallback={<LoadingLock name='me' />}>
+                  <h1>Coming Soon!</h1>
+                </Suspense>
+              ))}
+              {protect('/residences', (
+                <Suspense fallback={<LoadingLock name='residences' />}>
+                  <Houses />
+                </Suspense>
+              ))}
+              {protect('/residences/:houseID', (
+                <Suspense fallback={<LoadingLock name='residences' />}>
+                  <Houses houseSelected />
+                </Suspense>
+              ))}
+              <Route path='*' element={<Navigate to='/home' />} />
             </Routes>
           </div>
           <Suspense fallback={<LoadingLock name='navbar' />}>
