@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { setReboundDestination } from '../../../store/rebound';
+
+import { setReboundDestination, setReboundOrigin } from '../../../store/rebound';
 
 import { login } from '../../../store/session';
 import {
@@ -15,7 +15,6 @@ import './auth.css';
 
 export default function LoginForm () {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -26,17 +25,21 @@ export default function LoginForm () {
     e.preventDefault();
     dispatch(lockLoading('login request'));
     dispatch(setAfterAuth(() => {
-      dispatch(enableRebound());
       dispatch(unlockLoading('login request'));
     }));
     dispatch(login({ email, password }));
   };
 
+  const handleSignupNavigate = () => {
+    dispatch(setReboundDestination('/signup', true));
+  };
+
   useEffect(() => {
-    if (!reboundOrigin) {
-      dispatch(setReboundDestination('/home'));
-      dispatch(setAfterAuth(dispatch, enableRebound()));
-    }
+    if (!reboundOrigin) dispatch(setReboundOrigin('/home'));
+  }, [dispatch, reboundOrigin]);
+
+  useEffect(() => {
+    if (reboundOrigin) dispatch(setAfterAuth, enableRebound());
   }, [dispatch, reboundOrigin]);
 
   return (
@@ -71,7 +74,7 @@ export default function LoginForm () {
       <button
         className='auth-submit switch'
         type='button'
-        onClick={() => navigate('/signup')}
+        onClick={handleSignupNavigate}
       >
         Dont' have an account?<br />Sign up here
       </button>
