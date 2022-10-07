@@ -9,7 +9,9 @@ import { restore } from './store/session';
 import { hidePlus, showPlus } from './store/UX';
 
 import './index.css';
+import TempLoadingPruner from './components/logic/TempLoadingPruner';
 
+const AuthMonitor = lazy(() => import('./components/logic/AuthMonitor'));
 const Home = lazy(() => import('./components/paint/Home'));
 const NavBar = lazy(() => import('./components/paint/NavBar'));
 const LoginForm = lazy(() => import('./components/paint/Auth/LoginForm'));
@@ -33,68 +35,67 @@ export default function App () {
     dispatch(restore());
   }, [dispatch]);
 
-  useEffect(() => {
-    const tempLoading = document.getElementById('loading-temp');
-    if (tempLoading) {
-      tempLoading.parentElement.removeChild(tempLoading);
-    }
-  }, []);
-
   return (
-    <BrowserRouter>
-      <div id='main'>
-        <div id='router-container' onScroll={handleScroll}>
-          <Routes>
-            <Route
-              path='/'
-              element={<Navigate to='/home' />}
-            />
-            <Route
-              path='/home'
-              element={(
-                <Suspense fallback={<LoadingLock name='home' />}>
-                  <Home />
-                </Suspense>
+    <>
+      <BrowserRouter>
+        <div id='main'>
+          <div id='router-container' onScroll={handleScroll}>
+            <Routes>
+              <Route
+                path='/'
+                element={<Navigate to='/home' />}
+              />
+              <Route
+                path='/home'
+                element={(
+                  <Suspense fallback={<LoadingLock name='home' />}>
+                    <Home />
+                  </Suspense>
               )}
-            />
-            <Route
-              path='/login'
-              element={(
-                <Suspense fallback={<LoadingLock name='login' />}>
-                  <LoginForm />
-                </Suspense>
+              />
+              <Route
+                path='/login'
+                element={(
+                  <Suspense fallback={<LoadingLock name='login' />}>
+                    <LoginForm />
+                  </Suspense>
               )}
-            />
-            <Route
-              path='/signup'
-              element={(
-                <Suspense fallback={<LoadingLock name='signup' />}>
-                  <SignupForm />
-                </Suspense>
+              />
+              <Route
+                path='/signup'
+                element={(
+                  <Suspense fallback={<LoadingLock name='signup' />}>
+                    <SignupForm />
+                  </Suspense>
               )}
-            />
-            <Route
-              path='/residences'
-              element={
-                <Suspense fallback={<LoadingLock name='residences' />}>
-                  <Houses />
-                </Suspense>
+              />
+              <Route
+                path='/residences'
+                element={
+                  <Suspense fallback={<LoadingLock name='residences' />}>
+                    <Houses />
+                  </Suspense>
             }
-            />
-            <Route
-              path='/residences/:houseID'
-              element={
-                <Suspense fallback={<LoadingLock name='residences' />}>
-                  <Houses houseSelected />
-                </Suspense>
+              />
+              <Route
+                path='/residences/:houseID'
+                element={
+                  <Suspense fallback={<LoadingLock name='residences' />}>
+                    <Houses houseSelected />
+                  </Suspense>
               }
-            />
-          </Routes>
+              />
+            </Routes>
+          </div>
+          <Suspense fallback={<LoadingLock name='navbar' />}>
+            <NavBar />
+          </Suspense>
         </div>
-        <Suspense fallback={<LoadingLock name='navbar' />}>
-          <NavBar />
-        </Suspense>
-      </div>
-    </BrowserRouter>
+      </BrowserRouter>
+      <Suspense fallback={<LoadingLock name='auth monitor' />}>
+        <AuthMonitor />
+      </Suspense>
+      <TempLoadingPruner />
+    </>
   );
 }
