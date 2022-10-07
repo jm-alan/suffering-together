@@ -27,7 +27,7 @@ export default function ReboundMonitor () {
       navigate(destination);
     }
     return () => enabled && dispatch(disableRebound());
-  }, [navigate, pathname, origin, destination]);
+  }, [dispatch, enabled, navigate, pathname, origin, destination]);
 
   return null;
 }
