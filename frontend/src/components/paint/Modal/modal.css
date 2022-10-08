@@ -13,7 +13,7 @@
   position: relative;
   background-color: var(--not-quite-steelblue);
   overflow: hidden;
-  border-radius: calc(calc(1rem * 3) / 7);
+  border-radius: calc((1rem * 3) / 7);
   height: 50vh;
   width: 80vw;
 }
@@ -21,27 +21,27 @@
 .modal-floater {
   background-color: black;
   color: var(--not-quite-steelblue);
-  font-size: calc(calc(2rem * 3) / 7);
+  font-size: calc((2rem * 3) / 7);
   position: absolute;
   z-index: 1;
 }
 
 .top-left {
-  top: calc(calc(1rem * 3) / 7);
-  left: calc(calc(1rem * 3) / 7);
+  top: calc((1rem * 3) / 7);
+  left: calc((1rem * 3) / 7);
 }
 
 .top-right {
-  top: calc(calc(1rem * 3) / 7);
-  right: calc(calc(1rem * 3) / 7);
+  top: calc((1rem * 3) / 7);
+  right: calc((1rem * 3) / 7);
 }
 
 .bottom-left {
-  bottom: calc(calc(1rem * 3) / 7);
-  left: calc(calc(1rem * 3) / 7);
+  bottom: calc((1rem * 3) / 7);
+  left: calc((1rem * 3) / 7);
 }
 
 .bottom-right {
-  bottom: calc(calc(1rem * 3) / 7);
-  right: calc(calc(1rem * 3) / 7);
+  bottom: calc((1rem * 3) / 7);
+  right: calc((1rem * 3) / 7);
 }

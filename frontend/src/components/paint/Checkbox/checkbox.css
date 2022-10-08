@@ -5,14 +5,14 @@
 }
 
 .custom-checkbox {
-  height: calc(calc(3rem * 3) / 7);
-  width: calc(calc(3rem * 3) / 7);
+  height: calc((3rem * 3) / 7);
+  width: calc((3rem * 3) / 7);
   border: 1px solid black;
-  border-radius: calc(calc(0.5rem * 3) / 7);
+  border-radius: calc((0.5rem * 3) / 7);
 }
 
 .custom-checkbox>span {
-  font-size: calc(calc(3rem * 3) / 7);
+  font-size: calc((3rem * 3) / 7);
 }
 
 .custom-checkbox.checked {
