@@ -16,15 +16,12 @@ export default function CurrentResidents () {
     }
   }, [dispatch, houseID, residentsLoaded]);
   return (
-    <div id='house-residents-container'>
-      <h1>Residents</h1>
-      <div id='resident-entries-container'>
-        {Object.values(currentResidents).filter($ => $).map(({ id, firstName }) => (
-          <div key={id} className='resident-entry'>
-            {firstName}
-          </div>
-        ))}
-      </div>
+    <div className='current-residence-subcontainer top'>
+      {Object.values(currentResidents).filter($ => $).map(({ id, firstName }) => (
+        <div key={id} className='residence-subcontainer-entry resident'>
+          {firstName}
+        </div>
+      ))}
     </div>
   );
 }
