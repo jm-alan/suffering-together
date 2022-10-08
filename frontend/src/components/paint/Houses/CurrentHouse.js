@@ -4,6 +4,7 @@ import { Navigate, useParams } from 'react-router-dom';
 
 import CurrentResidents from './CurrentResidents';
 import { clearCurrent, setCurrent } from '../../../store/houses';
+import RecentTransactions from './RecentTransactions';
 
 export default function CurrentHouse () {
   const dispatch = useDispatch();
@@ -32,6 +33,7 @@ export default function CurrentHouse () {
         <h1>{currentHouse.name}</h1>
       </div>
       <CurrentResidents />
+      <RecentTransactions />
     </div>
   );
 }
