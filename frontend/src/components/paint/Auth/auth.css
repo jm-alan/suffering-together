@@ -8,11 +8,11 @@
 }
 
 .auth-form * {
-  font-size: calc((3rem * 3) / 7);
+  font-size: 1.25rem;
 }
 
 .auth-form>* {
-  --button-margin: calc((2rem * 3) / 7);
+  --button-margin: 0.75rem;
 }
 
 .auth-input {
@@ -20,13 +20,13 @@
   background-color: black;
   text-align: center;
   border: none;
-  border-bottom: calc((0.3rem * 3) / 7) solid darkgrey;
-  margin: calc((2rem * 3) / 7);
+  border-bottom: 0.125rem solid darkgrey;
+  margin: 0.75rem;
   transition:
     border-bottom 0.1s;
 }
 
 .auth-input:focus {
   outline: none;
-  border-bottom: calc((0.3rem * 3) / 7) solid var(--not-quite-steelblue);
+  border-bottom: 0.125rem solid var(--not-quite-steelblue);
 }

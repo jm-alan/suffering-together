@@ -1,5 +1,5 @@
 .new-item-floater {
-  --floater-font-size: calc((4rem * 3) / 7);
+  --floater-font-size: 1.75rem;
   --floater-side: calc(var(--floater-font-size) * 2);
   --floater-offset: 1.25rem;
   min-height: var(--floater-side);

@@ -49,11 +49,11 @@
 .house-entry {
   cursor: pointer;
   border: 1px solid var(--not-quite-steelblue);
-  font-size: calc((4rem * 3) / 7);
+  font-size: 1.75rem;
   width: 85vw;
-  padding: calc((1rem * 3) / 7);
-  margin: calc((1rem * 3) / 7) 0px;
-  border-radius: calc((1rem * 3) / 7);
+  padding: 0.425rem;
+  margin: 0.425rem 0px;
+  border-radius: 0.425rem;
 }
 
 .house-entry:active {

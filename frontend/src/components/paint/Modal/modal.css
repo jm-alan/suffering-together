@@ -13,7 +13,7 @@
   position: relative;
   background-color: var(--not-quite-steelblue);
   overflow: hidden;
-  border-radius: calc((1rem * 3) / 7);
+  border-radius: 0.425rem;
   height: 50vh;
   width: 80vw;
 }
@@ -21,27 +21,27 @@
 .modal-floater {
   background-color: black;
   color: var(--not-quite-steelblue);
-  font-size: calc((2rem * 3) / 7);
+  font-size: 0.75rem;
   position: absolute;
   z-index: 1;
 }
 
 .top-left {
-  top: calc((1rem * 3) / 7);
-  left: calc((1rem * 3) / 7);
+  top: 0.425rem;
+  left: 0.425rem;
 }
 
 .top-right {
-  top: calc((1rem * 3) / 7);
-  right: calc((1rem * 3) / 7);
+  top: 0.425rem;
+  right: 0.425rem;
 }
 
 .bottom-left {
-  bottom: calc((1rem * 3) / 7);
-  left: calc((1rem * 3) / 7);
+  bottom: 0.425rem;
+  left: 0.425rem;
 }
 
 .bottom-right {
-  bottom: calc((1rem * 3) / 7);
-  right: calc((1rem * 3) / 7);
+  bottom: 0.425rem;
+  right: 0.425rem;
 }

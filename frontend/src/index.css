@@ -10,7 +10,7 @@ body {
   margin: 0;
   background-color: black;
   color: var(--not-quite-steelblue);
-  font-size: calc((1.5rem * 3) / 7);
+  font-size: 0.75rem;
 }
 
 .clickable:active {
@@ -26,14 +26,14 @@ body {
 }
 
 button {
-  --button-padding: calc((1.5rem * 3) / 7);
-  --button-margin: calc((0rem * 3) / 7);
-  border-radius: calc((0.5rem * 3) / 7);
+  --button-padding: 0.75rem;
+  --button-margin: 0rem;
+  border-radius: 0.25rem;
   cursor: pointer;
   border: none;
   color: black;
   background-color: var(--not-quite-steelblue);
-  font-size: calc((1rem * 3) / 7);
+  font-size: 0.425rem;
   padding: var(--button-padding);
   margin: var(--button-margin);
   transition:
@@ -42,8 +42,8 @@ button {
 }
 
 button:not(:disabled):active {
-  margin: calc(var(--button-margin) + calc((0.5rem * 3) / 7));
-  padding: calc(var(--button-padding) - calc((0.5rem * 3) / 7));
+  margin: calc(var(--button-margin) + 0.25rem);
+  padding: calc(var(--button-padding) - 0.25rem);
 }
 
 button:disabled {

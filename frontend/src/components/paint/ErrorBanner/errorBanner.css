@@ -10,7 +10,7 @@
   overflow: hidden;
   background-color: pink;
   color: red;
-  font-size: calc((3rem * 3) / 7);
+  font-size: 1.25rem;
 }
 
 #scrolling-error-container {
@@ -18,7 +18,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: calc((1rem * 3) / 7) 0px;
+  padding: 0.425rem 0px;
   width: 80vw;
   height: var(--error-banner-container-height);
   overflow-x: hidden;
@@ -26,7 +26,7 @@
 }
 
 .error {
-  margin: calc((0.5rem * 3) / 7) 0px;
+  margin: 0.25rem 0px;
 }
 
 #error-banner-close {
@@ -35,7 +35,7 @@
   top: 5px;
   right: 5px;
   border-radius: 5px;
-  padding: calc((0.5rem * 3) / 7);
+  padding: 0.25rem;
 }
 
 #error-banner-close:active {

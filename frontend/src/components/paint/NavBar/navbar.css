@@ -33,5 +33,5 @@ nav {
 }
 
 .nav-button>span {
-  font-size: calc((4rem * 3) / 7);
+  font-size: 1.75rem;
 }
