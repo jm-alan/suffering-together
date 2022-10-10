@@ -1,16 +1,17 @@
 import React, { useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { clearModal, hideModal } from '../../../store/UX';
+
+import { clearModal, hideModal } from '../../../store/UX/modal';
 
 import './modal.css';
 
 export default function Modal () {
   const dispatch = useDispatch();
 
-  const showModal = useSelector(state => state.UX.showModal);
-  const modalMooring = useSelector(state => state.UX.modalMooring);
-  const Current = useSelector(state => state.UX.currentModal);
+  const showModal = useSelector(state => state.UX.modal.show);
+  const modalMooring = useSelector(state => state.UX.modal.mooring);
+  const Current = useSelector(state => state.UX.modal.current);
 
   const resist = e => {
     e.stopPropagation();

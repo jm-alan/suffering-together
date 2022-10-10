@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { devlog } from '../../../utils/logging';
-import { lockLoading, unlockLoading } from '../../../store/UX';
+import { lockLoading, unlockLoading } from '../../../store/UX/loading';
 
 export default function LoadingLock ({ name, children }) {
   const dispatch = useDispatch();

@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { signup } from '../../../store/session';
-import { setErrors } from '../../../store/errors';
+import { setErrors, showErrors } from '../../../store/UX/errors';
 import { onAny, onSuccess } from '../../../store/afterAuth';
-import { lockLoading, showErrors, unlockLoading } from '../../../store/UX';
+import { lockLoading, unlockLoading } from '../../../store/UX/loading';
 import {
   enableRebound,
   setReboundDestination,

@@ -4,7 +4,8 @@ import { Navigate } from 'react-router-dom';
 
 import LoadingLock from '../Loading/LoadingLock';
 import { getAllhouses } from '../../../store/houses';
-import { disablePlus, enablePlus, setModal, showModal } from '../../../store/UX';
+import { disablePlus, enablePlus } from '../../../store/UX/plus';
+import { setModal, showModal } from '../../../store/UX/modal';
 
 import './houses.css';
 

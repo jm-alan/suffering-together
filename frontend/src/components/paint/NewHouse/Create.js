@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import Checkbox from '../Checkbox';
 import csrfetch from '../../../utils/csrfetch';
 import { addHouse } from '../../../store/houses';
-import { lockLoading, unlockLoading } from '../../../store/UX';
+import { lockLoading, unlockLoading } from '../../../store/UX/loading';
 
 export default function Create () {
   const dispatch = useDispatch();

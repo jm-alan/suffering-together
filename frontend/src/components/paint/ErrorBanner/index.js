@@ -1,16 +1,15 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { clearErrors } from '../../../store/errors';
-import { hideErrors } from '../../../store/UX';
+import { clearErrors, hideErrors } from '../../../store/UX/errors';
 
 import './errorBanner.css';
 
 export default function ErrorBanner () {
   const dispatch = useDispatch();
 
-  const showErrors = useSelector(state => state.UX.showErrors);
-  const currentErrors = useSelector(state => state.errors.current);
+  const showErrors = useSelector(state => state.UX.errors.show);
+  const currentErrors = useSelector(state => state.UX.errors.current);
 
   const clearAndClose = () => {
     dispatch(clearErrors());

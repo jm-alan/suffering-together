@@ -2,9 +2,8 @@ import findCookie from './findCookie';
 import getApp from './getApp';
 import store from '../store';
 import paramKVParser from './paramKVParser';
-import { oops, setErrors } from '../store/errors';
-import { showErrors } from '../store/UX';
 import { silenceAsync } from './silcenceErrors';
+import { showErrors, setErrors, oops } from '../store/UX/errors';
 
 const getHeaders = () => ({
   'Content-Type': 'application/json',

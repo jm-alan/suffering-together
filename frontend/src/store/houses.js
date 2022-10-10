@@ -1,5 +1,5 @@
 import csrfetch from '../utils/csrfetch';
-import { clearModal, hideModal } from './UX';
+import { clearModal, hideModal } from './UX/modal';
 
 const SET_ALL = 'houses/SET_ALL';
 const SET_CURRENT = 'houses/SET_CURRENT';

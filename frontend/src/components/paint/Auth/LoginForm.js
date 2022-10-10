@@ -3,12 +3,12 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { login } from '../../../store/session';
 import { onAny, onSuccess } from '../../../store/afterAuth';
+import { lockLoading, unlockLoading } from '../../../store/UX/loading';
 import {
   setReboundDestination,
   setReboundOrigin,
   enableRebound
 } from '../../../store/rebound';
-import { lockLoading, unlockLoading } from '../../../store/UX';
 
 import './auth.css';
 

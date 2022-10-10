@@ -7,7 +7,7 @@ import TempLoadingPruner from './components/logic/TempLoadingPruner';
 import throttle from './utils/throttle';
 import protect from './utils/protect';
 import { restore } from './store/session';
-import { hidePlus, showPlus } from './store/UX';
+import { hidePlus, showPlus } from './store/UX/plus';
 
 import './index.css';
 

@@ -5,7 +5,7 @@ import { Provider, useDispatch } from 'react-redux';
 import LoadingLock from './components/paint/Loading/LoadingLock';
 import store from './store';
 import csrfetch from './utils/csrfetch';
-import { setMooring } from './store/UX';
+import { setMooring } from './store/UX/modal';
 
 import './utils/prototypes';
 

@@ -1,5 +1,5 @@
 import csrfetch from '../utils/csrfetch';
-import { clearErrors } from './errors';
+import { clearErrors } from './UX/errors';
 import { enableAfterAuth } from './afterAuth';
 
 const SET = 'session/SET';
