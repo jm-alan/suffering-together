@@ -11,6 +11,7 @@ nav {
 }
 
 .nav-button {
+  --nav-button-width: calc(100vw / 4);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -20,8 +21,9 @@ nav {
   height: var(--navbar-height);
   color: black;
   cursor: pointer;
-  max-width: calc(100vw / 5);
-  min-width: calc(100vw / 5);
+  width: var(--nav-button-width);
+  max-width: var(--nav-button-width);
+  min-width: var(--nav-button-width);
 }
 
 .nav-button:not(.first) {
