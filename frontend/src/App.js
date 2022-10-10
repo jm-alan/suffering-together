@@ -1,13 +1,11 @@
-import React, { lazy, useEffect, useRef, Suspense } from 'react';
+import React, { lazy, useEffect, Suspense } from 'react';
 import { useDispatch } from 'react-redux';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 
 import LoadingLock from './components/paint/Loading/LoadingLock';
 import TempLoadingPruner from './components/logic/TempLoadingPruner';
-import throttle from './utils/throttle';
 import protect from './utils/protect';
 import { restore } from './store/session';
-import { hidePlus, showPlus } from './store/UX/plus';
 
 import './index.css';
 
@@ -23,17 +21,6 @@ const FloatingPlusButton = lazy(() => import('./components/paint/FloatingPlusBut
 export default function App () {
   const dispatch = useDispatch();
 
-  const mutableScrollTracker = useRef(0);
-
-  const handleScroll = throttle('handleScroll', ({ target: { scrollTop } }) => {
-    if (scrollTop > mutableScrollTracker.current) {
-      dispatch(hidePlus());
-    } else if (scrollTop < mutableScrollTracker.current) {
-      dispatch(showPlus());
-    }
-    mutableScrollTracker.current = scrollTop;
-  }, 50);
-
   useEffect(() => {
     dispatch(restore());
   }, [dispatch]);
@@ -42,7 +29,7 @@ export default function App () {
     <>
       <BrowserRouter>
         <div id='main'>
-          <div id='router-container' onScroll={handleScroll}>
+          <div id='router-container'>
             <Routes>
               <Route
                 path='/'
