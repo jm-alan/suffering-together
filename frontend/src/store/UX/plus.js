@@ -2,7 +2,8 @@ const ENABLE = 'plus/ENABLE';
 const DISABLE = 'plus/DISABLE';
 const SHOW = 'plus/SHOW';
 const HIDE = 'plus/HIDE';
-const ACTION = 'plus/ACTION';
+const SET_ACTION = 'plus/SET_ACTION';
+const CLEAR_ACTION = 'plus/CLEAR_ACTION';
 
 export const enablePlus = () => ({
   type: ENABLE
@@ -21,12 +22,16 @@ export const hidePlus = () => ({
 });
 
 export const setPlusAction = action => ({
-  type: ACTION,
+  type: SET_ACTION,
   action
 });
 
+export const clearPlusAction = () => ({
+  type: CLEAR_ACTION
+});
+
 export default function reducer (
-  state = { enabled: false, show: false, action () {} },
+  state = { enabled: false, show: false, action: null },
   { type, action }
 ) {
   switch (type) {
@@ -50,10 +55,15 @@ export default function reducer (
         ...state,
         show: false
       };
-    case ACTION:
+    case SET_ACTION:
       return {
         ...state,
         action
+      };
+    case CLEAR_ACTION:
+      return {
+        ...state,
+        action: null
       };
     default:
       return state;

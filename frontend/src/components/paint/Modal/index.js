@@ -1,8 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { Suspense, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { clearModal, hideModal } from '../../../store/UX/modal';
+import LoadingLock from '../Loading/LoadingLock';
 
 import './modal.css';
 
@@ -50,7 +51,9 @@ export default function Modal () {
         >
           X
         </button>
-        <Current />
+        <Suspense fallback={<LoadingLock name='modal content' />}>
+          <Current />
+        </Suspense>
       </div>
     </div>,
     modalMooring

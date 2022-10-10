@@ -4,8 +4,13 @@ import { Navigate } from 'react-router-dom';
 
 import LoadingLock from '../Loading/LoadingLock';
 import { getAllhouses } from '../../../store/houses';
-import { disablePlus, enablePlus } from '../../../store/UX/plus';
 import { setModal, showModal } from '../../../store/UX/modal';
+import {
+  clearPlusAction,
+  hidePlus,
+  setPlusAction,
+  showPlus
+} from '../../../store/UX/plus';
 
 import './houses.css';
 
@@ -18,18 +23,21 @@ export default function Houses ({ houseSelected }) {
   const sessionLoaded = useSelector(state => state.session.loaded);
   const housesLoaded = useSelector(state => state.houses.allLoaded);
 
-  const popNewHouse = async () => {
-    dispatch(setModal(await import('../NewHouse')));
-    dispatch(showModal());
-  };
-
   useEffect(() => {
     if (sessionLoaded && user) dispatch(getAllhouses());
   }, [dispatch, sessionLoaded, user]);
 
   useEffect(() => {
-    if (houseSelected) dispatch(disablePlus());
-    else dispatch(enablePlus());
+    const popNewHouse = () => {
+      dispatch(setModal(lazy(() => import('../NewHouse'))));
+      dispatch(showModal());
+    };
+    dispatch(setPlusAction(popNewHouse));
+    dispatch(showPlus());
+    return () => {
+      dispatch(hidePlus());
+      dispatch(clearPlusAction());
+    };
   }, [dispatch, houseSelected]);
 
   if (sessionLoaded && !user) {
