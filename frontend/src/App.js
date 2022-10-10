@@ -18,6 +18,7 @@ const AuthMonitor = lazy(() => import('./components/logic/AuthMonitor'));
 const ReboundMonitor = lazy(() => import('./components/logic/ReboundMonitor'));
 const LoginForm = lazy(() => import('./components/paint/Auth/LoginForm'));
 const SignupForm = lazy(() => import('./components/paint/Auth/SignupForm'));
+const FloatingPlusButton = lazy(() => import('./components/paint/FloatingPlusButton'));
 
 export default function App () {
   const dispatch = useDispatch();
@@ -94,6 +95,9 @@ export default function App () {
           <ReboundMonitor />
         </Suspense>
       </BrowserRouter>
+      <Suspense fallback={<LoadingLock name='residences floating plus' />}>
+        <FloatingPlusButton />
+      </Suspense>
       <Suspense fallback={<LoadingLock name='auth monitor' />}>
         <AuthMonitor />
       </Suspense>

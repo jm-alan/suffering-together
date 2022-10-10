@@ -8,7 +8,6 @@ import { disablePlus, enablePlus, setModal, showModal } from '../../../store/UX'
 
 import './houses.css';
 
-const FloatingPlusButton = lazy(() => import('../FloatingPlusButton'));
 const SlidingHouseContainer = lazy(() => import('./SlidingHouseContainer'));
 
 export default function Houses ({ houseSelected }) {
@@ -38,9 +37,6 @@ export default function Houses ({ houseSelected }) {
 
   return (
     <>
-      <Suspense fallback={<LoadingLock name='residences floating plus' />}>
-        <FloatingPlusButton onClick={popNewHouse} />
-      </Suspense>
       {housesLoaded
         ? (
           <Suspense fallback={<LoadingLock name='residences sliding container' />}>
