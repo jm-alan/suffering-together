@@ -4,6 +4,8 @@ const SHOW = 'plus/SHOW';
 const HIDE = 'plus/HIDE';
 const SET_ACTION = 'plus/SET_ACTION';
 const CLEAR_ACTION = 'plus/CLEAR_ACTION';
+const SET_CONTROLLER = 'plus/SET_CONTROLLER';
+const CLEAR_CONTROLLER = 'plus/CLEAR_CONTROLLER';
 
 export const enablePlus = () => ({
   type: ENABLE
@@ -30,9 +32,23 @@ export const clearPlusAction = () => ({
   type: CLEAR_ACTION
 });
 
+export const setPlusController = controller => ({
+  type: SET_CONTROLLER,
+  controller
+});
+
+export const clearPlusController = () => ({
+  type: CLEAR_CONTROLLER
+});
+
 export default function reducer (
-  state = { enabled: false, show: false, action: null },
-  { type, action }
+  state = {
+    enabled: false,
+    show: false,
+    action: null,
+    controller: null
+  },
+  { type, action, controller }
 ) {
   switch (type) {
     case ENABLE:
@@ -64,6 +80,16 @@ export default function reducer (
       return {
         ...state,
         action: null
+      };
+    case SET_CONTROLLER:
+      return {
+        ...state,
+        controller
+      };
+    case CLEAR_CONTROLLER:
+      return {
+        ...state,
+        controller: null
       };
     default:
       return state;
