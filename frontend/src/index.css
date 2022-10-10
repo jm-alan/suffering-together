@@ -13,16 +13,22 @@ body {
   font-size: 0.75rem;
 }
 
-.clickable:active {
-  color: white !important;
-  background-color: var(--active-highlight);
-}
-
 *,
 *::before,
 *::after {
   box-sizing: border-box;
   font-family: 'Google Sans';
+}
+
+*:is(:active, :focus),
+*::before:is(:active, :focus),
+*::after:is(:active, :focus) {
+  outline: none;
+}
+
+.clickable:active {
+  color: white !important;
+  background-color: var(--active-highlight);
 }
 
 button {
