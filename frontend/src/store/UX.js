@@ -86,8 +86,7 @@ export default function reducer (
     loadingLock: 0,
     onUnlock: {},
     showPlus: true,
-    enablePlus: true,
-    afterAuth: []
+    enablePlus: true
   },
   {
     type,
