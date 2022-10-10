@@ -29,7 +29,6 @@ export default function NavBar () {
       <nav>
         <NavButton icon={leftButtonIcon} destination={leftButtonDestination} first />
         <NavButton icon='people' destination='/residences' />
-        <NavButton icon='add' onClick={() => {}} />
         <NavButton icon='history' destination='/expenses' />
         <NavButton icon='settings' destination='/settings' last />
       </nav>
