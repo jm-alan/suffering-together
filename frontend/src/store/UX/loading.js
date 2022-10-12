@@ -1,17 +1,16 @@
-import { devlog } from '../../utils/logging';
-
 const LOCK = 'loading/LOCK';
 const UNLOCK = 'loading/UNLOCK';
 
-export const lockLoading = (unlockKey, onUnlock = () => {}) => {
-  devlog(`lockLoading called by ${unlockKey}`);
-  return { type: LOCK, unlockKey, onUnlock };
-};
+export const lockLoading = (unlockKey, onUnlock = () => {}) => ({
+  type: LOCK,
+  unlockKey,
+  onUnlock
+});
 
-export const unlockLoading = unlockKey => {
-  devlog(`unlockLoading called by ${unlockKey}`);
-  return { type: UNLOCK, unlockKey };
-};
+export const unlockLoading = unlockKey => ({
+  type: UNLOCK,
+  unlockKey
+});
 
 export default function reducer (
   state = { lock: 0, onUnlock: {} },

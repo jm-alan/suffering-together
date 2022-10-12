@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
 import Checkbox from '../Checkbox';
+import LoadingLock from '../Loading/LoadingLock';
 import csrfetch from '../../../utils/csrfetch';
 import { addHouse } from '../../../store/houses';
-import { lockLoading, unlockLoading } from '../../../store/UX/loading';
 
 export default function Create () {
   const dispatch = useDispatch();
@@ -12,6 +12,7 @@ export default function Create () {
   const [name, setName] = useState('');
   const [joinCode, setJoinCode] = useState('');
   const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
   const [hasPassword, setHasPassword] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [shouldGetRandomJoinCode, setShouldGetRandomJoinCode] = useState(false);
@@ -28,7 +29,7 @@ export default function Create () {
 
   useEffect(() => {
     if (shouldGetRandomJoinCode) {
-      dispatch(lockLoading('joincode'));
+      setLoading(true);
       (async () => {
         const { code } = await csrfetch.get(
           '/api/utils/random',
@@ -36,7 +37,7 @@ export default function Create () {
         );
         setRandomJoinCode(code);
         setShouldGetRandomJoinCode(false);
-        dispatch(unlockLoading('joincode'));
+        setLoading(false);
       })();
     }
   }, [shouldGetRandomJoinCode, setRandomJoinCode, setShouldGetRandomJoinCode]);
@@ -48,54 +49,57 @@ export default function Create () {
   }, [randomJoinCode, joinCode, setJoinCode]);
 
   return (
-    <form className='new-item-form houses' onSubmit={handleSubmit}>
-      <input
-        className='new-item-input'
-        type='text'
-        placeholder='Residence Name'
-        minLength={5}
-        value={name}
-        onChange={({ target: { value } }) => {
-          setName(value);
-          if (value && (value.length >= 5) && !joinCode) {
-            setShouldGetRandomJoinCode(true);
-          }
-        }}
-        required
-      />
-      <input
-        className='new-item-input'
-        type='text'
-        placeholder='Join Code'
-        value={joinCode}
-        onChange={({ target: { value } }) => setJoinCode(value)}
-      />
-      <Checkbox
-        label='Set a password?'
-        value={hasPassword}
-        valueSetter={setHasPassword}
-      />
-      {hasPassword
-        ? (
-          <>
-            <input
-              className='new-item-input'
-              type={showPassword ? 'text' : 'password'}
-              placeholder='Password'
-              value={password}
-              onChange={({ target: { value } }) => setPassword(value)}
-            />
-            <Checkbox
-              label='Show password'
-              value={showPassword}
-              valueSetter={setShowPassword}
-            />
-          </>
-          )
-        : null}
-      <button className='new-item-button submit' type='submit'>
-        Create Residence
-      </button>
-    </form>
+    <>
+      <form className='new-item-form houses' onSubmit={handleSubmit}>
+        <input
+          className='new-item-input'
+          type='text'
+          placeholder='Residence Name'
+          minLength={5}
+          value={name}
+          onChange={({ target: { value } }) => {
+            setName(value);
+            if (value && (value.length >= 5) && !joinCode) {
+              setShouldGetRandomJoinCode(true);
+            }
+          }}
+          required
+        />
+        <input
+          className='new-item-input'
+          type='text'
+          placeholder='Join Code'
+          value={joinCode}
+          onChange={({ target: { value } }) => setJoinCode(value)}
+        />
+        <Checkbox
+          label='Set a password?'
+          value={hasPassword}
+          valueSetter={setHasPassword}
+        />
+        {hasPassword
+          ? (
+            <>
+              <input
+                className='new-item-input'
+                type={showPassword ? 'text' : 'password'}
+                placeholder='Password'
+                value={password}
+                onChange={({ target: { value } }) => setPassword(value)}
+              />
+              <Checkbox
+                label='Show password'
+                value={showPassword}
+                valueSetter={setShowPassword}
+              />
+            </>
+            )
+          : null}
+        <button className='new-item-button submit' type='submit'>
+          Create Residence
+        </button>
+      </form>
+      {loading && <LoadingLock name='join code' />}
+    </>
   );
 }
