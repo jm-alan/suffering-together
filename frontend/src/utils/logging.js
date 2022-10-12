@@ -1,17 +1,5 @@
-export const devlog = (...args) => {
-  if (process.env.NODE_ENV === 'development') {
-    console.log(...args);
-  }
-};
+export const devlog = process.env.NODE_ENV === 'development' ? console.log.bind(window.console) : () => {};
 
-export const devwarn = (...args) => {
-  if (process.env.NODE_ENV === 'development') {
-    console.warn(...args);
-  }
-};
+export const devwarn = process.env.NODE_ENV === 'development' ? console.warn.bind(window.console) : () => {};
 
-export const deverr = (...args) => {
-  if (process.env.NODE_ENV === 'development') {
-    console.error(...args);
-  }
-};
+export const deverr = process.env.NODE_ENV === 'development' ? console.error.bind(window.console) : () => {};
