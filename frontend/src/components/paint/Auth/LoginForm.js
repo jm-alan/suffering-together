@@ -1,16 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Navigate } from 'react-router-dom';
 
+import LoadingLock from '../Loading/LoadingLock';
 import { login } from '../../../store/session';
 import { onAny, onSuccess } from '../../../store/afterAuth';
-import {
-  setReboundDestination,
-  setReboundOrigin,
-  enableRebound
-} from '../../../store/rebound';
+import { enableFinal, enableInterim, setInterimURL } from '../../../store/rebound';
 
 import './auth.css';
-import LoadingLock from '../Loading/LoadingLock';
 
 export default function LoginForm () {
   const dispatch = useDispatch();
@@ -19,26 +16,25 @@ export default function LoginForm () {
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const reboundOrigin = useSelector(state => state.rebound.originalDestination);
+  const user = useSelector(state => state.session.user);
+
+  const handleSignupNavigate = () => {
+    dispatch(setInterimURL('/signup'));
+    dispatch(enableInterim());
+  };
 
   const handleSubmit = e => {
     e.preventDefault();
     setLoading(true);
     dispatch(onAny(() => setLoading(false)));
+    dispatch(onSuccess(() => {
+      console.log('enabling final navigation in login');
+      dispatch(enableFinal());
+    }));
     dispatch(login({ email, password }));
   };
 
-  const handleSignupNavigate = () => {
-    dispatch(setReboundDestination('/signup', true));
-  };
-
-  useEffect(() => {
-    if (!reboundOrigin) dispatch(setReboundOrigin('/home'));
-  }, [dispatch, reboundOrigin]);
-
-  useEffect(() => {
-    if (reboundOrigin) dispatch(onSuccess(() => dispatch(enableRebound())));
-  }, [dispatch, reboundOrigin]);
+  if (user) return <Navigate to='/home' />;
 
   return (
     <>

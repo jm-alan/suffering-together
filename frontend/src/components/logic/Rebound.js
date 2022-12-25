@@ -2,19 +2,21 @@ import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
 import {
-  setReboundDestination,
-  setReboundOrigin
+  setInterimURL,
+  setFinalURL,
+  enableInterim
 } from '../../store/rebound';
 import { devlog } from '../../utils/logging';
 
-export default function Rebound ({ from: startingLocation, to: finalLocation }) {
+export default function Rebound ({ interimURL, finalURL }) {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    devlog(`<Rebound /> from ${startingLocation} to ${finalLocation} mounting`);
-    dispatch(setReboundOrigin(startingLocation));
-    dispatch(setReboundDestination(finalLocation));
-  }, [dispatch, startingLocation, finalLocation]);
+    devlog(`<Rebound /> interim: ${interimURL} final: ${finalURL}`);
+    dispatch(setInterimURL(interimURL));
+    dispatch(setFinalURL(finalURL));
+    dispatch(enableInterim());
+  }, [dispatch, interimURL, finalURL]);
 
   return null;
 }

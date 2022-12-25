@@ -5,12 +5,7 @@ import { Route } from 'react-router-dom';
 import Rebound from '../components/logic/Rebound';
 import LoadingLock from '../components/paint/Loading/LoadingLock';
 
-/**
- *
- * @param {string} path
- * @param {JSX.Element | JSX.Element[]} children
- */
-export default function protect (path, children) {
+export default function protect (path, elements) {
   const user = useSelector(state => state.session.user);
   const loaded = useSelector(state => state.session.loaded);
 
@@ -19,8 +14,8 @@ export default function protect (path, children) {
       path={path}
       element={loaded
         ? user
-          ? children
-          : <Rebound from={path} to='/login' />
+          ? elements
+          : <Rebound interimURL='/login' finalURL={path} />
         : <LoadingLock name={`${path} pending session restore`} />}
     />
   );

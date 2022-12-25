@@ -1,97 +1,100 @@
-const SET_ORIGINAL = 'rebound/SET_ORIGINAL';
-const SET_NEW = 'rebound/SET_NEW';
-const CLEAR_ORIGINAL = 'rebound/CLEAR_ORIGINAL';
-const CLEAR_NEW = 'rebound/CLEAR_NEW';
-const ENABLE = 'rebound/ENABLE';
-const DISABLE = 'rebound/DISABLE';
+const SET_INTERIM = 'rebound/SET_INTERIM';
+const SET_FINAL = 'rebound/SET_FINAL';
+const LOCK = 'rebound/LOCK';
+const UNLOCK = 'rebound/UNLOCK';
+const ENABLE_INTERIM = 'rebound/ENABLE_INTERIM';
+const DISABLE_INTERIM = 'rebound/DISABLE_INTERIM';
+const ENABLE_FINAL = 'rebound/ENABLE_FINAL';
+const DISABLE_FINAL = 'rebound/DISABLE_FINAL';
 
-/**
- * Sets the location to which the rebound process should navigate
- * once enabled, i.e. after the user has completed some action
- * @param {string} originalDestination
- * @param {boolean} force
- */
-export const setReboundOrigin = (originalDestination, force = false) => ({
-  type: SET_ORIGINAL,
-  originalDestination,
-  force
+export const setInterimURL = (interimURL = null) => ({
+  type: SET_INTERIM,
+  interimURL
 });
 
-export const clearReboundOrigin = () => ({
-  type: CLEAR_ORIGINAL
+export const setFinalURL = (finalURL = null) => ({
+  type: SET_FINAL,
+  finalURL
 });
 
-/**
- * Sets the location to which the rebound process should navigate
- * while disabled, i.e. while the user completes some action
- * @param {string} newDestination
- * @param {boolean} force
- */
-export const setReboundDestination = (newDestination, force = false) => ({
-  type: SET_NEW,
-  newDestination,
-  force
+export const enableInterim = () => ({
+  type: ENABLE_INTERIM
 });
 
-export const clearReboundDestination = () => ({
-  type: CLEAR_NEW
+export const disableInterim = () => ({
+  type: DISABLE_INTERIM
 });
 
-export const enableRebound = () => ({
-  type: ENABLE
+export const enableFinal = () => ({
+  type: ENABLE_FINAL
 });
 
-export const disableRebound = () => ({
-  type: DISABLE
+export const disableFinal = () => ({
+  type: DISABLE_FINAL
+});
+
+export const lockRebound = () => ({
+  type: LOCK
+});
+
+export const unlockRebound = () => ({
+  type: UNLOCK
 });
 
 export default function reducer (
   state = {
-    originalDestination: null,
-    newDestination: null,
-    enabled: false
+    interimURL: null,
+    finalURL: null,
+    interimEnabled: false,
+    finalEnabled: false,
+    locked: false
   },
   {
     type,
-    originalDestination,
-    newDestination,
-    force
+    interimURL,
+    finalURL
   }
 ) {
   switch (type) {
-    case SET_ORIGINAL:
-      if (force || !state.originalDestination) {
-        return {
-          ...state,
-          originalDestination
-        };
-      } else return state;
-    case CLEAR_ORIGINAL:
+    case SET_INTERIM:
       return {
         ...state,
-        originalDestination: null
+        interimURL
       };
-    case SET_NEW:
-      if (force || !state.newDestination) {
-        return {
-          ...state,
-          newDestination
-        };
-      } else return state;
-    case CLEAR_NEW:
+    case SET_FINAL:
       return {
         ...state,
-        newDestination
+        finalURL
       };
-    case ENABLE:
+    case LOCK:
       return {
         ...state,
-        enabled: true
+        locked: true
       };
-    case DISABLE:
+    case UNLOCK:
       return {
         ...state,
-        enabled: false
+        locked: false
+      };
+    case ENABLE_INTERIM:
+      return {
+        ...state,
+        interimEnabled: true
+      };
+    case DISABLE_INTERIM:
+      return {
+        ...state,
+        interimEnabled: false
+      };
+    case ENABLE_FINAL:
+      return {
+        ...state,
+        finalEnabled: true
+      };
+    case DISABLE_FINAL:
+      return {
+        ...state,
+        finalEnabled: false
       };
     default:
       return state;

@@ -1,28 +1,25 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Navigate } from 'react-router-dom';
 
+import LoadingLock from '../Loading/LoadingLock';
 import { signup } from '../../../store/session';
 import { onAny, onSuccess } from '../../../store/afterAuth';
 import { setErrors, showErrors } from '../../../store/UX/errors';
-import {
-  enableRebound,
-  setReboundDestination,
-  setReboundOrigin
-} from '../../../store/rebound';
+import { enableFinal, enableInterim, setInterimURL } from '../../../store/rebound';
 
 import './auth.css';
-import LoadingLock from '../Loading/LoadingLock';
 
 export default function SignupForm () {
   const dispatch = useDispatch();
-
-  const reboundOrigin = useSelector(state => state.rebound.originalDestination);
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [firstName, setFirstName] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [loading, setLoading] = useState(false);
+
+  const user = useSelector(state => state.session.user);
 
   const handleSubmit = e => {
     e.preventDefault();
@@ -34,21 +31,20 @@ export default function SignupForm () {
     } else {
       setLoading(true);
       dispatch(onAny(() => setLoading(false)));
+      dispatch(onSuccess(() => {
+        console.log('enabling final navigation in signup');
+        dispatch(enableFinal());
+      }));
       dispatch(signup({ firstName, email, password }));
     }
   };
 
   const handleLoginNavigate = () => {
-    dispatch(setReboundDestination('/login', true));
+    dispatch(setInterimURL('/login'));
+    dispatch(enableInterim());
   };
 
-  useEffect(() => {
-    if (!reboundOrigin) dispatch(setReboundOrigin('/home'));
-  }, [dispatch, reboundOrigin]);
-
-  useEffect(() => {
-    if (reboundOrigin) dispatch(onSuccess(() => dispatch(enableRebound())));
-  }, [dispatch, reboundOrigin]);
+  if (user) return <Navigate to='/home' />;
 
   return (
     <>
