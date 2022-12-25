@@ -71,7 +71,7 @@ export default function LoginForm () {
           type='button'
           onClick={handleSignupNavigate}
         >
-          Dont' have an account?<br />Sign up here
+          Don't have an account?<br />Sign up here
         </button>
       </form>
       {loading && <LoadingLock name='login' />}
