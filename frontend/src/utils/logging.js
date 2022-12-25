@@ -8,7 +8,5 @@ export const deverr = process.env.NODE_ENV === 'development' ? console.error.bin
 
 export const useLogger = (argObject) => {
   const vals = Object.values(argObject);
-  useEffect(() => {
-    devlog(argObject);
-  }, [...vals]);
+  useEffect(() => devlog(argObject), [...vals]);
 };
