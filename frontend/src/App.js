@@ -42,8 +42,8 @@ export default function App () {
                 protectedRoute(undefined, loadingLockable(NavigableHouses, 'residenses::index'), [], true),
                 protectedRoute('add', loadingLockable(NavigableHouses, 'residences::add', { adding: true })),
                 protectedRoute('new', loadingLockable(NavigableHouses, 'residences::new', { creating: true })),
-                protectedRoute('join', loadingLockable(NavigableHouses, 'residences::join', { joining: true }))
-                // protectedRoute(':houseID', loadingLockable(Houses, 'residences::id'))
+                protectedRoute('join', loadingLockable(NavigableHouses, 'residences::join', { joining: true })),
+                protectedRoute(':houseID', loadingLockable(Houses, 'residences::id'))
               ])}
               <Route path='*' element={<Navigate to='home' />} />
             </Routes>
