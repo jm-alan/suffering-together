@@ -12,6 +12,7 @@ export default function Modal () {
 
   const showModal = useSelector(state => state.UX.modal.show);
   const modalMooring = useSelector(state => state.UX.modal.mooring);
+  const onClose = useSelector(state => state.UX.modal.onClose);
   const Current = useSelector(state => state.UX.modal.current);
 
   const resist = e => {
@@ -19,6 +20,7 @@ export default function Modal () {
   };
 
   const clearAndClose = () => {
+    onClose && onClose();
     dispatch(clearModal());
     dispatch(hideModal());
   };
@@ -26,8 +28,7 @@ export default function Modal () {
   useEffect(() => {
     const handleEscape = ({ keyCode }) => {
       if (keyCode === 27) {
-        dispatch(clearModal());
-        dispatch(hideModal());
+        clearAndClose();
       }
     };
     document.addEventListener('keydown', handleEscape);
