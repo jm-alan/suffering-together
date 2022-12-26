@@ -13,7 +13,9 @@ export default function Modal () {
   const showModal = useSelector(state => state.UX.modal.show);
   const modalMooring = useSelector(state => state.UX.modal.mooring);
   const onClose = useSelector(state => state.UX.modal.onClose);
-  const Current = useSelector(state => state.UX.modal.current);
+  const current = useSelector(state => state.UX.modal.current);
+
+  const Component = typeof current === 'function' ? current : () => current;
 
   const resist = e => {
     e.stopPropagation();
@@ -37,7 +39,7 @@ export default function Modal () {
     };
   }, [dispatch]);
 
-  return showModal && Current && createPortal(
+  return showModal && Component && createPortal(
     <div
       id='modal-background'
       onClick={clearAndClose}
@@ -53,7 +55,7 @@ export default function Modal () {
           X
         </button>
         <Suspense fallback={<LoadingLock name='modal content' />}>
-          <Current />
+          <Component />
         </Suspense>
       </div>
     </div>,
