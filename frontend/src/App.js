@@ -8,6 +8,7 @@ import { restore } from './store/session';
 
 import './index.css';
 import loadingLockable from './utils/renderControls/loadingLockable';
+import NavigableHouses from './components/paint/Houses/NavigableHouses';
 
 const Home = lazy(() => import('./components/paint/Home'));
 const Houses = lazy(() => import('./components/paint/Houses'));
@@ -37,9 +38,11 @@ export default function App () {
               {protectedRoute('home', loadingLockable(<Home />, 'home'))}
               {protectedRoute('me', loadingLockable(<h1>Coming Soon!</h1>, 'me'))}
               {protectedRoute('residences', loadingLockable(<Houses />, 'residences'), [
-                protectedRoute('new', loadingLockable(<Houses creating />, 'residences::new')),
-                protectedRoute('join', loadingLockable(<Houses joining />, 'residences::join')),
-                protectedRoute(':houseID', loadingLockable(<Houses selected />, 'residences::id'))
+                protectedRoute(undefined, loadingLockable(<NavigableHouses />, 'residenses::index'), [], true),
+                protectedRoute('add', loadingLockable(<NavigableHouses adding />, 'residences::add')),
+                protectedRoute('new', loadingLockable(<NavigableHouses creating />, 'residences::new')),
+                protectedRoute('join', loadingLockable(<NavigableHouses joining />, 'residences::join'))
+                // protectedRoute(':houseID', loadingLockable(<Houses selected />, 'residences::id'))
               ])}
               <Route path='*' element={<Navigate to='home' />} />
             </Routes>
