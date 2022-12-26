@@ -2,10 +2,6 @@
   --floater-font-size: 1.75rem;
   --floater-side: calc(var(--floater-font-size) * 2);
   --floater-offset: 1.25rem;
-  min-height: var(--floater-side);
-  max-height: var(--floater-side);
-  min-width: var(--floater-side);
-  max-width: var(--floater-side);
   position: fixed;
   right: var(--floater-offset);
   z-index: 0;
