@@ -5,12 +5,13 @@ import { Route } from 'react-router-dom';
 import Rebound from '../../components/logic/Rebound';
 import LoadingLock from '../../components/paint/Loading/LoadingLock';
 
-export default function protect (path, elements, subroutes = []) {
+export default function protect (path, elements, subroutes = [], index = false) {
   const user = useSelector(state => state.session.user);
   const loaded = useSelector(state => state.session.loaded);
 
   return (
     <Route
+      index={index}
       key={path}
       path={path}
       element={loaded
