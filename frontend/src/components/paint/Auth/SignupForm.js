@@ -31,10 +31,7 @@ export default function SignupForm () {
     } else {
       setLoading(true);
       dispatch(onAny(() => setLoading(false)));
-      dispatch(onSuccess(() => {
-        console.log('enabling final navigation in signup');
-        dispatch(enableFinal());
-      }));
+      dispatch(onSuccess(() => dispatch(enableFinal())));
       dispatch(signup({ firstName, email, password }));
     }
   };

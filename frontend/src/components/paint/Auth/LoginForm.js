@@ -27,10 +27,7 @@ export default function LoginForm () {
     e.preventDefault();
     setLoading(true);
     dispatch(onAny(() => setLoading(false)));
-    dispatch(onSuccess(() => {
-      console.log('enabling final navigation in login');
-      dispatch(enableFinal());
-    }));
+    dispatch(onSuccess(() => dispatch(enableFinal())));
     dispatch(login({ email, password }));
   };
 
