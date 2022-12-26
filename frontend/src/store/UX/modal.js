@@ -3,6 +3,7 @@ const HIDE = 'modal/SHOW';
 const SET = 'modal/SET';
 const CLEAR = 'modal/CLEAR';
 const MOORING = 'modal/MOORING';
+const ON_CLOSE = 'modal/ON_CLOSE';
 
 export const showModal = () => ({
   type: SHOW
@@ -26,9 +27,14 @@ export const setMooring = mooring => ({
   mooring
 });
 
+export const setOnClose = (onClose = null) => ({
+  type: ON_CLOSE,
+  onClose
+});
+
 export default function reducer (
-  state = { current: null, show: false, mooring: null },
-  { type, mooring, current }
+  state = { current: null, show: false, mooring: null, onClose: null },
+  { type, mooring, current, onClose }
 ) {
   switch (type) {
     case SHOW:
@@ -55,6 +61,11 @@ export default function reducer (
       return {
         ...state,
         mooring
+      };
+    case ON_CLOSE:
+      return {
+        ...state,
+        onClose
       };
     default:
       return state;
