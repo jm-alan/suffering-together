@@ -4,17 +4,19 @@ import { useDispatch } from 'react-redux';
 import { devlog } from '../../../utils/logging';
 import { lockLoading, unlockLoading } from '../../../store/UX/loading';
 
-export default function LoadingLock ({ name, children }) {
+export default function LoadingLock ({ name, item, children }) {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    devlog(`<LoadingLock /> for ${name} mounting`);
-    dispatch(lockLoading(name, children));
+    const identifier = name ?? item;
+    const uniqueIdentifier = Symbol(identifier);
+    devlog('<LoadingLock /> for', uniqueIdentifier, 'mounting');
+    dispatch(lockLoading(uniqueIdentifier, children));
     return () => {
-      devlog(`<LoadingLock /> for ${name} unmounting`);
-      dispatch(unlockLoading(name));
+      devlog('<LoadingLock /> for', uniqueIdentifier, 'unmounting');
+      dispatch(unlockLoading(uniqueIdentifier));
     };
-  }, [dispatch, name, children]);
+  }, [dispatch, item, children]);
 
   return null;
 }
