@@ -13,7 +13,6 @@ export default function Create () {
   const [joinCode, setJoinCode] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
-  const [hasPassword, setHasPassword] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [shouldGetRandomJoinCode, setShouldGetRandomJoinCode] = useState(false);
   const [randomJoinCode, setRandomJoinCode] = useState(null);
@@ -23,7 +22,7 @@ export default function Create () {
     dispatch(addHouse({
       name,
       joinCode,
-      password: hasPassword ? password : null
+      password
     }));
   };
 
@@ -72,29 +71,24 @@ export default function Create () {
           value={joinCode}
           onChange={({ target: { value } }) => setJoinCode(value)}
         />
-        <Checkbox
-          label='Set a password?'
-          value={hasPassword}
-          valueSetter={setHasPassword}
-        />
-        {hasPassword
-          ? (
-            <>
-              <input
-                className='new-item-input'
-                type={showPassword ? 'text' : 'password'}
-                placeholder='Password'
-                value={password}
-                onChange={({ target: { value } }) => setPassword(value)}
-              />
-              <Checkbox
-                label='Show password'
-                value={showPassword}
-                valueSetter={setShowPassword}
-              />
-            </>
-            )
-          : null}
+        <div className='password-visibility-organizer'>
+          <input
+            className='new-item-input'
+            type={showPassword ? 'text' : 'password'}
+            placeholder='Password'
+            value={password}
+            onChange={({ target: { value } }) => setPassword(value)}
+          />
+          <Checkbox
+            className='password-visibility-toggle'
+            disableLabel
+            disableOutline
+            label='Show password'
+            value={showPassword}
+            valueSetter={setShowPassword}
+            customIndicator={['visibility', 'visibility_off']}
+          />
+        </div>
         <button className='new-item-button submit' type='submit'>
           Create Residence
         </button>

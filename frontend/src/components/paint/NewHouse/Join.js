@@ -26,9 +26,10 @@ export default function Join () {
       <input
         className='new-item-input join-residence'
         type='password'
-        placeholder='Password (optional)'
+        placeholder='Password'
         value={password}
         onChange={({ target: { value } }) => setPassword(value)}
+        required
       />
       <button id='join-residence-submit' type='submit'>
         Join

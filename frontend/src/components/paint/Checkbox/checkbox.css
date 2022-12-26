@@ -4,7 +4,20 @@
   justify-content: space-between;
 }
 
+.checkbox-organizer.bare> :is(.custom-checkbox, .custom-checkbox.checked) {
+  border: none;
+  height: unset;
+  width: unset;
+  background-color: transparent;
+  color: black;
+}
+
+.checkbox-organizer.unlabeled>span.checkbox-title {
+  display: none;
+}
+
 .custom-checkbox {
+  cursor: pointer;
   height: 1.25rem;
   width: 1.25rem;
   border: 1px solid black;

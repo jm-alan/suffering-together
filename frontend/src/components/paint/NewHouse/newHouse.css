@@ -72,8 +72,12 @@
 }
 
 .new-item-form>* {
+  --form-width: calc(80vw - 1.75rem);
+  width: var(--form-width);
+}
+
+.new-item-form :is(input, button) {
   color: black;
-  width: calc(80vw - 1.75rem);
   font-size: 1.25rem;
 }
 
@@ -95,4 +99,22 @@
 .new-item-button.submit {
   background-color: black;
   color: var(--not-quite-steelblue);
+}
+
+.password-visibility-organizer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.password-visibility-organizer>input {
+  width: calc(var(--form-width) - 1.5rem);
+}
+
+.password-visibility-organizer>.password-visibility-toggle {
+  width: 1.5rem;
+  justify-content: center;
+}
+
+.password-visibility-organizer>.password-visibility-toggle>.custom-checkbox>span {
+  font-size: 1.5rem;
 }
