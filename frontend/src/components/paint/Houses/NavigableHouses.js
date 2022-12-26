@@ -4,7 +4,7 @@ import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 
 import LoadingLock from '../Loading/LoadingLock';
 import { getAllhouses } from '../../../store/houses';
-import { clearModal, hideModal, setModal, showModal } from '../../../store/UX/modal';
+import { clearModal, hideModal, setModal, setOnClose, showModal } from '../../../store/UX/modal';
 import {
   clearPlusAction,
   hidePlus,
@@ -42,6 +42,7 @@ export default function NavigableHouses ({ adding = false, creating = false, joi
 
   useEffect(() => {
     if (adding) {
+      dispatch(setOnClose(() => navigate('/residences')));
       dispatch(setModal(lazy(() => import('../NewHouse'))));
       dispatch(showModal());
     }
