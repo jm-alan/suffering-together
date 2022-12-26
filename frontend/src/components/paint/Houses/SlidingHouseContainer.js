@@ -6,12 +6,12 @@ import AllHouses from './AllHouses';
 import CurrentHouse from './CurrentHouse';
 import EnablePlus from '../../logic/EnablePlus';
 
-export default function SlidingHouseContainer ({ houseSelected = false }) {
+export default function SlidingHouseContainer ({ selected = false }) {
   const { houseID } = useParams();
 
-  const isUUID = !!houseSelected && !!houseID && !!houseID.match(UUIDpattern);
+  const isUUID = !!selected && !!houseID && !!houseID.match(UUIDpattern);
 
-  if (houseSelected && !isUUID) {
+  if (selected && !isUUID) {
     return <Navigate to='/residences' />;
   }
 
@@ -19,11 +19,11 @@ export default function SlidingHouseContainer ({ houseSelected = false }) {
     <div id='residence-scroll-control'>
       <div
         id='residence-sliding-container'
-        className={houseSelected ? 'reveal' : 'hide'}
+        className={selected ? 'reveal' : 'hide'}
       >
         <AllHouses />
         <CurrentHouse />
-        {houseSelected ? null : <EnablePlus />}
+        {selected ? null : <EnablePlus />}
       </div>
     </div>
   );

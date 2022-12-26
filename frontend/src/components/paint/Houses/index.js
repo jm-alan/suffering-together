@@ -16,7 +16,7 @@ import './houses.css';
 
 const SlidingHouseContainer = lazy(() => import('./SlidingHouseContainer'));
 
-export default function Houses ({ houseSelected }) {
+export default function Houses ({ creating, joining, selected }) {
   const dispatch = useDispatch();
 
   const user = useSelector(state => state.session.user);
@@ -38,7 +38,7 @@ export default function Houses ({ houseSelected }) {
       dispatch(hidePlus());
       dispatch(clearPlusAction());
     };
-  }, [dispatch, houseSelected]);
+  }, [dispatch]);
 
   if (sessionLoaded && !user) {
     return <Navigate to='/login' />;
@@ -49,7 +49,7 @@ export default function Houses ({ houseSelected }) {
       {housesLoaded
         ? (
           <Suspense fallback={<LoadingLock name='residences sliding container' />}>
-            <SlidingHouseContainer houseSelected={houseSelected} />
+            <SlidingHouseContainer selected={selected} />
           </Suspense>
           )
         : <LoadingLock name='houses list fetch' />}
