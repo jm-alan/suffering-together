@@ -1,9 +1,10 @@
-import React, { useEffect, useRef, useState } from 'react';
-
-import Join from './Join';
-import Create from './Create';
+import React, { lazy, useEffect, useRef, useState } from 'react';
+import loadingLockable from '../../../utils/renderControls/loadingLockable';
 
 import './newHouse.css';
+
+const Join = lazy(() => import('./Join'));
+const Create = lazy(() => import('./Create'));
 
 export default function NewHouse ({ creating, joining }) {
   const [shouldShowCreate, setShouldShowCreate] = useState(creating);
@@ -79,8 +80,8 @@ export default function NewHouse ({ creating, joining }) {
             </div>
           </div>
           <div className='new-house-sliding-subcontainer'>
-            {shouldShowCreate && <Create />}
-            {shouldShowJoin && <Join />}
+            {shouldShowCreate && loadingLockable(Create, 'add house modal create')}
+            {shouldShowJoin && loadingLockable(Join, 'add house modal join')}
           </div>
         </div>
       </div>
