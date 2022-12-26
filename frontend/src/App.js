@@ -1,13 +1,13 @@
-import React, { lazy, useEffect, Suspense } from 'react';
+import React, { lazy, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 
-import LoadingLock from './components/paint/Loading/LoadingLock';
 import TempLoadingPruner from './components/logic/TempLoadingPruner';
-import protect from './utils/protect';
+import protectedRoute from './utils/renderControls/protectedRoute';
 import { restore } from './store/session';
 
 import './index.css';
+import loadingLockable from './utils/renderControls/loadingLockable';
 
 const Home = lazy(() => import('./components/paint/Home'));
 const Houses = lazy(() => import('./components/paint/Houses'));
@@ -31,63 +31,25 @@ export default function App () {
         <div id='main'>
           <div id='router-container'>
             <Routes>
-              <Route
-                path='/'
-                element={<Navigate to='/home' />}
-              />
-              <Route
-                path='/login'
-                element={(
-                  <Suspense fallback={<LoadingLock name='login' />}>
-                    <LoginForm />
-                  </Suspense>
-              )}
-              />
-              <Route
-                path='/signup'
-                element={(
-                  <Suspense fallback={<LoadingLock name='signup' />}>
-                    <SignupForm />
-                  </Suspense>
-              )}
-              />
-              {protect('/home', (
-                <Suspense fallback={<LoadingLock name='home' />}>
-                  <Home />
-                </Suspense>
-              ))}
-              {protect('/me', (
-                <Suspense fallback={<LoadingLock name='me' />}>
-                  <h1>Coming Soon!</h1>
-                </Suspense>
-              ))}
-              {protect('/residences', (
-                <Suspense fallback={<LoadingLock name='residences' />}>
-                  <Houses />
-                </Suspense>
-              ))}
-              {protect('/residences/:houseID', (
-                <Suspense fallback={<LoadingLock name='residences' />}>
-                  <Houses houseSelected />
-                </Suspense>
-              ))}
-              <Route path='*' element={<Navigate to='/home' />} />
+              <Route path='/' element={<Navigate to='/home' />} />
+              <Route path='login' element={loadingLockable(<LoginForm />, 'login form')} />
+              <Route path='signup' element={loadingLockable(<SignupForm />, 'signup form')} />
+              {protectedRoute('home', loadingLockable(<Home />, 'home'))}
+              {protectedRoute('me', loadingLockable(<h1>Coming Soon!</h1>, 'me'))}
+              {protectedRoute('residences', loadingLockable(<Houses />, 'residences'), [
+                protectedRoute('new', loadingLockable(<Houses creating />, 'residences::new')),
+                protectedRoute('join', loadingLockable(<Houses joining />, 'residences::join')),
+                protectedRoute(':houseID', loadingLockable(<Houses selected />, 'residences::id'))
+              ])}
+              <Route path='*' element={<Navigate to='home' />} />
             </Routes>
           </div>
-          <Suspense fallback={<LoadingLock name='navbar' />}>
-            <NavBar />
-          </Suspense>
+          {loadingLockable(<NavBar />)}
         </div>
-        <Suspense fallback={<LoadingLock name='rebound monitor' />}>
-          <ReboundMonitor />
-        </Suspense>
+        {loadingLockable(<ReboundMonitor />)}
       </BrowserRouter>
-      <Suspense fallback={<LoadingLock name='residences floating plus' />}>
-        <FloatingPlusButton />
-      </Suspense>
-      <Suspense fallback={<LoadingLock name='auth monitor' />}>
-        <AuthMonitor />
-      </Suspense>
+      {loadingLockable(<FloatingPlusButton />)}
+      {loadingLockable(<AuthMonitor />)}
       <TempLoadingPruner />
     </>
   );
