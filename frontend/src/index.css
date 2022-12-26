@@ -6,6 +6,10 @@
   --active-highlight: #53aaff;
 }
 
+.hidden {
+  display: none;
+}
+
 body {
   margin: 0;
   background-color: black;

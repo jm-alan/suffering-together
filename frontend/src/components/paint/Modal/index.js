@@ -3,6 +3,7 @@ import { createPortal } from 'react-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { clearModal, hideModal } from '../../../store/UX/modal';
+import { useLogger } from '../../../utils/logging';
 import LoadingLock from '../Loading/LoadingLock';
 
 import './modal.css';
@@ -13,9 +14,7 @@ export default function Modal () {
   const showModal = useSelector(state => state.UX.modal.show);
   const modalMooring = useSelector(state => state.UX.modal.mooring);
   const onClose = useSelector(state => state.UX.modal.onClose);
-  const current = useSelector(state => state.UX.modal.current);
-
-  const Component = typeof current === 'function' ? current : () => current;
+  const Current = useSelector(state => state.UX.modal.current);
 
   const resist = e => {
     e.stopPropagation();
@@ -39,7 +38,9 @@ export default function Modal () {
     };
   }, [dispatch]);
 
-  return showModal && Component && createPortal(
+  useLogger({ showModal, onClose, Current });
+
+  return showModal && Current && createPortal(
     <div
       id='modal-background'
       onClick={clearAndClose}
@@ -55,7 +56,7 @@ export default function Modal () {
           X
         </button>
         <Suspense fallback={<LoadingLock name='modal content' />}>
-          <Component />
+          <Current />
         </Suspense>
       </div>
     </div>,

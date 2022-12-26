@@ -9,6 +9,7 @@
 }
 
 #new-house-sliding-container {
+  left: 0vw;
   height: 50vh;
   min-height: 50vh;
   max-height: 50vh;
@@ -19,6 +20,10 @@
   position: relative;
   transition:
     left 0.5s;
+}
+
+#new-house-sliding-container.slide {
+  left: -80vw;
 }
 
 .new-house-sliding-subcontainer {

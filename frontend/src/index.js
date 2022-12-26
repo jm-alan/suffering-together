@@ -10,7 +10,6 @@ import { setMooring } from './store/UX/modal';
 import './utils/prototypes';
 
 const App = lazy(() => import('./App'));
-const Modal = lazy(() => import('./components/paint/Modal'));
 const PageLoading = lazy(() => import('./components/paint/Loading/PageLoading'));
 const ErrorBanner = lazy(() => import('./components/paint/ErrorBanner'));
 
@@ -35,9 +34,6 @@ const Root = () => {
       </Suspense>
       <Suspense fallback={<LoadingLock name='core app' />}>
         <App />
-      </Suspense>
-      <Suspense fallback={<LoadingLock name='modal' />}>
-        <Modal />
       </Suspense>
       <PageLoading />
       <div ref={mooringRef} id='mooring' />

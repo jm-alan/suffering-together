@@ -1,3 +1,5 @@
+import { devlog } from '../../utils/logging';
+
 const SHOW = 'modal/SHOW';
 const HIDE = 'modal/SHOW';
 const SET = 'modal/SET';
@@ -48,6 +50,7 @@ export default function reducer (
         show: false
       };
     case SET:
+      devlog('setting modal to', current);
       return {
         ...state,
         current
@@ -63,6 +66,7 @@ export default function reducer (
         mooring
       };
     case ON_CLOSE:
+      devlog('setting on close to', onClose);
       return {
         ...state,
         onClose

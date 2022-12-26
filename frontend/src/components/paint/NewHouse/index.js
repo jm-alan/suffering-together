@@ -1,54 +1,67 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import Join from './Join';
 import Create from './Create';
 
 import './newHouse.css';
 
-export default function NewHouse () {
-  const [page, setPage] = useState(0);
-  const [mode, setMode] = useState(null);
+export default function NewHouse ({ creating, joining }) {
+  const [shouldShowCreate, setShouldShowCreate] = useState(creating);
+  const [shouldShowJoin, setShouldShowJoin] = useState(joining);
+
+  const backButtonRef = useRef(null);
+  const slidingContainerRef = useRef(null);
+
+  let modeTimeout;
 
   const forward = () => {
-    setPage(prev => prev + 1);
+    backButtonRef.current.classList.remove('hidden');
+    slidingContainerRef.current.classList.add('slide');
   };
 
   const backward = () => {
-    setPage(prev => prev - 1);
-    setTimeout(setMode, 500, null);
-  };
-
-  const showJoin = () => {
-    setMode('join');
-    forward();
+    backButtonRef.current.classList.add('hidden');
+    slidingContainerRef.current.classList.remove('slide');
+    window.history.pushState(null, '', '/residences/add');
+    modeTimeout = setTimeout(() => {
+      setShouldShowCreate(false);
+      setShouldShowJoin(false);
+    }, 500);
   };
 
   const showCreate = () => {
-    setMode('create');
+    clearTimeout(modeTimeout);
+    window.history.pushState(null, '', '/residences/new');
+    setShouldShowJoin(false);
+    setShouldShowCreate(true);
     forward();
   };
 
-  useEffect(() => () => {
-    setPage(0);
-    setMode(null);
-  }, [setPage, setMode]);
+  const showJoin = () => {
+    clearTimeout(modeTimeout);
+    window.history.pushState(null, '', '/residences/join');
+    setShouldShowCreate(false);
+    setShouldShowJoin(true);
+    forward();
+  };
+
+  useEffect(() => {
+    if (creating || joining) {
+      forward();
+    }
+  }, [creating, joining]);
 
   return (
     <>
-      {page
-        ? (
-          <button className='modal-floater top-left' onClick={backward}>
-            {'<'}
-          </button>
-          )
-        : null}
+      <button
+        ref={backButtonRef}
+        className='modal-floater top-left hidden'
+        onClick={backward}
+      >
+        {'<'}
+      </button>
       <div id='new-house-scroll-control'>
-        <div
-          id='new-house-sliding-container'
-          style={{
-            left: `-${80 * page}vw`
-          }}
-        >
+        <div ref={slidingContainerRef} id='new-house-sliding-container'>
           <div className='new-house-sliding-subcontainer'>
             <div id='new-house-mode-select-container'>
               <button
@@ -66,16 +79,8 @@ export default function NewHouse () {
             </div>
           </div>
           <div className='new-house-sliding-subcontainer'>
-            {(() => {
-              switch (mode) {
-                case 'join':
-                  return <Join />;
-                case 'create':
-                  return <Create />;
-                default:
-                  return null;
-              }
-            })()}
+            {shouldShowCreate && <Create />}
+            {shouldShowJoin && <Join />}
           </div>
         </div>
       </div>

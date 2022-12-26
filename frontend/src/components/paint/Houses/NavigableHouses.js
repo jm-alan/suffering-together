@@ -1,27 +1,22 @@
 import React, { lazy, Suspense, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Navigate, useLocation, useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 
+import loadingLockable from '../../../utils/renderControls/loadingLockable';
 import LoadingLock from '../Loading/LoadingLock';
 import { getAllhouses } from '../../../store/houses';
+import { clearPlusAction, hidePlus, setPlusAction, showPlus } from '../../../store/UX/plus';
 import { clearModal, hideModal, setModal, setOnClose, showModal } from '../../../store/UX/modal';
-import {
-  clearPlusAction,
-  hidePlus,
-  setPlusAction,
-  showPlus
-} from '../../../store/UX/plus';
 
 import './houses.css';
 import { useLogger } from '../../../utils/logging';
 
 const SlidingHouseContainer = lazy(() => import('./SlidingHouseContainer'));
+const NewHouse = lazy(() => import('../NewHouse'));
 
 export default function NavigableHouses ({ adding = false, creating = false, joining = false, selected }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  const location = useLocation();
 
   const user = useSelector(state => state.session.user);
   const sessionLoaded = useSelector(state => state.session.loaded);
@@ -41,24 +36,21 @@ export default function NavigableHouses ({ adding = false, creating = false, joi
   }, [dispatch]);
 
   useEffect(() => {
-    if (adding) {
-      dispatch(setOnClose(() => navigate('/residences')));
-      dispatch(setModal(lazy(() => import('../NewHouse'))));
+    if (adding || creating || joining) {
+      const onClose = () => navigate('/residences');
+      dispatch(setOnClose(onClose));
+      dispatch(setModal(() => loadingLockable(NewHouse, 'new house modal', { adding, creating, joining })));
       dispatch(showModal());
     }
     return () => {
-      dispatch(clearModal());
-      dispatch(hideModal());
+      if (!adding && !creating && !joining) {
+        dispatch(clearModal());
+        dispatch(hideModal());
+      }
     };
-  }, [adding, dispatch]);
+  }, [adding, creating, joining, dispatch]);
 
-  useLogger({
-    adding,
-    creating,
-    joining,
-    selected,
-    location
-  });
+  useLogger({ adding, creating, joining });
 
   if (sessionLoaded && !user) {
     return <Navigate to='/login' />;
